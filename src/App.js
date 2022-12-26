@@ -36,6 +36,7 @@ import AnalysisBanano from "./containers/pages/AnalysisBanano";
 import AnalysisPineapple from "./containers/pages/AnalysisPineapple";
 import Commercial from "./containers/pages/Comercial";
 import CommercialDetail from "./containers/pages/ComercialDetail";
+import KPI from "./containers/pages/KPI";
 
 
 const App = () => {
@@ -97,6 +98,9 @@ const App = () => {
                     {/*Comercial*/}
                     <Route exact path="commercial/" element={<Commercial/>}/>
                     <Route exact path="commercial/:slug" element={<CommercialDetail/>}/>
+
+                    {/*Planning*/}
+                    <Route exact path="planning/kpi" element={<KPI/>}/>
 
 
                 </Routes>

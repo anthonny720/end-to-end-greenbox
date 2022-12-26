@@ -279,6 +279,11 @@ let colors = {
     "blue-grey-900": "#263238",
 };
 
+const CustomTd=({children})=>{
+    return(
+        <td className={"px-2 py-4 text-center text-xs"}>{children}</td>
+    )
+}
 
 const MySwal = withReactContent(Swal)
-export {MySwal, colors}
+export {MySwal, colors,CustomTd}

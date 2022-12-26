@@ -24,7 +24,6 @@ class CutTestSerializer(serializers.ModelSerializer):
 class AnalysisPineappleSerializer(serializers.ModelSerializer):
     entry_date = serializers.CharField(source='lot.entryDate', read_only=True)
     week = serializers.CharField(source='lot.get_week', read_only=True)
-
     boxes = serializers.CharField(source='lot.get_quantity_boxes', read_only=True)
     calibers = serializers.DictField(source='lot.get_calibers_percentage', read_only=True)
     net_weight = serializers.CharField(source='lot.get_total_net_weight', read_only=True)

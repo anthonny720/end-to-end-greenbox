@@ -19,10 +19,9 @@ urlpatterns = [path('admin/', admin.site.urls),
 
                path('api/logistic/', include('apps.warehouse.urls')),
                path('api/commercial/', include('apps.commercial.urls')),
+               path('api/planning/', include('apps.planning.urls')),
 
-               path('auth/', include('djoser.urls')),
-               path('auth/', include('djoser.urls.jwt')),
-               ]
+               path('auth/', include('djoser.urls')), path('auth/', include('djoser.urls.jwt')), ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

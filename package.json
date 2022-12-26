@@ -1,5 +1,5 @@
 {
-  "name": "traceability_greenbox",
+  "name": "ent-to-end-greenbox",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

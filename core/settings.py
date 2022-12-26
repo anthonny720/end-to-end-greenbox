@@ -37,6 +37,7 @@ PROJECT_APPS = ['apps.users',
                 'apps.products', 'apps.business_partners',
                 'apps.raw_material', 'apps.management',
                 'apps.quality', 'apps.process_line', 'apps.warehouse', 'apps.report', 'apps.commercial',
+                'apps.planning'
                 ]
 
 THIRD_PARTY_APPS = ['corsheaders', 'simple_history', 'rest_framework', 'import_export', 'djoser',

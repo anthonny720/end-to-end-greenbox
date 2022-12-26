@@ -1,8 +1,11 @@
+from datetime import datetime
+
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from apps.planning.models import IndicatorKPIPineapple, IndicatorKPIMango, IndicatorKPIAguaymanto
 from apps.quality.models import AnalysisPineapple, CutTest, AnalysisBanano, AnalysisMango, AnalysisAguaymanto, \
     AnalysisBlueberry
 from apps.raw_material.models import Lot, ILot
@@ -16,6 +19,12 @@ from apps.util.pagination import SetPagination
 class ListCreateLotView(APIView):
 
     def get(self, request, format=None):
+        try:
+            IndicatorKPIPineapple.objects.get_or_create(date=datetime.now())
+            IndicatorKPIMango.objects.get_or_create(date=datetime.now())
+            IndicatorKPIAguaymanto.objects.get_or_create(date=datetime.now())
+        except:
+            pass
         queryset = Lot.objects.all()
         lot = request.query_params.get('lot', None)
         category = request.query_params.get('category', None)
@@ -50,12 +59,36 @@ class ListCreateLotView(APIView):
             if lot.category.name == "Piña":
                 AnalysisPineapple.objects.create(lot=lot)
                 CutTest.objects.create(lot=lot)
+                try:
+                    i, created = IndicatorKPIPineapple.objects.get_or_create(date=lot.entryDate)
+                    i.price_objective = 2.66
+                    i.lots.add(lot)
+                    i.save()
+
+                except Exception as e:
+                    print(e)
             elif lot.category.name == "Banano":
                 AnalysisBanano.objects.create(lot=lot)
             elif lot.category.name == "Mango":
                 AnalysisMango.objects.create(lot=lot)
+                try:
+                    i, created = IndicatorKPIMango.objects.get_or_create(date=lot.entryDate)
+                    i.price_objective = 1.57
+                    i.lots.add(lots=lot)
+                    i.save()
+                except:
+                    pass
             elif lot.category.name == "Aguaymanto":
                 AnalysisAguaymanto.objects.create(lot=lot)
+                try:
+                    i, created = IndicatorKPIAguaymanto.objects.create(date=lot.entryDate)
+                    i.price_objective = 2.60
+                    i.lots.add(lots=lot)
+                    i.save()
+
+
+                except:
+                    pass
             else:
                 AnalysisBlueberry.objects.create(lot=lot)
             Report.objects.create(lot=lot)
@@ -72,7 +105,7 @@ class DetailEntryView(APIView):
         serializer = LotDetailSerializer(lot)
         return Response({'result': serializer.data}, status=status.HTTP_200_OK)
 
-    def patch(self,request,*args,**kwargs):
+    def patch(self, request, *args, **kwargs):
         entry = get_object_or_404(Lot, lot=kwargs['lot'])
         # if request.user.role != "6":
         #     return Response({'error': 'No tiene permisos para realizar esta acción'},
