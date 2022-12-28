@@ -50,6 +50,7 @@ const Form = ({close, data}) => {
                 <option value={"7"}>{"Producción"}</option>
                 <option value={"8"}>{"Visualizador"}</option>
                 <option value={"9"}>{"Compras"}</option>
+                <option value={"10"}>{"Mantenimiento"}</option>
             </select>
         </div>
 

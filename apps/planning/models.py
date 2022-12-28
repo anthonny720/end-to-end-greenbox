@@ -53,6 +53,7 @@ class IndicatorKPIPineapple(IndicatorKPI):
     class Meta:
         verbose_name = "Indicador de Piña"
         verbose_name_plural = "Indicador de Piña"
+        ordering = ['-date']
 
     def get_entry_real(self):
         entry_real = 0.0
@@ -162,6 +163,7 @@ class IndicatorKPIMango(IndicatorKPI):
     class Meta:
         verbose_name = "Indicador de Mango"
         verbose_name_plural = "Indicador de Mango"
+        ordering = ['-date']
 
     def get_entry_real(self):
         entry_real = 0
@@ -296,6 +298,7 @@ class IndicatorKPIAguaymanto(IndicatorKPI):
     class Meta:
         verbose_name = "Indicador de Aguaymanto"
         verbose_name_plural = "Indicador de Aguaymanto"
+        ordering = ['-date']
 
     def get_entry_real(self):
         entry_real = 0

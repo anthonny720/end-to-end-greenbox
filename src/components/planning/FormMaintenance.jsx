@@ -22,9 +22,9 @@ const FormMaintenance = ({data, close, params}) => {
     ]
 
     const columns2 = [
-        {name: 'works_scheduled', title: 'Precio objetivo', type: 'text', maxLength: 2},
-        {name: 'work_corrective', title: 'Precio objetivo', type: 'text', maxLength: 2},
-        {name: 'work_preventive', title: 'Precio objetivo', type: 'text', maxLength: 2},
+        {name: 'works_scheduled', title: 'Trabajos planificados', type: 'text', maxLength: 2},
+        {name: 'work_corrective', title: 'Trabajos correctivos', type: 'text', maxLength: 2},
+        {name: 'work_preventive', title: 'Trabajos preventivos', type: 'text', maxLength: 2},
     ]
 
     const dispatch = useDispatch();

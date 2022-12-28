@@ -14,7 +14,7 @@ from apps.planning.serializers import IndicatorPineappleSerializer, IndicatorMan
 
 class ListPineappleView(APIView):
     def get(self, request):
-        queryset = IndicatorKPIPineapple.objects.all()
+        queryset = IndicatorKPIPineapple.objects.all().order_by('-date')
         week = request.query_params.get('week', None)
         year = request.query_params.get('year', None)
 
@@ -104,7 +104,7 @@ class ListPineappleView(APIView):
 
 class ListMangoView(APIView):
     def get(self, request):
-        queryset = IndicatorKPIMango.objects.all()
+        queryset = IndicatorKPIMango.objects.all().order_by('-date')
         week = request.query_params.get('week', None)
         year = request.query_params.get('year', None)
         if week:
@@ -214,7 +214,7 @@ class ListMangoView(APIView):
 
 class ListAguaymantoView(APIView):
     def get(self, request):
-        queryset = IndicatorKPIAguaymanto.objects.all()
+        queryset = IndicatorKPIAguaymanto.objects.all().order_by('-date')
         week = request.query_params.get('week', None)
         year = request.query_params.get('year', None)
         if week:
@@ -351,7 +351,7 @@ class UpdateMangoView(APIView):
 
 class ListMaintenanceView(APIView):
     def get(self, request):
-        queryset = IndicatorMaintenance.objects.all()
+        queryset = IndicatorMaintenance.objects.all().order_by('-date')
         week = request.query_params.get('week', None)
         year = request.query_params.get('year', None)
         if week:
