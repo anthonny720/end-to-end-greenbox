@@ -1,12 +1,15 @@
 from rest_framework import serializers
 
-from apps.planning.models import IndicatorKPIPineapple, IndicatorKPIMango, IndicatorKPIAguaymanto, IndicatorKPI
+from apps.planning.models import IndicatorKPIPineapple, IndicatorKPIMango, IndicatorKPIAguaymanto, IndicatorKPI, \
+    IndicatorMaintenance
 from apps.raw_material.models import Lot
 
+
 class Indicator(serializers.ModelSerializer):
-    year=serializers.CharField(source='get_year',read_only=True)
-    month=serializers.CharField(source='get_month',read_only=True)
-    week=serializers.CharField(source='get_week',read_only=True)
+    year = serializers.CharField(source='get_year', read_only=True)
+    month = serializers.CharField(source='get_month', read_only=True)
+    week = serializers.CharField(source='get_week', read_only=True)
+
     class Meta:
         model = IndicatorKPI
         fields = '__all__'
@@ -15,7 +18,7 @@ class Indicator(serializers.ModelSerializer):
 class LotSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lot
-        fields = ('lot','get_total_net_weight', )
+        fields = ('lot', 'get_total_net_weight',)
 
 
 class IndicatorPineappleSerializer(Indicator):
@@ -26,8 +29,7 @@ class IndicatorPineappleSerializer(Indicator):
     info = serializers.DictField(source='get_calibers_maduration', read_only=True)
     condition = serializers.DictField(source='get_condition', read_only=True)
     compliance_production = serializers.CharField(source='get_compliance_production', read_only=True)
-    stock= serializers.CharField(source='get_stock', read_only=True)
-
+    stock = serializers.CharField(source='get_stock', read_only=True)
 
     class Meta:
         model = IndicatorKPIPineapple
@@ -42,7 +44,7 @@ class IndicatorMangoSerializer(Indicator):
     info = serializers.DictField(source='get_info', read_only=True)
     compliance_production = serializers.CharField(source='get_compliance_production', read_only=True)
     variety = serializers.DictField(source='get_variety', read_only=True)
-    stock= serializers.CharField(source='get_stock', read_only=True)
+    stock = serializers.CharField(source='get_stock', read_only=True)
 
     class Meta:
         model = IndicatorKPIMango
@@ -57,8 +59,29 @@ class IndicatorAguaymantoSerializer(Indicator):
     info = serializers.DictField(source='get_maduration_defects', read_only=True)
     compliance_production = serializers.CharField(source='get_compliance_production', read_only=True)
     discard_percentage = serializers.CharField(source='get_percentage_discard', read_only=True)
-    stock= serializers.CharField(source='get_stock', read_only=True)
+    stock = serializers.CharField(source='get_stock', read_only=True)
 
     class Meta:
         model = IndicatorKPIAguaymanto
+        fields = '__all__'
+
+
+class IndicatorMaintenanceSerializer(serializers.ModelSerializer):
+    week = serializers.CharField(source='get_week', read_only=True,)
+    consumption_real = serializers.DecimalField(source='get_consumption_real', read_only=True, max_digits=7,
+                                                decimal_places=2)
+    efficiency_machine = serializers.DecimalField(source='get_efficiency_machine', read_only=True, max_digits=7,
+                                                  decimal_places=2)
+    work_executed = serializers.DecimalField(source='get_work_executed', read_only=True, max_digits=7, decimal_places=2)
+    compliance_works = serializers.DecimalField(source='get_compliance_works', read_only=True, max_digits=7,
+                                                decimal_places=2)
+    compliance_corrective = serializers.DecimalField(source='get_compliance_corrective', read_only=True, max_digits=7,
+                                                     decimal_places=2)
+    compliance_preventive = serializers.DecimalField(source='get_compliance_preventive', read_only=True, max_digits=7,
+                                                     decimal_places=2)
+    efficiency_pnd = serializers.DecimalField(source='get_efficiency_pnd', read_only=True, max_digits=7,
+                                              decimal_places=2)
+
+    class Meta:
+        model = IndicatorMaintenance
         fields = '__all__'

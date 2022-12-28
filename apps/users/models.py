@@ -5,7 +5,7 @@ from simple_history.models import HistoricalRecords
 # Create your models here.
 
 Roles = (('1', 'Operaciones'), ('2', 'Logistica'), ('3', 'Certificaciones'), ('4', 'Administración'), ('5', 'Calidad'),
-         ('6', 'Materia Prima'), ('7', 'Producción'), ('8', 'Visualizador'),('9', 'Compras'))
+         ('6', 'Materia Prima'), ('7', 'Producción'), ('8', 'Visualizador'),('9', 'Compras'),('10','Mantenimiento'))
 
 
 class UserAccountManager(BaseUserManager):
@@ -35,7 +35,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    role = models.CharField(max_length=1, choices=Roles, default='8')
+    role = models.CharField(max_length=2, choices=Roles, default='8')
     created_at = models.DateTimeField(auto_now_add=True)
     history = HistoricalRecords()
 

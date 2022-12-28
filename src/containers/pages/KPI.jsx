@@ -11,6 +11,8 @@ import Modal from "../../components/util/Modal";
 import FormPlanningPineapple from "../../components/planning/FormPineapple";
 import FormPlanningMango from "../../components/planning/FormMango";
 import FormPlanningAguaymanto from "../../components/planning/FormAguaymanto";
+import KPIMaintenance from "../../components/planning/KPIMaintenance";
+import FormMaintenance from "../../components/planning/FormMaintenance";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -24,6 +26,7 @@ const KPI = () => {
     const kpi_pineapple = useSelector(state => state.Planning.pineapple)
     const kpi_mango = useSelector(state => state.Planning.mango)
     const kpi_aguaymanto = useSelector(state => state.Planning.aguaymanto)
+    const kpi_maintenance = useSelector(state => state.Planning.maintenance)
 
     /*MODAL*/
     const [title, setTitle] = useState();
@@ -54,11 +57,18 @@ const KPI = () => {
         setContent(<FormPlanningAguaymanto data={row} params={params}
                                            close={openModal}/>)
     }
+    const handleOpenModalUpdateMaintenance = (row) => {
+        setTitle(`${row.date}`)
+        setIsOpen(true)
+        setContent(<FormMaintenance data={row} params={params}
+                                           close={openModal}/>)
+    }
 
     useEffect(() => {
         dispatch({type: 'GET_KPI_PINEAPPLE_FAIL'})
         dispatch({type: 'GET_KPI_MANGO_FAIL'})
         dispatch({type: 'GET_KPI_AGUAYMANTO_FAIL'})
+        dispatch({type: 'GET_KPI_MAINTENANCE_FAIL'})
     }, []);
 
 
@@ -103,7 +113,7 @@ const KPI = () => {
 
                     className={classNames('rounded-xl bg-white p-3', 'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2')}
                 >
-
+                <KPIMaintenance week={params.week} update={handleOpenModalUpdateMaintenance} data={kpi_maintenance?kpi_maintenance:[]}/>
 
                 </Tab.Panel>
 

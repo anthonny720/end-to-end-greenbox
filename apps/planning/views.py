@@ -1,10 +1,13 @@
+from datetime import datetime
+
+from django.db.models import Sum
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.planning.models import IndicatorKPIPineapple, IndicatorKPIMango, IndicatorKPIAguaymanto
+from apps.planning.models import IndicatorKPIPineapple, IndicatorKPIMango, IndicatorKPIAguaymanto, IndicatorMaintenance
 from apps.planning.serializers import IndicatorPineappleSerializer, IndicatorMangoSerializer, \
-    IndicatorAguaymantoSerializer
+    IndicatorAguaymantoSerializer, IndicatorMaintenanceSerializer
 
 
 # Create your views here.
@@ -13,15 +16,14 @@ class ListPineappleView(APIView):
     def get(self, request):
         queryset = IndicatorKPIPineapple.objects.all()
         week = request.query_params.get('week', None)
-        month = request.query_params.get('month', None)
         year = request.query_params.get('year', None)
 
         if week:
             queryset = queryset.filter(date__week=week)
-        if month:
-            queryset = queryset.filter(date__month=month)
         if year:
             queryset = queryset.filter(date__year=year)
+        else:
+            queryset = queryset.filter(date__year=datetime.now().year)
 
         if queryset.exists():
             serializer = IndicatorPineappleSerializer(queryset, many=True)
@@ -46,8 +48,6 @@ class ListPineappleView(APIView):
             total_objective_price = 0
             for data in queryset:
                 if data.lots is not None and data.lots.count() > 0:
-                    total_entry += data.entry if data.entry else 0
-                    total_real_entry += data.get_entry_real()
                     total_c6 += data.get_calibers_maduration()['caliber_6']
                     total_c8_10_12 += data.get_calibers_maduration()['caliber_8_10_12']
                     total_c14 += data.get_calibers_maduration()['caliber_14']
@@ -58,6 +58,8 @@ class ListPineappleView(APIView):
                     total_price += float(data.get_price()) if data.get_price() else 0
                     total_convencional += data.get_condition()['convencional']
                     total_organic += data.get_condition()['organic']
+                total_entry += data.entry if data.entry else 0
+                total_real_entry += data.get_entry_real()
                 total_objective_entry += data.entry_objective
                 total_objective_production += data.objective
                 total_objective_price += data.price_objective
@@ -80,9 +82,10 @@ class ListPineappleView(APIView):
                        'total_objective_entry': total_objective_entry / count,
                        'total_objective_production': total_objective_production / count,
                        'total_objective_price': total_objective_price,
-                       'total_compliance_entry': (float(total_real_entry) / float(total_entry)) * 100 if total_entry > 0 else 0,
-                       'total_compliance_production': (
-                                                              float(total_discard) / float(total_kg_brute)) * 100 if total_kg_brute > 0 else 0}
+                       'total_compliance_entry': (float(total_real_entry) / float(
+                           total_entry)) * 100 if total_entry > 0 else 0,
+                       'total_compliance_production': 100 - (
+                               float(total_discard) / float(total_kg_brute)) * 100 if total_kg_brute > 0 else 0}
             if total > 0:
                 summary['total_c6'] = total_c6 / total
                 summary['total_c8_10_12'] = total_c8_10_12 / total
@@ -108,6 +111,8 @@ class ListMangoView(APIView):
             queryset = queryset.filter(date__week=week)
         if year:
             queryset = queryset.filter(date__year=year)
+        else:
+            queryset = queryset.filter(date__year=datetime.now().year)
         if queryset.exists():
             serializer = IndicatorMangoSerializer(queryset, many=True)
             total = queryset.filter(price_objective__gt=0.1).count()
@@ -137,8 +142,6 @@ class ListMangoView(APIView):
             total_objective_price = 0
             for data in queryset:
                 if data.lots is not None and data.lots.count() > 0:
-                    total_entry += data.entry if data.entry else 0
-                    total_real_entry += data.get_entry_real()
                     total_wt_280 += data.get_info()['wt_280']
                     total_wt_280_300 += data.get_info()['wt_280_300']
                     total_wt_300 += data.get_info()['wt_300']
@@ -155,6 +158,8 @@ class ListMangoView(APIView):
                     total_edward += data.get_variety()['edward']
                     total_haden += data.get_variety()['haden']
                     total_other += data.get_variety()['others']
+                total_entry += data.entry if data.entry else 0
+                total_real_entry += data.get_entry_real()
                 total_objective_entry += data.entry_objective
                 total_objective_production += data.objective
                 total_objective_price += data.price_objective
@@ -183,9 +188,10 @@ class ListMangoView(APIView):
                        'total_objective_entry': total_objective_entry / count,
                        'total_objective_production': total_objective_production / count,
                        'total_objective_price': total_objective_price,
-                       'total_compliance_entry': (float(total_real_entry) / float(total_entry)) * 100 if total_entry > 0 else 0,
-                       'total_compliance_production': (
-                                                              float(total_discard) / float(total_kg_brute)) * 100 if total_kg_brute > 0 else 0}
+                       'total_compliance_entry': (float(total_real_entry) / float(
+                           total_entry)) * 100 if total_entry > 0 else 0,
+                       'total_compliance_production': 100 - (
+                               float(total_discard) / float(total_kg_brute)) * 100 if total_kg_brute > 0 else 0}
             if total > 0:
                 summary['total_wt_280'] = total_wt_280 / total
                 summary['total_wt_280_300'] = total_wt_280_300 / total
@@ -210,14 +216,13 @@ class ListAguaymantoView(APIView):
     def get(self, request):
         queryset = IndicatorKPIAguaymanto.objects.all()
         week = request.query_params.get('week', None)
-        month = request.query_params.get('month', None)
         year = request.query_params.get('year', None)
         if week:
             queryset = queryset.filter(date__week=week)
-        if month:
-            queryset = queryset.filter(date__month=month)
         if year:
             queryset = queryset.filter(date__year=year)
+        else:
+            queryset = queryset.filter(date__year=datetime.now().year)
         if queryset.exists():
             serializer = IndicatorAguaymantoSerializer(queryset, many=True)
             total = queryset.filter(price_objective__gt=0.1).count()
@@ -242,8 +247,6 @@ class ListAguaymantoView(APIView):
 
             for data in queryset:
                 if data.lots is not None and data.lots.count() > 0:
-                    total_entry += data.entry if data.entry else 0
-                    total_real_entry += data.get_entry_real()
                     total_maduration_1 += data.get_maduration_defects()['maduration_1']
                     total_maduration_2 += data.get_maduration_defects()['maduration_2']
                     total_maduration_3 += data.get_maduration_defects()['maduration_3']
@@ -252,12 +255,14 @@ class ListAguaymantoView(APIView):
                     total_cracked += data.get_maduration_defects()['cracked']
                     total_crushed += data.get_maduration_defects()['crushed']
                     total_price += float(data.get_price()) if data.get_price() else 0
+                total_entry += data.entry if data.entry else 0
+                total_real_entry += data.get_entry_real()
                 total_objective_entry += data.entry_objective
                 total_objective_production += data.objective
                 total_objective_price += data.price_objective
                 total_objective_discard += data.discard_objective
                 total_discard += data.discard if data.discard else 0
-                total_caliz = data.caliz if data.caliz else 0
+                total_caliz += data.caliz if data.caliz else 0
                 total_kg_brute += data.kg_brute if data.kg_brute else 0
             summary = {'total_entry': total_entry,
                        'total_real_entry': total_real_entry,
@@ -276,10 +281,12 @@ class ListAguaymantoView(APIView):
                        'total_objective_production': total_objective_production / count,
                        'total_objective_price': total_objective_price,
                        'total_objective_discard': total_objective_discard / count,
-                       'total_compliance_entry': (float(total_real_entry) / float(total_entry)) * 100 if total_entry > 0 else 0,
-                       'total_compliance_production': (
-                                                              float(total_caliz) / float(total_kg_brute)) * 100 if total_kg_brute > 0 else 0,
-                       'total_discard_percentage': (float(total_discard) / float(total_kg_brute)) * 100 if total_kg_brute > 0 else 0}
+                       'total_compliance_entry': (float(total_real_entry) / float(
+                           total_entry)) * 100 if total_entry > 0 else 0,
+                       'total_compliance_production': 100 - (
+                               float(total_caliz) / float(total_kg_brute)) * 100 if total_kg_brute > 0 else 0,
+                       'total_discard_percentage': (float(total_discard) / float(
+                           total_kg_brute)) * 100 if total_kg_brute > 0 else 0}
 
             if total > 0:
                 summary['total_maduration_1'] = total_maduration_1 / total
@@ -290,7 +297,6 @@ class ListAguaymantoView(APIView):
                 summary['total_cracked'] = total_cracked / total
                 summary['total_crushed'] = total_crushed / total
                 summary['total_objective_price'] = total_objective_price / total
-                summary['total_caliz'] = total_caliz / total
                 summary['total_price'] = total_price / total
             return Response({'result': serializer.data, 'summary': summary}, status=status.HTTP_200_OK)
         else:
@@ -336,6 +342,85 @@ class UpdateMangoView(APIView):
         if IndicatorKPIMango.objects.filter(id=kwargs['id']).exists():
             data = IndicatorKPIMango.objects.get(id=kwargs['id'])
             serializer = IndicatorMangoSerializer(data, data=request.data, partial=True)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response({'message': 'Registro actualizado correctamente'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'No se encontraron registros'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class ListMaintenanceView(APIView):
+    def get(self, request):
+        queryset = IndicatorMaintenance.objects.all()
+        week = request.query_params.get('week', None)
+        year = request.query_params.get('year', None)
+        if week:
+            queryset = queryset.filter(date__week=week)
+        if year:
+            queryset = queryset.filter(date__year=year)
+        else:
+            queryset = queryset.filter(date__year=datetime.now().year)
+
+        if queryset.exists():
+            serializer = IndicatorMaintenanceSerializer(queryset, many=True)
+            count=queryset.count()
+            total_consumption = queryset.aggregate(Sum('consumption'))['consumption__sum']
+            total_kg_terminated = queryset.aggregate(Sum('kg_terminated'))['kg_terminated__sum']
+            total_objective_glp = queryset.aggregate(Sum('objective_glp'))['objective_glp__sum']
+            total_kg_executed = queryset.aggregate(Sum('kg_executed'))['kg_executed__sum']
+            total_ability = queryset.aggregate(Sum('ability'))['ability__sum']
+            total_objective_machine = queryset.aggregate(Sum('objective_machine'))['objective_machine__sum']
+            total_works_executed = 0
+            total_works_scheduled = queryset.aggregate(Sum('works_scheduled'))['works_scheduled__sum']
+            total_objective_works = queryset.aggregate(Sum('objective_works'))['objective_works__sum']
+            total_work_corrective = queryset.aggregate(Sum('work_corrective'))['work_corrective__sum']
+            total_objective_corrective = queryset.aggregate(Sum('objective_corrective'))['objective_corrective__sum']
+            total_objective_preventive = queryset.aggregate(Sum('objective_preventive'))['objective_preventive__sum']
+            total_work_preventive = queryset.aggregate(Sum('work_preventive'))['work_preventive__sum']
+            total_kg_defective = queryset.aggregate(Sum('kg_defective'))['kg_defective__sum']
+            total_kg_released = queryset.aggregate(Sum('kg_released'))['kg_released__sum']
+            total_objective_pnd=queryset.aggregate(Sum('objective_pnd'))['objective_pnd__sum']
+
+            for data in queryset:
+                total_works_executed += data.get_work_executed()
+            summary = {
+                'total_consumption':total_consumption,
+                'total_kg_terminated':total_kg_terminated,
+                'total_consumption_real': total_consumption/total_kg_terminated  if total_kg_terminated != 0 else 0,
+                'total_objective_glp':total_objective_glp,
+                'total_kg_executed':total_kg_executed,
+                'total_ability':total_ability,
+                'total_efficiency_machine':total_kg_executed/total_ability * 100 if total_ability != 0 else 0,
+                'total_objective_machine':total_objective_machine,
+                'total_works_executed':total_works_executed,
+                'total_works_scheduled':total_works_scheduled,
+                'total_compliance_works':total_works_executed/total_works_scheduled * 100 if total_works_scheduled != 0 else 0,
+                'total_objective_works':total_objective_works,
+                'total_work_corrective':total_work_corrective,
+                'total_compliance_corrective':total_work_corrective/total_works_executed * 100 if total_works_executed != 0 else 0,
+                'total_objective_corrective':total_objective_corrective,
+                'total_objective_preventive':total_objective_preventive,
+                'total_compliance_preventive':total_work_preventive/total_works_executed * 100 if total_works_executed != 0 else 0,
+                'total_work_preventive':total_work_preventive,
+                'total_kg_defective':total_kg_defective,
+                'total_kg_released':total_kg_released,
+                'total_compliance_pnd':(1-total_kg_defective/total_kg_released)*100 if total_kg_released != 0  else 0,
+                'total_objective_pnd':total_objective_pnd,
+            }
+            return Response({'result': serializer.data, 'summary': summary}, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'No se encontraron registros'},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class UpdateMaintenanceView(APIView):
+    def patch(self, request, *args, **kwargs):
+        if request.user.role != "1" and request.user.role != "10":
+            return Response({'error': 'No tiene permisos para realizar esta acción'},
+                            status=status.HTTP_401_UNAUTHORIZED)
+        if IndicatorMaintenance.objects.filter(id=kwargs['id']).exists():
+            data = IndicatorMaintenance.objects.get(id=kwargs['id'])
+            serializer = IndicatorMaintenanceSerializer(data, data=request.data, partial=True)
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response({'message': 'Registro actualizado correctamente'}, status=status.HTTP_200_OK)

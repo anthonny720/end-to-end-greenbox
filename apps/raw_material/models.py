@@ -45,7 +45,7 @@ class Lot(models.Model):
     tc = models.FileField(upload_to=custom_tc_file_path, blank=True, null=True, verbose_name="TC",
                           validators=[FileExtensionValidator(allowed_extensions=["pdf"])])
     invoice = models.FileField(upload_to=custom_invoice_file_path, blank=True, null=True, verbose_name="Factura",
-                               validators=[FileExtensionValidator(allowed_extensions=["pdf"])],)
+                               validators=[FileExtensionValidator(allowed_extensions=["pdf"])], )
     entryDate = models.DateField(verbose_name="Fecha de entrada")
     starting_point_date = models.DateField(verbose_name="Fecha de inicio de partida", blank=True, null=True)
     downloadDate = models.DateField(verbose_name="Fecha de descarga")
@@ -396,12 +396,12 @@ class ILot(models.Model):
         try:
             return (self.pa * Boxes.objects.filter(name="PAE").first().weight) + (
                     self.gb * Boxes.objects.filter(name="GreenBox").first().weight) + (
-                           self.t0 * Boxes.objects.filter(name="Tibana").first().weight) + (
-                           self.t1 * Boxes.objects.filter(name="Tibana 1").first().weight) + (
-                           self.t2 * Boxes.objects.filter(name="Tibana 2").first().weight) + (
-                           self.co * Boxes.objects.filter(name="Colores").first().weight) + (
-                           self.gn * Boxes.objects.filter(name="Gandules").first().weight) + (
-                           self.ma * Boxes.objects.filter(name="Madera").first().weight)
+                    self.t0 * Boxes.objects.filter(name="Tibana").first().weight) + (
+                    self.t1 * Boxes.objects.filter(name="Tibana 1").first().weight) + (
+                    self.t2 * Boxes.objects.filter(name="Tibana 2").first().weight) + (
+                    self.co * Boxes.objects.filter(name="Colores").first().weight) + (
+                    self.gn * Boxes.objects.filter(name="Gandules").first().weight) + (
+                    self.ma * Boxes.objects.filter(name="Madera").first().weight)
         except:
             return 0
 

@@ -11,8 +11,8 @@ const Table = ({data, update, remove}) => {
     const tableRef = useRef(null);
     return (<div className="overflow-x-auto relative scrollbar-hide">
         <DownloadTableExcel
-            filename="pagos-estibadores"
-            sheet="pagos"
+            filename="Registro de pagos"
+            sheet="Hoja 1"
             currentTableRef={tableRef.current}
         >
             <button

@@ -108,18 +108,20 @@ const ListDetail = ({lot, handleDelete, handleViewer, handleInvoice, handleTc}) 
                                 </div>
                             </td>
                             <td>
-                                <div className="flex items-center mt-2">
+                                <div className="flex  items-center mt-2 ">
                                     <div className="bg-purple-500 text-white  rounded-full p-2.5">
                                         <FontAwesomeIcon icon={faGlobeAmericas} width="20"/>
                                     </div>
-                                    <div className="pl-3">
+                                    <div className="pl-3 ">
                                         <div className="flex items-center text-sm leading-none">
-                                            <p className="font-semibold text-gray-800 dark:text-white ">Parcela</p>
+                                            <p className="font-semibold text-gray-800 dark:text-white  ">Parcela</p>
                                         </div>
-                                        <p className="text-sm text-gray-400">{lot?.parcel}</p>
+                                        <div className="text-gray-400 text-sm  w-2/3 truncate h-max">
+                                            <p className={'text-clip overflow-x-auto scrollbar-hide'}>{lot?.parcel}</p>
+                                        </div>
 
                                         <div
-                                            className="flex items-center justify-center px-2 py-1 mt-2 bg-green-100 rounded-full">
+                                            className="flex items-center w-2/3 justify-center px-2 py-1 mt-2 bg-green-100 rounded-full">
                                         </div>
                                     </div>
                                 </div>

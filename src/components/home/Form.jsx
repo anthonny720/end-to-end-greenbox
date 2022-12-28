@@ -13,7 +13,7 @@ const Form = ({close, providers, categories}) => {
 
     const columns = [
         {name: 'origin', title: 'Origen', type: 'text', maxLength: 50},
-        {name: 'parcel', title: 'Parcela', type: 'text', maxLength: 50},
+        {name: 'parcel', title: 'Parcela', type: 'text', maxLength: 150},
         {name: 'carrierGuide', title: 'Guia de transportista', type: 'text', maxLength: 12},
         {name: 'providerGuide', title: 'Guia de proveedor', type: 'text', maxLength: 12},
         {name: 'entryDate', title: 'Fecha de ingreso', type: 'date', maxLength: 10},

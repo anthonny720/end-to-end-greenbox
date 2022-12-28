@@ -12,7 +12,7 @@ const FormPlanningMango = ({data, close,params}) => {
     const columns = [
         {name: 'entry', title: 'Proy. ingreso', type: 'text', maxLength: 7},
         {name: 'entry_objective', title: '% Objetivo ingreso', type: 'text', maxLength: 3},
-        {name: 'discard', title: 'Kg corona', type: 'text', maxLength: 7},
+        {name: 'discard', title: 'Kg descarte', type: 'text', maxLength: 7},
         {name: 'kg_brute', title: 'Kg mp bruta', type: 'text', maxLength: 7},
         {name: 'objective', title: '% Objetivo producción', type: 'text', maxLength: 3},
         {name: 'price_objective', title: 'Precio objetivo', type: 'text', maxLength: 4},

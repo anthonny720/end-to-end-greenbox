@@ -1,7 +1,7 @@
 import React from 'react';
 import {useFormik} from "formik";
 import {useDispatch} from "react-redux";
-import {get_kpi_aguaymanto, get_kpi_mango, get_kpi_pineapple} from "../../redux/actions/planning";
+import {get_kpi_aguaymanto, get_kpi_maintenance, get_kpi_mango, get_kpi_pineapple} from "../../redux/actions/planning";
 import * as Yup from "yup";
 
 const Filter = ({ft}) => {
@@ -17,6 +17,7 @@ const Filter = ({ft}) => {
                 form.year !== '' && form.week !== '' && dispatch(get_kpi_pineapple({week: form.week, year: form.year}))
                 dispatch(get_kpi_mango({week: form.week, year: form.year}))
                 dispatch(get_kpi_aguaymanto({week: form.week, year: form.year}))
+                dispatch(get_kpi_maintenance({week: form.week, year: form.year}))
             }
 
         }
@@ -51,14 +52,12 @@ const Filter = ({ft}) => {
 };
 const initialValues = () => {
     return {
-        year: '',
-        week: ''
+        year: '', week: ''
     }
 }
 const newSchema = () => {
     return {
-        year: Yup.number(),
-        week: Yup.number()
+        year: Yup.number(), week: Yup.number()
     }
 }
 

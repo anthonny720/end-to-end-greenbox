@@ -12,7 +12,7 @@ const Table = ({data, update}) => {
     const tableRef = useRef(null);
     return (<div className="overflow-x-auto relative scrollbar-hide">
         <DownloadTableExcel
-            filename="analisis-mango"
+            filename="Analisis Mango"
             sheet="analisis-mango"
             currentTableRef={tableRef.current}
         >

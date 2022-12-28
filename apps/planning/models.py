@@ -208,14 +208,14 @@ class IndicatorKPIMango(IndicatorKPI):
                        'total': 0}
         try:
             for lot in self.lots.all():
-                wt_280 += lot.analysis_mango.weight_280
-                wt_280_300 += lot.analysis_mango.weight_280_300
-                wt_300 += lot.analysis_mango.weight_300
-                color_1 += lot.analysis_mango.color_1
-                color_1_5_2_5 += lot.get_total_net_weight() * (
+                wt_280 += float(lot.analysis_mango.weight_280) * lot.get_total_net_weight()
+                wt_280_300 += float(lot.analysis_mango.weight_280_300) * lot.get_total_net_weight()
+                wt_300 += float(lot.analysis_mango.weight_300) * lot.get_total_net_weight()
+                color_1 += float(lot.analysis_mango.color_1) * lot.get_total_net_weight()
+                color_1_5_2_5 += float(lot.get_total_net_weight()) * (
                         float(lot.analysis_mango.color_1_5) + float(lot.analysis_mango.color_2_5) + float(
                     lot.analysis_mango.color_2))
-                color_3 += lot.analysis_mango.color_3 * lot.get_total_net_weight()
+                color_3 += float(lot.analysis_mango.color_3) * lot.get_total_net_weight()
                 mechanical_damage += lot.get_total_net_weight() * (
                         float(lot.analysis_mango.mechanical_damage) + float(lot.analysis_mango.cracked))
                 physical_damage += lot.get_total_net_weight() * (
@@ -225,7 +225,8 @@ class IndicatorKPIMango(IndicatorKPI):
                         float(lot.analysis_mango.anthracnose) + float(lot.analysis_mango.queresa) + float(
                     lot.analysis_mango.insect_bite))
                 others += lot.get_total_net_weight() * (
-                        float(lot.analysis_mango.rot) + float(lot.analysis_mango.mature))
+                        float(lot.analysis_mango.rot) + float(lot.analysis_mango.mature) + float(
+                    lot.analysis_mango.advanced))
 
             information['wt_280'] = wt_280 / self.get_entry_real()
             information['wt_280_300'] = wt_280_300 / self.get_entry_real()
@@ -237,7 +238,7 @@ class IndicatorKPIMango(IndicatorKPI):
             information['physical_damage'] = physical_damage / self.get_entry_real()
             information['plagues'] = plagues / self.get_entry_real()
             information['others'] = others / self.get_entry_real()
-            information['total'] = mechanical_damage + physical_damage + plagues + others
+            information['total'] = (mechanical_damage + physical_damage + plagues + others) / self.get_entry_real() if self.get_entry_real()>0 else 0
             return information
         except Exception as e:
             return information
@@ -326,10 +327,10 @@ class IndicatorKPIAguaymanto(IndicatorKPI):
                 maduration_2 += float(lot.analysis_aguaymanto.maturation_2) * lot.get_total_net_weight()
                 maduration_3 += float(lot.analysis_aguaymanto.maturation_3) * lot.get_total_net_weight()
 
-                mushroom += float(lot.analysis_aguaymanto.maturation_3) * lot.get_total_net_weight()
-                green += float(lot.analysis_aguaymanto.maturation_3) * lot.get_total_net_weight()
-                cracked += float(lot.analysis_aguaymanto.maturation_3) * lot.get_total_net_weight()
-                crushed += float(lot.analysis_aguaymanto.maturation_3) * lot.get_total_net_weight()
+                mushroom += float(lot.analysis_aguaymanto.mushroom) * lot.get_total_net_weight()
+                green += float(lot.analysis_aguaymanto.green) * lot.get_total_net_weight()
+                cracked += float(lot.analysis_aguaymanto.cracked) * lot.get_total_net_weight()
+                crushed += float(lot.analysis_aguaymanto.crushed) * lot.get_total_net_weight()
 
             information['maduration_1'] = maduration_1 / self.get_entry_real()
             information['maduration_2'] = maduration_2 / self.get_entry_real()
@@ -380,3 +381,80 @@ class IndicatorKPIAguaymanto(IndicatorKPI):
             return q.stock
         except:
             return 0
+
+
+class IndicatorMaintenance(models.Model):
+    date = models.DateField(verbose_name="Fecha de ingreso", unique=True)
+    # GLP
+    consumption = models.DecimalField(max_digits=7, decimal_places=2, default=0, verbose_name='Consumo GLP', blank=True)
+    kg_terminated= models.DecimalField(max_digits=7, decimal_places=2, default=0, verbose_name='Kg terminados', blank=True)
+    objective_glp= models.DecimalField(max_digits=3, decimal_places=2, default=0.33, verbose_name='Objetivo GLP', blank=True)
+    # MACHINE
+    kg_executed = models.DecimalField(max_digits=7, decimal_places=2, default=0, verbose_name='Kg ejecutados', blank=True)
+    ability = models.IntegerField(default=1800, verbose_name='Capacidad', blank=True)
+    objective_machine = models.IntegerField(default=90, verbose_name='Objetivo picadora', blank=True)
+    # WORKS
+    works_scheduled = models.IntegerField(default=0, verbose_name='Trabajos programados', blank=True)
+    objective_works = models.IntegerField(default=98, verbose_name='Objetivo de trabajos', blank=True)
+    work_corrective = models.IntegerField(default=0, verbose_name='Trabajos correctivos', blank=True)
+    objective_corrective = models.IntegerField(default=20, verbose_name='Objetivo de trabajos correctivos', blank=True)
+    objective_preventive = models.IntegerField(default=80, verbose_name='Objetivo de trabajos preventivos', blank=True)
+    work_preventive = models.IntegerField(default=0, verbose_name='Trabajos preventivos', blank=True)
+    # PND  MACHINE
+    kg_defective= models.DecimalField(max_digits=7, decimal_places=2, default=0, verbose_name='Kg defectuosos', blank=True)
+    kg_released= models.DecimalField(max_digits=7, decimal_places=2, default=0, verbose_name='Kg lanzados', blank=True)
+    objective_pnd = models.IntegerField(default=94, verbose_name='Objetivo de PND', blank=True)
+
+    class Meta:
+        verbose_name = "Indicador de Mantenimiento"
+        verbose_name_plural = "Indicador de Mantenimiento"
+        ordering = ['-date']
+
+    def __str__(self):
+        return str(self.date)
+
+    def get_week(self):
+        return self.date.isocalendar()[1]
+
+    def get_consumption_real(self):
+        try:
+            return self.consumption/ self.kg_terminated
+        except:
+            return 0
+
+    def get_efficiency_machine(self):
+        try:
+            return self.kg_executed / self.ability * 100
+        except:
+            return 0
+
+    def get_work_executed(self):
+        try:
+            return self.works_scheduled + self.work_corrective
+        except:
+            return 0
+
+    def get_compliance_works(self):
+        try:
+            return self.get_work_executed() / self.works_scheduled * 100
+        except:
+            return 0
+
+    def get_compliance_corrective(self):
+        try:
+            return self.work_corrective / self.get_work_executed()* 100
+        except:
+            return 0
+
+    def get_compliance_preventive(self):
+        try:
+            return self.work_preventive / self.get_work_executed() * 100
+        except:
+            return 0
+
+    def get_efficiency_pnd(self):
+        try:
+            return (1-self.kg_defective / self.kg_released) * 100
+        except:
+            return 0
+

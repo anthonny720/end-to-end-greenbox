@@ -1,18 +1,33 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEdit} from "@fortawesome/free-solid-svg-icons";
+import {faEdit, faFileExcel} from "@fortawesome/free-solid-svg-icons";
 import Skeleton from "react-loading-skeleton";
 import {map, size} from "lodash";
 import React, {useRef} from "react";
 import Humanize from "humanize-plus";
 import {CustomTd} from "../../helpers/util";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {DownloadTableExcel} from "react-export-table-to-excel";
+import {setAlert} from "../../redux/actions/alert";
 
 const KPIMango = ({data,week,update}) => {
     const summary = useSelector(state => state.Planning.summary_mango)
-
+    const user = useSelector(state => state.Auth.user);
+    const dispatch = useDispatch();
     const columns = ['', 'Fecha', 'Semana', 'Lotes', 'PY DE INGRESO', 'REAL INGRESO', '% CUMPLIMIENTO', 'OBJETIVO', '<280G', '280-300G', '>300G', 'COLOR 1', 'COLOR 1.5-2.5 ', 'COLOR >=3', 'MECÁNICO', 'FISICO', 'PLAGAS Y ENFERMEDADES', 'OTROS', '% DEFECTOS', 'DESCARTE', 'KG DE MP BRUTO', '% CUMPLIMIENTO', 'OBJETIVO', 'PRECIO', 'OBJETIVO', 'KENT', 'EDWARD', 'HADEN', 'OTROS', 'STOCK'];
     const tableRef = useRef(null);
     return (<div className="overflow-x-auto relative scrollbar-hide">
+        <DownloadTableExcel
+            filename="KPI Mango"
+            sheet="KPI Mango"
+            currentTableRef={tableRef.current}
+        >
+            <button
+                className=" border-0 text-lg h-12 w-36 bg-green-400 hover:bg-green-500 text-white mt-2 px-3 rounded-md">
+                <span>Descargar</span>
+                <FontAwesomeIcon icon={faFileExcel} className={"ml-2"}/>
+            </button>
+
+        </DownloadTableExcel>
         <table ref={tableRef} className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -23,7 +38,7 @@ const KPIMango = ({data,week,update}) => {
             {data !== null && size(data) > 0 ? map(data, (row, index) => (<tr key={index} className="bg-white border-b">
                 <CustomTd><FontAwesomeIcon icon={faEdit}
                                            onClick={() => {
-                    update(row)
+                    user && user !== undefined && user !== null && user.get_role_name === 'Operaciones' ? update(row) : dispatch(setAlert('No tienes permisos para editar', 'warning'))
                 }}
                                            className={"text-blue-400 cursor-pointer"}/></CustomTd>
 
@@ -37,8 +52,8 @@ const KPIMango = ({data,week,update}) => {
                 </p>))}</CustomTd>
                 <CustomTd>{Humanize.formatNumber(row?.entry, 2)}</CustomTd>
                 <CustomTd>{Humanize.formatNumber(row?.entry_real, 2)}</CustomTd>
-                <CustomTd>{Humanize.formatNumber(row?.compliance_entry, 2)}</CustomTd>
-                <CustomTd>{Humanize.formatNumber(row?.entry_objective, 2)}</CustomTd>
+                <CustomTd>{Humanize.formatNumber(row?.compliance_entry, 0)}</CustomTd>
+                <CustomTd>{Humanize.formatNumber(row?.entry_objective, 0)}</CustomTd>
                 <CustomTd>{Humanize.formatNumber(row?.info?.wt_280, 2)}</CustomTd>
                 <CustomTd>{Humanize.formatNumber(row?.info?.wt_280_300, 2)}</CustomTd>
                 <CustomTd>{Humanize.formatNumber(row?.info?.wt_300, 2)}</CustomTd>
@@ -52,8 +67,8 @@ const KPIMango = ({data,week,update}) => {
                 <CustomTd>{Humanize.formatNumber(row?.info?.total, 2)}</CustomTd>
                 <CustomTd>{Humanize.formatNumber(row?.discard, 2)}</CustomTd>
                 <CustomTd>{Humanize.formatNumber(row?.kg_brute, 2)}</CustomTd>
-                <CustomTd>{Humanize.formatNumber(row?.compliance_production, 2)}</CustomTd>
-                <CustomTd>{Humanize.formatNumber(row?.objective, 2)}</CustomTd>
+                <CustomTd>{Humanize.formatNumber(row?.compliance_production, 0)}</CustomTd>
+                <CustomTd>{Humanize.formatNumber(row?.objective, 0)}</CustomTd>
                 <CustomTd>{Humanize.formatNumber(row?.price, 2)}</CustomTd>
                 <CustomTd>{Humanize.formatNumber(row?.price_objective, 2)}</CustomTd>
                 <CustomTd>{Humanize.formatNumber(row?.variety?.kent, 2)}</CustomTd>
@@ -76,9 +91,9 @@ const KPIMango = ({data,week,update}) => {
                 <CustomTd>{summary ? Humanize.formatNumber(summary?.total_entry, 2) : <Skeleton count={1}/>}</CustomTd>
                 <CustomTd>{summary ? Humanize.formatNumber(summary?.total_real_entry, 2) :
                     <Skeleton count={1}/>}</CustomTd>
-                <CustomTd>{summary ? Humanize.formatNumber(summary?.total_compliance_entry, 2) :
+                <CustomTd>{summary ? Humanize.formatNumber(summary?.total_compliance_entry, 0) :
                     <Skeleton count={1}/>}</CustomTd>
-                 <CustomTd>{summary ? Humanize.formatNumber(summary?.total_objective_entry, 2) :
+                 <CustomTd>{summary ? Humanize.formatNumber(summary?.total_objective_entry, 0) :
                     <Skeleton count={1}/>}</CustomTd>
                 <CustomTd>{summary ? Humanize.formatNumber(summary?.total_wt_280, 2) : <Skeleton count={1}/>}</CustomTd>
                 <CustomTd>{summary ? Humanize.formatNumber(summary?.total_wt_280_300, 2) :
@@ -104,9 +119,9 @@ const KPIMango = ({data,week,update}) => {
                     <Skeleton count={1}/>}</CustomTd>
                 <CustomTd>{summary ? Humanize.formatNumber(summary?.total_kg_brute, 2) :
                     <Skeleton count={1}/>}</CustomTd>
-                <CustomTd>{summary ? Humanize.formatNumber(summary?.total_compliance_production, 2) :
+                <CustomTd>{summary ? Humanize.formatNumber(summary?.total_compliance_production, 0) :
                     <Skeleton count={1}/>}</CustomTd>
-               <CustomTd>{summary ? Humanize.formatNumber(summary?.total_objective_production, 2) :
+               <CustomTd>{summary ? Humanize.formatNumber(summary?.total_objective_production, 0) :
                     <Skeleton count={1}/>}</CustomTd>
                 <CustomTd>{summary ? Humanize.formatNumber(summary?.total_price, 2) : <Skeleton count={1}/>}</CustomTd>
                 <CustomTd>{summary ? Humanize.formatNumber(summary?.total_objective_price, 2) : <Skeleton count={1}/>}</CustomTd>

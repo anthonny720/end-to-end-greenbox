@@ -3,16 +3,18 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPaperPlane} from "@fortawesome/free-solid-svg-icons";
 import * as Yup from "yup";
 import {useFormik} from "formik";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {map} from "lodash";
 import {update_kpi_aguaymanto} from "../../redux/actions/planning";
 
 
-const FormPlanningAguaymanto = ({data, close,params}) => {
+const FormPlanningAguaymanto = ({data, close, params}) => {
+
+
     const columns = [
         {name: 'entry', title: 'Proy. ingreso', type: 'text', maxLength: 7},
         {name: 'entry_objective', title: '% Objetivo ingreso', type: 'text', maxLength: 3},
-        {name: 'discard', title: 'Kg corona', type: 'text', maxLength: 7},
+        {name: 'discard', title: 'Kg descarte', type: 'text', maxLength: 7},
         {name: 'caliz', title: 'Kg caliz', type: 'text', maxLength: 7},
         {name: 'discard_objective', title: '% Objetivo descarte', type: 'text', maxLength: 2},
         {name: 'kg_brute', title: 'Kg mp bruta', type: 'text', maxLength: 7},
@@ -27,7 +29,7 @@ const FormPlanningAguaymanto = ({data, close,params}) => {
         validationSchema: Yup.object(newSchema()),
         validateOnChange: true,
         onSubmit: (form, onSubmitProps) => {
-            dispatch(update_kpi_aguaymanto(form, data.id,params))
+            dispatch(update_kpi_aguaymanto(form, data.id, params))
             close()
         }
     })

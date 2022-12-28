@@ -61,40 +61,37 @@ class ListCreateLotView(APIView):
                 CutTest.objects.create(lot=lot)
                 try:
                     i, created = IndicatorKPIPineapple.objects.get_or_create(date=lot.entryDate)
-                    i.price_objective = 2.66
+                    i.price_objective=1.66
                     i.lots.add(lot)
                     i.save()
-
-                except Exception as e:
-                    print(e)
+                except:
+                    pass
             elif lot.category.name == "Banano":
                 AnalysisBanano.objects.create(lot=lot)
             elif lot.category.name == "Mango":
                 AnalysisMango.objects.create(lot=lot)
                 try:
                     i, created = IndicatorKPIMango.objects.get_or_create(date=lot.entryDate)
-                    i.price_objective = 1.57
-                    i.lots.add(lots=lot)
+                    i.price_objective = 2.66
+                    i.lots.add(lot)
                     i.save()
                 except:
                     pass
             elif lot.category.name == "Aguaymanto":
                 AnalysisAguaymanto.objects.create(lot=lot)
                 try:
-                    i, created = IndicatorKPIAguaymanto.objects.create(date=lot.entryDate)
+                    i, created = IndicatorKPIAguaymanto.objects.get_or_create(date=lot.entryDate)
                     i.price_objective = 2.60
-                    i.lots.add(lots=lot)
+                    i.lots.add(lot)
                     i.save()
-
-
-                except:
+                except Exception as e:
                     pass
             else:
                 AnalysisBlueberry.objects.create(lot=lot)
             Report.objects.create(lot=lot)
             return Response({'message': 'Lote registrado correctamente'}, status=status.HTTP_201_CREATED)
         except Exception as e:
-            return Response({'error': 'Ocurrió un error al registrar el lote'},
+            return Response({'error': 'Ocurrió un error al registrar el lote', 'detail': str(e)},
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 

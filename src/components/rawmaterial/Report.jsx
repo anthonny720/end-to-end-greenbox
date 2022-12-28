@@ -1,6 +1,5 @@
 import React from 'react';
 import Humanize from 'humanize-plus';
-import {Helmet} from "react-helmet";
 
 export class ReportToPrint extends React.PureComponent {
     render() {
@@ -45,7 +44,7 @@ export class ReportToPrint extends React.PureComponent {
                     <div className={"flex flex-row gap-24"}>
                         <h3 className={"text-md   p-2 text-center"}>DE:</h3>
                         <div className={"flex flex-col"}>
-                            <h3 className={"text-md   p-2 text-center"}>ANTHONNY GÓMEZ SANTIVAÑEZ</h3>
+                            <h3 className={"text-md   p-2 text-center"}>Roger Williams Ortega Ingaruca</h3>
                             {/*<h3 className={"text-md font-semibold  text-center"}>Proveedor de materia prima</h3>*/}
                         </div>
                     </div>
@@ -93,11 +92,18 @@ export class ReportToPrint extends React.PureComponent {
                                 <td className="font-bold border border-black px-2 py-1">FECHA DEL PUNTO DE
                                     PARTIDA:
                                 </td>
-                                <td className="font-bold uppercase text-center border border-black px-2 py-1">{info?.starting_point_date}</td>
+                                <td className="font-bold uppercase text-center border border-black px-2 py-1">
+                                    {new Date(info?.starting_point_date).toLocaleDateString('es-PE', {
+                                        timeZone: 'UTC', day: 'numeric', month: 'long', year: 'numeric'
+                                    })}
+                                </td>
                             </tr>
                             <tr>
                                 <td className="font-bold border border-black px-2 py-1">FECHA DE DESCARGA:</td>
-                                <td className="font-bold uppercase text-center border border-black px-8 py-1">{info?.downloadDate}</td>
+                                <td className="font-bold uppercase text-center border border-black px-8 py-1">
+                                    {new Date(info?.downloadDate).toLocaleDateString('es-PE', {
+                                        timeZone: 'UTC', day: 'numeric', month: 'long', year: 'numeric'
+                                    })}</td>
                             </tr>
                             <tr>
                                 <td className="font-bold border border-black px-2 py-1">PROVEEDOR:</td>
