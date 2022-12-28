@@ -13,13 +13,10 @@ const Filter = ({ft}) => {
         validateOnChange: true,
         onSubmit: (form) => {
             ft({week: form.week, year: form.year})
-            {
-                form.year !== '' && form.week !== '' && dispatch(get_kpi_pineapple({week: form.week, year: form.year}))
-                dispatch(get_kpi_mango({week: form.week, year: form.year}))
-                dispatch(get_kpi_aguaymanto({week: form.week, year: form.year}))
-                dispatch(get_kpi_maintenance({week: form.week, year: form.year}))
-            }
-
+            dispatch(get_kpi_pineapple({week: form.week, year: form.year}))
+            dispatch(get_kpi_mango({week: form.week, year: form.year}))
+            dispatch(get_kpi_aguaymanto({week: form.week, year: form.year}))
+            dispatch(get_kpi_maintenance({week: form.week, year: form.year}))
         }
     })
     return (<form className="w-full  shadow p-2 rounded-lg bg-white" onChange={formik.handleSubmit}>

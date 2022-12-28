@@ -433,7 +433,7 @@ class IndicatorMaintenance(models.Model):
 
     def get_work_executed(self):
         try:
-            return self.works_scheduled + self.work_corrective
+            return self.work_preventive + self.work_corrective
         except:
             return 0
 
@@ -445,13 +445,13 @@ class IndicatorMaintenance(models.Model):
 
     def get_compliance_corrective(self):
         try:
-            return self.work_corrective / self.get_work_executed()* 100
+            return self.work_corrective / self.works_scheduled* 100
         except:
             return 0
 
     def get_compliance_preventive(self):
         try:
-            return self.work_preventive / self.get_work_executed() * 100
+            return self.work_preventive / self.works_scheduled * 100
         except:
             return 0
 
