@@ -18,8 +18,7 @@ const FormAnalysisMango = ({close, data, dispatch}) => {
         title: 'Color 2,5 %',
         type: 'text',
         maxLength: 4,
-    }, {name: 'color_3', title: 'Color 3 %', type: 'text', maxLength: 4,}, {
-    }, {name: 'color_3_5', title: 'Color 3.5 %', type: 'text', maxLength: 4,},
+    }, {name: 'color_3', title: 'Color 3 %', type: 'text', maxLength: 4,}, {name: 'color_3_5', title: 'Color 3.5 %', type: 'text', maxLength: 4,},
         {name: 'brix_7', title: 'Brix > 7 %', type: 'text', maxLength: 4,},
         {name: 'brix_7_8', title: 'Brix 7-8 %', type: 'text', maxLength: 4,},
         {name: 'brix_8_9', title: 'Brix 8-9 %', type: 'text', maxLength: 4,},
