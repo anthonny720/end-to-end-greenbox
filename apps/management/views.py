@@ -170,7 +170,7 @@ class ListPaymentsView(APIView):
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def post(self, request, format=None):
-        if not request.user.is_superuser:
+        if request.user.role != '6' and request.user.role != '2':
             return Response({'error': 'No tiene permisos para realizar esta acción'},
                             status=status.HTTP_401_UNAUTHORIZED)
         data = request.data
@@ -189,7 +189,7 @@ class ListPaymentsView(APIView):
 class DetailPaymentView(APIView):
 
     def patch(self, request, *args, **kwargs):
-        if not request.user.is_superuser:
+        if request.user.role != '6' and request.user.role != '2':
             return Response({'error': 'No tiene permisos para realizar esta acción'},
                             status=status.HTTP_401_UNAUTHORIZED)
         inf = get_object_or_404(Payments, id=kwargs['id'])
@@ -203,7 +203,7 @@ class DetailPaymentView(APIView):
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def delete(self, request, *args, **kwargs):
-        if not request.user.is_superuser:
+        if request.user.role != '2':
             return Response({'error': 'No tiene permisos para realizar esta acción'},
                             status=status.HTTP_401_UNAUTHORIZED)
         try:
