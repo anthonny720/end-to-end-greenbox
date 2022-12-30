@@ -119,7 +119,8 @@ class AnalysisAguaymanto(models.Model):
                                         verbose_name='Fitosanitario')
     watery = models.DecimalField(decimal_places=2, max_digits=4, default=0, blank=True, null=True,
                                  verbose_name='Consistencia aguada')
-
+    small = models.DecimalField(decimal_places=2, max_digits=4, default=0, blank=True, null=True, verbose_name='Pequeño < 17mm')
+    caliz = models.DecimalField(decimal_places=2, max_digits=4, default=0, blank=True, null=True, verbose_name='Caliz')
     history = HistoricalRecords()
 
     def __str__(self):
@@ -130,7 +131,7 @@ class AnalysisAguaymanto(models.Model):
 
     def get_defects(self):
         try:
-            return self.mushroom + self.green + self.cracked + self.crushed + self.phytosanitary + self.watery
+            return self.mushroom + self.green + self.cracked + self.crushed + self.phytosanitary + self.watery + self.small
         except:
             return 0
 
@@ -239,12 +240,16 @@ class AnalysisMango(models.Model):
                                     verbose_name=u"Color 2,5")
     color_3 = models.DecimalField(decimal_places=2, max_digits=4, default=0, blank=True, null=True,
                                   verbose_name=u"Color 3")
-    brix_7_9 = models.DecimalField(decimal_places=2, max_digits=4, default=0, blank=True, null=True,
-                                   verbose_name=u"Brix 7-9")
-    brix_10_12 = models.DecimalField(decimal_places=2, max_digits=4, default=0, blank=True, null=True,
-                                     verbose_name=u"Brix 10-12")
-    brix_13 = models.DecimalField(decimal_places=2, max_digits=4, default=0, blank=True, null=True,
-                                  verbose_name=u"Brix >13")
+    color_3_5 = models.DecimalField(decimal_places=2, max_digits=4, default=0, blank=True, null=True,
+                                    verbose_name=u"Color 3,5")
+    brix_7 = models.DecimalField(decimal_places=2, max_digits=4, default=0, blank=True, null=True,
+                                   verbose_name=u"Brix < 7")
+    brix_7_8 = models.DecimalField(decimal_places=2, max_digits=4, default=0, blank=True, null=True,
+                                     verbose_name=u"Brix 7-8")
+    brix_8_9 = models.DecimalField(decimal_places=2, max_digits=4, default=0, blank=True, null=True,
+                                  verbose_name=u"Brix 8-9")
+    brix_9 = models.DecimalField(decimal_places=2, max_digits=4, default=0, blank=True, null=True,
+                                   verbose_name=u"Brix > 9")
     weight_280 = models.DecimalField(decimal_places=2, max_digits=4, default=0, blank=True, null=True,
                                      verbose_name=u"Peso <280 ")
     weight_280_300 = models.DecimalField(decimal_places=2, max_digits=4, default=0, blank=True, null=True,

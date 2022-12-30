@@ -8,7 +8,7 @@ import {Link} from "react-router-dom";
 import Humanize from 'humanize-plus'
 
 const Table = ({data, update}) => {
-    const columns = [' ', 'Semana', 'Fecha de Ingreso', 'Lote MP', 'Peso neto', 'Jabas', 'Color 1 %', 'Color 1,5 %', 'Color 2 %', 'Color 2.5 %', 'Color 3 %', 'Brix 7-9 %', 'Brix 10-12 %', 'Brix >13 %', 'Peso <280 %', 'Peso 280-300 %', 'Peso >300 %', 'Daños mecánicos %', 'Rajados  %', 'Daños de sol %', 'Antracnosis %', 'Pudrición %', 'Sobre maduración %', 'Latex %', 'Queresa %', 'Insectos %', 'Fruta blanda %', 'Avanzado %', 'Total defectos %', 'Total fruta sin daño %',]
+    const columns = [' ', 'Semana', 'Fecha de Ingreso', 'Lote MP', 'Peso neto', 'Jabas', 'Color 1 %', 'Color 1,5 %', 'Color 2 %', 'Color 2.5 %', 'Color 3 %','Color 3.5 &','Brix < 7', 'Brix 7-8 %', 'Brix 8-9 %', 'Brix >9 %', 'Peso <280 %', 'Peso 280-300 %', 'Peso >300 %', 'Daños mecánicos %', 'Rajados  %', 'Daños de sol %', 'Antracnosis %', 'Pudrición %', 'Sobre maduración %', 'Latex %', 'Queresa %', 'Insectos %', 'Fruta blanda %', 'Avanzado %', 'Total defectos %', 'Total fruta sin daño %',]
     const tableRef = useRef(null);
     return (<div className="overflow-x-auto relative scrollbar-hide">
         <DownloadTableExcel
@@ -49,9 +49,11 @@ const Table = ({data, update}) => {
                 <td className="py-4 px-6 whitespace-nowrap text-center">{Humanize.formatNumber(row?.color_2, 2)}</td>
                 <td className="py-4 px-6 whitespace-nowrap text-center">{Humanize.formatNumber(row?.color_2_5, 2)}</td>
                 <td className="py-4 px-6 whitespace-nowrap text-center">{Humanize.formatNumber(row?.color_3, 2)}</td>
-                <td className="py-4 px-6 whitespace-nowrap text-center">{Humanize.formatNumber(row?.brix_7_9, 2)}</td>
-                <td className="py-4 px-6 whitespace-nowrap text-center">{Humanize.formatNumber(row?.brix_10_12, 2)}</td>
-                <td className="py-4 px-6 whitespace-nowrap text-center">{Humanize.formatNumber(row?.brix_13, 2)}</td>
+                <td className="py-4 px-6 whitespace-nowrap text-center">{Humanize.formatNumber(row?.color_3_5, 2)}</td>
+                <td className="py-4 px-6 whitespace-nowrap text-center">{Humanize.formatNumber(row?.brix_7, 2)}</td>
+                <td className="py-4 px-6 whitespace-nowrap text-center">{Humanize.formatNumber(row?.brix_7_8, 2)}</td>
+                <td className="py-4 px-6 whitespace-nowrap text-center">{Humanize.formatNumber(row?.brix_8_9, 2)}</td>
+                <td className="py-4 px-6 whitespace-nowrap text-center">{Humanize.formatNumber(row?.brix_9, 2)}</td>
                 <td className="py-4 px-6 whitespace-nowrap text-center">{Humanize.formatNumber(row?.weight_280, 2)}</td>
                 <td className="py-4 px-6 whitespace-nowrap text-center">{Humanize.formatNumber(row?.weight_280_300, 2)}</td>
                 <td className="py-4 px-6 whitespace-nowrap text-center">{Humanize.formatNumber(row?.weight_300, 2)}</td>

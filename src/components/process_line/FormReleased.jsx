@@ -22,9 +22,10 @@ const FormReleased = ({close, data, process, lot}) => {
     }, []);
 
 
-    const columns = [{name: 'release_date', title: 'Fecha de liberación', type: 'date', maxLength: 50,}, {
-        name: 'quantity', title: 'Cantidad', type: 'text', maxLength: 5,
-    }, {name: 'expiration_date', title: 'Fecha de vencimiento', type: 'date', maxLength: 50,},]
+    const columns = [{name: 'release_date', title: 'Fecha de liberación', type: 'date', maxLength: 50,},
+        {name: 'quantity', title: 'Cantidad', type: 'text', maxLength: 5,},
+        {name: 'kg', title: 'Kg por caja', type: 'text', maxLength: 5,},
+        {name: 'expiration_date', title: 'Fecha de vencimiento', type: 'date', maxLength: 50,},]
 
 
     /*Formik*/
@@ -87,7 +88,7 @@ const FormReleased = ({close, data, process, lot}) => {
                     className="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300       rounded transition       ease-in-out
                     m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     aria-label="Default select example">
-                <option value={''}>Seleccione un lote de cajas</option>
+                <option value={null}>Seleccione un lote de cajas</option>
                 {boxes !== null && map(boxes, b => (<option key={b.id} value={b.id}>{b.lot}</option>))}
             </select>
         </div>
@@ -102,7 +103,7 @@ const FormReleased = ({close, data, process, lot}) => {
                     className="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300       rounded transition       ease-in-out
                     m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     aria-label="Default select example">
-                <option value={''}>Seleccione un lote de bolsas</option>
+                <option value={null}>Seleccione un lote de bolsas</option>
                 {bags !== null && map(bags, b => (<option key={b.id} value={b.id}>{b.lot}</option>))}
             </select>
         </div>
@@ -131,10 +132,11 @@ const initialValues = (data) => {
         release_date: data?.release_date || "",
         process: data?.process_id || "",
         quantity: data?.quantity || 0,
+        kg: data?.kg || 0,
         client: data?.client_id || "",
         expiration_date: data?.expiration_date || "",
-        lot_bags: data?.lot_bags_id || "",
-        lot_boxes: data?.lot_boxes_id || "",
+        lot_bags: data?.lot_bags_id || null,
+        lot_boxes: data?.lot_boxes_id || null,
         observations: data?.observations || 1
     }
 }
@@ -143,10 +145,11 @@ const newSchema = () => {
         release_date: Yup.string().required(true),
         process: Yup.number().required(true),
         quantity: Yup.number().min(1).integer().required(true),
+        kg: Yup.number().min(0).required(true),
         client: Yup.number().required(true),
         expiration_date: Yup.string().required(true),
-        lot_bags: Yup.number().required(true),
-        lot_boxes: Yup.number().required(true),
+        lot_bags: Yup.number(),
+        lot_boxes: Yup.number(),
         observations: Yup.number()
     }
 }

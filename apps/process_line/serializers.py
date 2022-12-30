@@ -90,7 +90,7 @@ class LiberatedListSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProcessLineReleased
         fields = (
-            'id', 'week', 'month', 'year', 'packing_date', 'release_date', 'lot', 'quantity', 'client',
+            'id', 'week', 'month', 'year', 'packing_date', 'release_date', 'lot', 'quantity','kg', 'client',
             'expiration_date', 'lot_boxes',
             'lot_bags',
             'observations', 'lot_mp', 'process_id',

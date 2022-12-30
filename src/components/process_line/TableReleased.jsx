@@ -6,7 +6,7 @@ import {DownloadTableExcel} from 'react-export-table-to-excel';
 import React, {useRef} from "react";
 import Humanize from "humanize-plus";
 const Table = ({data}) => {
-    const columns = ['Semana', 'Fecha de envasado', 'Fecha de Liberación', 'Lote', 'Cantidad', 'Cliente', 'Cajas', 'Bolsas', 'Observaciones']
+    const columns = ['Semana', 'Fecha de envasado', 'Fecha de Liberación', 'Lote', 'Cantidad','Kg', 'Cliente', 'Cajas', 'Bolsas', 'Observaciones']
     const tableRef = useRef(null);
     return (<div className="overflow-x-auto relative scrollbar-hide">
         <DownloadTableExcel
@@ -42,6 +42,7 @@ const Table = ({data}) => {
                 })}</p>}</td>
                 <td className="py-4 px-6 whitespace-nowrap text-center">{row?.lot}</td>
                 <td className="py-4 px-6 whitespace-nowrap text-center">{Humanize.formatNumber(row?.quantity, 2)}</td>
+                <td className="py-4 px-6 whitespace-nowrap text-center">{Humanize.formatNumber(row?.kg, 2)}</td>
                 <td className="py-4 px-6 whitespace-nowrap text-center">{row?.client}</td>
                 <td className="py-4 px-6 whitespace-nowrap text-center">{row?.lot_boxes}</td>
                 <td className="py-4 px-6 whitespace-nowrap text-center">{row?.lot_bags}</td>

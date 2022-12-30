@@ -6,6 +6,7 @@ import {Navigate} from "react-router-dom";
 import {TailSpin} from "react-loader-spinner";
 import {Helmet} from "react-helmet";
 import {login} from "../../redux/actions/auth";
+import image from '../../assets/cerros-grabado-verde.png'
 
 
 export default function Login() {
@@ -36,8 +37,7 @@ export default function Login() {
                     <div
                         className="absolute top-0 w-full h-full "
                         style={{
-                            backgroundImage:
-                                `url("https://greenbox.pe/wp-content/themes/greenbox/img/cerros-grabado-verde.png")`,
+                            backgroundImage: `url(${image})`,
                             backgroundSize: "cover",
                             backgroundRepeat: "cover"
                         }}

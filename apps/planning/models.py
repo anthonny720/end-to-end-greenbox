@@ -137,7 +137,7 @@ class IndicatorKPIPineapple(IndicatorKPI):
 
     def get_compliance_production(self):
         try:
-            return float(self.discard) / float(self.kg_brute) * 100
+            return 100-(float(self.discard) / float(self.kg_brute) * 100)
         except:
             return 0
 
@@ -182,7 +182,7 @@ class IndicatorKPIMango(IndicatorKPI):
 
     def get_compliance_production(self):
         try:
-            return float(self.discard) / float(self.kg_brute) * 100
+            return 100-(float(self.discard) / float(self.kg_brute) * 100)
         except:
             return 0
 
@@ -217,7 +217,7 @@ class IndicatorKPIMango(IndicatorKPI):
                 color_1_5_2_5 += float(lot.get_total_net_weight()) * (
                         float(lot.analysis_mango.color_1_5) + float(lot.analysis_mango.color_2_5) + float(
                     lot.analysis_mango.color_2))
-                color_3 += float(lot.analysis_mango.color_3) * lot.get_total_net_weight()
+                color_3 += (float(lot.analysis_mango.color_3_5)+float(lot.analysis_mango.color_3)) * lot.get_total_net_weight()
                 mechanical_damage += lot.get_total_net_weight() * (
                         float(lot.analysis_mango.mechanical_damage) + float(lot.analysis_mango.cracked))
                 physical_damage += lot.get_total_net_weight() * (
@@ -349,7 +349,7 @@ class IndicatorKPIAguaymanto(IndicatorKPI):
 
     def get_compliance_production(self):
         try:
-            return float(self.caliz) / float(self.kg_brute) * 100
+            return 100-(float(self.caliz) / float(self.kg_brute) * 100) 
         except:
             return 0
 

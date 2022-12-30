@@ -8,23 +8,19 @@ import {map} from "lodash";
 import {update_analysis_aguaymanto} from "../../redux/actions/quality";
 
 const FormAnalysisAguaymanto = ({close, data}) => {
-    const columns = [{
-        name: 'maturation_1', title: 'Maduración 1 %', type: 'text', maxLength: 4,
-    }, {name: 'maturation_2', title: 'Maduración 2 %', type: 'text', maxLength: 4,}, {
+    const columns = [
+        {name: 'caliz', title: 'Caliz %', type: 'text', maxLength: 4,},
+        {name: 'maturation_1', title: 'Maduración 1 %', type: 'text', maxLength: 4,},
+        {name: 'maturation_2', title: 'Maduración 2 %', type: 'text', maxLength: 4,}, {
         name: 'maturation_3', title: 'Maduración 3 %', type: 'text', maxLength: 4,
     }, {name: 'mushroom', title: 'Hongos y fermentado', type: 'text', maxLength: 4,}, {
         name: 'green', title: 'Verde', type: 'text', maxLength: 4,
-    }, {name: 'crushed', title: 'Aplastado', type: 'text', maxLength: 4,}, {
-        name: 'cracked',
-        title: 'Rajado',
-        type: 'text',
-        maxLength: 4,
-    }, {name: 'phytosanitary', title: 'Fitosanitario', type: 'text', maxLength: 4,}, {
-        name: 'watery',
-        title: 'Consistencia aguada',
-        type: 'text',
-        maxLength: 4,
-    },]
+    }, {name: 'crushed', title: 'Aplastado', type: 'text', maxLength: 4,},
+        {name: 'cracked', title: 'Rajado', type: 'text', maxLength: 4,
+    }, {name: 'phytosanitary', title: 'Fitosanitario', type: 'text', maxLength: 4,},
+        {name: 'watery', title: 'Consistencia aguada', type: 'text', maxLength: 4,},
+        {name: 'small', title: 'Pequeño < 17mm', type: 'text', maxLength: 4,},
+    ]
     const dispatch = useDispatch();
     const formik = useFormik({
         initialValues: initialValues(data),
@@ -61,6 +57,7 @@ const FormAnalysisAguaymanto = ({close, data}) => {
 
 const initialValues = (data) => {
     return {
+        caliz: data?.caliz || 0,
         maturation_1: data?.maturation_1 || 0,
         maturation_2: data?.maturation_2 || 0,
         maturation_3: data?.maturation_3 || 0,
@@ -70,11 +67,13 @@ const initialValues = (data) => {
         cracked: data?.cracked || 0,
         phytosanitary: data?.phytosanitary || 0,
         watery: data?.watery || 0,
+        small: data?.small || 0,
     }
 
 }
 const newSchema = () => {
     return {
+        caliz: Yup.number().min(0).max(100).required(),
         maturation_1: Yup.number().min(0).max(100).required(),
         maturation_2: Yup.number().min(0).max(100).required(),
         maturation_3: Yup.number().min(0).max(100).required(),
@@ -84,6 +83,7 @@ const newSchema = () => {
         cracked: Yup.number().min(0).max(100).required(),
         phytosanitary: Yup.number().min(0).max(100).required(),
         watery: Yup.number().min(0).max(100).required(),
+        small: Yup.number().min(0).max(100).required(),
 
     }
 }

@@ -161,6 +161,7 @@ class ProcessLineReleased(models.Model):
     process = models.ForeignKey(ProcessLineTerminated, on_delete=models.PROTECT, related_name='process_line_released',
                                 verbose_name='Proceso Terminado')
     quantity = models.IntegerField(verbose_name='Cantidad liberada', blank=True, null=True, default=0)
+    kg = models.DecimalField(verbose_name='Kg por caja', blank=True, null=True, default=0, max_digits=7, decimal_places=2)
     client = models.ForeignKey(Client, on_delete=models.PROTECT, related_name='client_released', verbose_name='Cliente')
     expiration_date = models.DateField(verbose_name='Fecha de Vencimiento', blank=True, null=True)
     lot_bags = models.ForeignKey(PackingProduct, on_delete=models.PROTECT, related_name='lot_bags_released',
@@ -171,6 +172,7 @@ class ProcessLineReleased(models.Model):
         choices=(('1', 'Producto apto'), ('2', 'Producto en transición'), ('3', 'Producto no conforme'),),
         max_length=100, verbose_name='Observaciones', default='1', blank=True, null=True)
     history = HistoricalRecords()
+    updated = models.DateTimeField(auto_now=True, verbose_name='Fecha de Actualización')
 
     class Meta:
         verbose_name = 'Proceso de  Liberación'

@@ -8,7 +8,7 @@ import Humanize from 'humanize-plus';
 import {Link} from "react-router-dom";
 
 const Table = ({data, update}) => {
-    const columns = [' ', 'Semana', 'Fecha de Ingreso', 'Lote MP', 'Peso neto', 'Jabas', 'Maduración 1 %', 'Maduración 2 %', 'Maduración 3 %', 'Maduración Total %', 'Hongos y fermentado %', 'Verde %', 'Rajado %', 'Aplastado %', 'Fitosanitario %', 'Consistencia Aguada %', 'Defectos %']
+    const columns = [' ', 'Semana', 'Fecha de Ingreso', 'Lote MP', 'Peso neto', 'Jabas','Caliz', 'Maduración 1 %', 'Maduración 2 %', 'Maduración 3 %', 'Maduración Total %', 'Hongos y fermentado %', 'Verde %', 'Rajado %', 'Aplastado %', 'Fitosanitario %', 'Consistencia Aguada %','Pequeño < 17mm', 'Defectos %']
     const tableRef = useRef(null);
     return (<div className="overflow-x-auto relative scrollbar-hide">
         <DownloadTableExcel
@@ -43,6 +43,7 @@ const Table = ({data, update}) => {
                 </Link>}</td>
                 <td className="py-4 px-6 whitespace-nowrap text-center">{Humanize.formatNumber(row?.net_weight, 2)}</td>
                 <td className="py-4 px-6 whitespace-nowrap text-center">{row?.boxes}</td>
+                <td className="py-4 px-6 whitespace-nowrap text-center">{Humanize.formatNumber(row?.caliz, 2)}</td>
                 <td className="py-4 px-6 whitespace-nowrap text-center">{Humanize.formatNumber(row?.maturation_1, 2)}</td>
                 <td className="py-4 px-6 whitespace-nowrap text-center">{Humanize.formatNumber(row?.maturation_2, 2)}</td>
                 <td className="py-4 px-6 whitespace-nowrap text-center">{Humanize.formatNumber(row?.maturation_3, 2)}</td>
@@ -53,6 +54,7 @@ const Table = ({data, update}) => {
                 <td className="py-4 px-6 whitespace-nowrap text-center">{Humanize.formatNumber(row?.crushed, 2)}</td>
                 <td className="py-4 px-6 whitespace-nowrap text-center">{Humanize.formatNumber(row?.phytosanitary, 2)}</td>
                 <td className="py-4 px-6 whitespace-nowrap text-center">{Humanize.formatNumber(row?.watery, 2)}</td>
+                <td className="py-4 px-6 whitespace-nowrap text-center">{Humanize.formatNumber(row?.small, 2)}</td>
                 <td className="py-4 px-6 whitespace-nowrap text-center">{Humanize.formatNumber(row?.defects, 2)}</td>
 
 

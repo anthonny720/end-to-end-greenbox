@@ -1,15 +1,16 @@
 {
   "files": {
     "main.css": "/static/css/main.9bff350a.css",
-    "main.js": "/static/js/main.a8993260.js",
+    "main.js": "/static/js/main.b1a357d6.js",
     "static/media/logistics.png": "/static/media/logistics.d13b1a4dfeafc500ddf4.png",
+    "static/media/cerros-grabado-verde.png": "/static/media/cerros-grabado-verde.a252848140ad9b773d1b.png",
     "static/media/packers-and-movers.gif": "/static/media/packers-and-movers.b08c8ee753e474ccbd20.gif",
     "index.html": "/index.html",
     "main.9bff350a.css.map": "/static/css/main.9bff350a.css.map",
-    "main.a8993260.js.map": "/static/js/main.a8993260.js.map"
+    "main.b1a357d6.js.map": "/static/js/main.b1a357d6.js.map"
   },
   "entrypoints": [
     "static/css/main.9bff350a.css",
-    "static/js/main.a8993260.js"
+    "static/js/main.b1a357d6.js"
   ]
 }
