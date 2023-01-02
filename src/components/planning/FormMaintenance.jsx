@@ -102,7 +102,7 @@ const newSchema = () => {
         consumption: Yup.number().min(0),
         kg_terminated: Yup.number(),
         kg_executed: Yup.number().min(0),
-        ability: Yup.number().min(1008).max(1800).integer(),
+        ability: Yup.number().min(0).max(1800).integer(),
         kg_defective: Yup.number().min(0),
         kg_released: Yup.number().min(0).integer(),
         works_scheduled: Yup.number().min(0).integer(),
