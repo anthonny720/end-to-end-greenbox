@@ -121,7 +121,7 @@ class Lot(models.Model):
     def get_weight_pallets(self):
         t = 0
         try:
-            for count in self.data.all():
+            for count in self.data.all().exclude(type="S"):
                 t += count.get_weight_pallet()
             return t
         except:
@@ -199,7 +199,7 @@ class Lot(models.Model):
     def get_c(self):
         c = {"c6": 0, "c8": 0, "c10": 0, "c12": 0, "c14": 0}
         try:
-            for count in self.data.all():
+            for count in self.data.all().exclude(type="S"):
                 c["c6"] += count.c6
                 c["c8"] += count.c8
                 c["c10"] += count.c10
@@ -212,7 +212,7 @@ class Lot(models.Model):
     def get_weight_pallets(self):
         t = 0
         try:
-            for count in self.data.all():
+            for count in self.data.all().exclude(type="S"):
                 t += count.get_weight_pallet()
             return t
         except:
@@ -221,7 +221,7 @@ class Lot(models.Model):
     def get_weight_boxes(self):
         t = 0
         try:
-            for count in self.data.all():
+            for count in self.data.all().exclude(type="S"):
                 t += count.get_weight_boxes()
             return t
         except:
@@ -229,7 +229,7 @@ class Lot(models.Model):
 
     def get_pallet(self):
         try:
-            e = self.data.all()
+            e = self.data.all().exclude(type="S")
             p = {"Negro": e.filter(pallet__name="Negro").count(), "Verde": e.filter(pallet__name="Verde").count(),
                  "Azul": e.filter(pallet__name="Azul").count(), "Celeste": e.filter(pallet__name="Celeste").count(),
                  "Rojo": e.filter(pallet__name="Rojo").count(), "Madera": e.filter(pallet__name="Madera").count()}
@@ -240,7 +240,7 @@ class Lot(models.Model):
     def get_box(self):
         b = {"gb": 0, "co": 0, "t0": 0, "t1": 0, "t2": 0, "gn": 0, "pa": 0, "ma": 0}
         try:
-            for count in self.data.all():
+            for count in self.data.all().exclude(type="S"):
                 b["gb"] += count.gb
                 b["co"] += count.co
                 b["t0"] += count.t0
@@ -268,7 +268,7 @@ class Lot(models.Model):
     def get_quantity_boxes(self):
         t = 0
         try:
-            for count in self.data.all():
+            for count in self.data.all().exclude(type="S"):
                 t += count.get_quantity_boxes()
             return t
         except:
@@ -277,7 +277,7 @@ class Lot(models.Model):
     def get_total_final_weight(self):
         t = 0
         try:
-            for count in self.data.all():
+            for count in self.data.all().exclude(type="S"):
                 t += count.final_weight
             return t
         except:
@@ -286,7 +286,7 @@ class Lot(models.Model):
     def get_total_tare(self):
         t = 0
         try:
-            for count in self.data.all():
+            for count in self.data.all().exclude(type="S"):
                 t += count.tare
             return t
         except:
@@ -295,7 +295,7 @@ class Lot(models.Model):
     def get_total_net_weight(self):
         nw = 0
         try:
-            for count in self.data.all():
+            for count in self.data.all().exclude(type="S"):
                 nw += count.get_net_weight()
             return nw + float(self.quality)
         except:
@@ -304,7 +304,7 @@ class Lot(models.Model):
     def get_total_net_final_weight(self):
         nfw = 0
         try:
-            for count in self.data.all():
+            for count in self.data.all().exclude(type="M"):
                 nfw += count.get_net_final_weight()
             return nfw
         except:
@@ -319,7 +319,7 @@ class Lot(models.Model):
     def get_total_indicted(self):
         ti = 0
         try:
-            for t in self.data.all():
+            for t in self.data.all().exclude(type="M"):
                 if t.indicted:
                     ti += t.get_net_final_weight()
             return ti
@@ -329,8 +329,8 @@ class Lot(models.Model):
     def get_stock(self):
         try:
             return self.get_total_net_weight() - self.get_total_indicted() - self.get_decrease() - float(self.quality)
-        except Exception as e:
-            return str(e)
+        except:
+            return 0
 
     def get_total_brute_weight(self):
 
@@ -365,6 +365,8 @@ class ILot(models.Model):
     location = models.ForeignKey(to='management.Location', on_delete=models.PROTECT, verbose_name="Ubicacion",
                                  related_name="lot", blank=True, null=True)
     history = HistoricalRecords()
+    type = models.CharField(max_length=1, choices=(('C', 'COMPLETE'), ('M', 'MODIFIED'), ('S', 'SPLIT')), default="C",
+                            verbose_name="Tipo de pallet")
 
     class Meta:
         verbose_name = 'Informacion de Lotes'
@@ -434,6 +436,7 @@ class ILot(models.Model):
 def my_callback(sender, instance, *args, **kwargs):
     if instance.final_weight < 1:
         instance.final_weight = instance.weight
+
     if instance.tare == 0:
         instance.tare = instance.get_weight_pallet() + instance.get_weight_boxes()
     else:

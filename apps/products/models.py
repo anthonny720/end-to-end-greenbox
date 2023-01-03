@@ -57,7 +57,7 @@ class Fruits(models.Model):
                 i += c.get_total_net_weight()
             self.input = i
             for c in self.fruit_entry.all():
-                for d in c.data.filter(dateIndicted=current_date):
+                for d in c.data.filter(dateIndicted=current_date).exclude(type='M'):
                     o += d.get_net_final_weight()
             self.output = o
             self.save()

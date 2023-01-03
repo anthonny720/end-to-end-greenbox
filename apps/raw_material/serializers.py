@@ -76,7 +76,7 @@ class ILotSerializer(serializers.ModelSerializer):
         fields = (
             'number', 'indicted_type', 'dateIndicted', 'location_name', 'weight', 'net_weight', 'tare', 'final_weight',
             'net_final_weight', 'gb', 'pa', 'co', 't0', 't1', 't2', 'gn', 'ma', 'c6', 'c8', 'c10', 'c12', 'c14',
-            'pallet_name', 'boxes', 'pallet', 'id', 'indicted', 'location',)
+            'pallet_name', 'boxes', 'pallet', 'id', 'indicted', 'location','type')
 
 
 class ILotCRUDSerializer(serializers.ModelSerializer):

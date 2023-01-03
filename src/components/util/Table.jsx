@@ -45,6 +45,10 @@ const Table = ({data,columns, remove, edit, humanize, omit_data}) => {
                                              remove(row.id)
                                          }}
                         />
+                        {row?.type &&
+                        <span className={`text-white font-extralight text-xs ${row?.type ==="C"?"bg-green-400":row?.type==="M"?"bg-orange-400":"bg-cyan-400"} p-1 rounded-full ml-2`}>{row?.type==="C" ? "Completo":row?.type ==="S"?"Partido":"Modificado"}</span>
+                        }
+
                     </th>
                     {map(omit(row, omit_data), (value, index) => (<td key={index}
                                                                       className="py-4 px-6 whitespace-nowrap text-center">{humanize ? typeof (value) === 'number' ? Humanize.formatNumber(value, 1) : value : value

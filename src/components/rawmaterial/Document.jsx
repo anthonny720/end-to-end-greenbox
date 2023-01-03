@@ -1,5 +1,5 @@
 import React from 'react';
-import {map} from "lodash";
+import {filter, map} from "lodash";
 import Humanize from 'humanize-plus';
 
 export class ComponentToPrint extends React.PureComponent {
@@ -38,7 +38,7 @@ export class ComponentToPrint extends React.PureComponent {
                 <div className={"mt-12"}>
                     <h3 className={"text-xs mt-4 font-light"}>FECHA DE DESCARGA:
                         {new Date(info?.downloadDate).toLocaleDateString('es-PE', {
-                            timeZone: 'UTC',day: 'numeric', month: 'long', year: 'numeric'
+                            timeZone: 'UTC', day: 'numeric', month: 'long', year: 'numeric'
                         })}
                     </h3>
                     <h3 className={"text-xs font-light"}>LOTE: {info?.lot}</h3>
@@ -62,8 +62,10 @@ export class ComponentToPrint extends React.PureComponent {
                     </tr>
                     </tbody>
                     <tbody>
-                    {map(data, (l, index) => (<tr key={index}
-                                                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    {map(filter(data, function (o) {
+                        return o.type !== 'S';
+                    }), (l, index) => (<tr key={index}
+                                           className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td
                             className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap text-center">{l.number}</td>
                         <td
@@ -114,7 +116,7 @@ export class ComponentToPrint extends React.PureComponent {
                         <div className="flex items-center">
                             <div className="h-1 w-1 rounded-full bg-green-500 mr-1"/>
                             <span
-                                className="text-xs text-black font-normal">Tara: {Humanize.formatNumber(info.tare, 2)}</span>
+                                className="text-xs text-black font-normal">Tara: {Humanize.formatNumber(info.total_tare, 2)}</span>
                         </div>
                     </div>
                     <div

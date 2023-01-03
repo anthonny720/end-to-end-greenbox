@@ -1,7 +1,6 @@
-from datetime import datetime
-
 from django.db.models import Sum
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -13,22 +12,25 @@ from apps.planning.serializers import IndicatorPineappleSerializer, IndicatorMan
 # Create your views here.
 
 class ListPineappleView(APIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
     def get(self, request):
         queryset = IndicatorKPIPineapple.objects.all().order_by('-date')
         week = request.query_params.get('week', None)
         year = request.query_params.get('year', None)
 
         if week:
-            queryset = queryset.filter(date__week=week)
+            queryset = queryset.filter(date__week=week)[:7]
         if year:
             queryset = queryset.filter(date__year=year)
-        else:
-            queryset = queryset.filter(date__year=datetime.now().year)
 
         if queryset.exists():
             serializer = IndicatorPineappleSerializer(queryset, many=True)
             count = queryset.count()
-            total = queryset.filter(price_objective__gte=0.1).count()
+            total = 0
+            for data in queryset:
+                if data.price_objective > 0:
+                    total += 1
             total_entry = 0
             total_real_entry = 0
             total_c6 = 0
@@ -103,19 +105,22 @@ class ListPineappleView(APIView):
 
 
 class ListMangoView(APIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
     def get(self, request):
         queryset = IndicatorKPIMango.objects.all().order_by('-date')
         week = request.query_params.get('week', None)
         year = request.query_params.get('year', None)
         if week:
-            queryset = queryset.filter(date__week=week)
+            queryset = queryset.filter(date__week=week)[:7]
         if year:
             queryset = queryset.filter(date__year=year)
-        else:
-            queryset = queryset.filter(date__year=datetime.now().year)
         if queryset.exists():
             serializer = IndicatorMangoSerializer(queryset, many=True)
-            total = queryset.filter(price_objective__gt=0.1).count()
+            total = 0
+            for data in queryset:
+                if data.price_objective > 0:
+                    total += 1
             count = queryset.count()
             total_entry = 0
             total_real_entry = 0
@@ -213,19 +218,24 @@ class ListMangoView(APIView):
 
 
 class ListAguaymantoView(APIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
     def get(self, request):
         queryset = IndicatorKPIAguaymanto.objects.all().order_by('-date')
         week = request.query_params.get('week', None)
         year = request.query_params.get('year', None)
         if week:
-            queryset = queryset.filter(date__week=week)
+            queryset = queryset.filter(date__week=week)[:7]
+
         if year:
             queryset = queryset.filter(date__year=year)
-        else:
-            queryset = queryset.filter(date__year=datetime.now().year)
+
         if queryset.exists():
             serializer = IndicatorAguaymantoSerializer(queryset, many=True)
-            total = queryset.filter(price_objective__gt=0.1).count()
+            total = 0
+            for data in queryset:
+                if data.price_objective > 0:
+                    total += 1
             count = queryset.count()
             total_entry = 0
             total_real_entry = 0
@@ -350,6 +360,8 @@ class UpdateMangoView(APIView):
 
 
 class ListMaintenanceView(APIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
     def get(self, request):
         queryset = IndicatorMaintenance.objects.all().order_by('-date')
         week = request.query_params.get('week', None)
@@ -360,6 +372,7 @@ class ListMaintenanceView(APIView):
         if year:
             queryset = queryset.filter(date__year=year)
         if queryset.exists():
+            count_2 = queryset.count()
             count = 0
             for q in queryset:
                 if q.kg_executed > 0:
@@ -388,26 +401,26 @@ class ListMaintenanceView(APIView):
                 'total_consumption': total_consumption,
                 'total_kg_terminated': total_kg_terminated,
                 'total_consumption_real': total_consumption / total_kg_terminated if total_kg_terminated != 0 else 0,
-                'total_objective_glp': total_objective_glp,
+                'total_objective_glp': total_objective_glp / count_2 if count_2 != 0 else 0,
                 'total_kg_executed': total_kg_executed / count if count != 0 else 0,
                 'total_ability': total_ability / count if count != 0 else 0,
                 'total_efficiency_machine': total_kg_executed / total_ability * 100 if total_ability != 0 else 0,
-                'total_objective_machine': total_objective_machine,
+                'total_objective_machine': total_objective_machine / count_2 if count_2 != 0 else 0,
                 'total_works_executed': total_works_executed,
                 'total_works_scheduled': total_works_scheduled,
                 'total_compliance_works': total_works_executed / total_works_scheduled * 100 if total_works_scheduled != 0 else 0,
-                'total_objective_works': total_objective_works,
+                'total_objective_works': total_objective_works / count_2 if count_2 != 0 else 0,
                 'total_work_corrective': total_work_corrective,
                 'total_compliance_corrective': total_work_corrective / total_works_executed * 100 if total_works_executed != 0 else 0,
-                'total_objective_corrective': total_objective_corrective,
-                'total_objective_preventive': total_objective_preventive,
+                'total_objective_corrective': total_objective_corrective / count_2 if count_2 != 0 else 0,
+                'total_objective_preventive': total_objective_preventive / count_2 if count_2 != 0 else 0,
                 'total_compliance_preventive': total_work_preventive / total_works_executed * 100 if total_works_executed != 0 else 0,
-                'total_work_preventive': total_work_preventive,
+                'total_work_preventive': total_work_preventive / count_2 if count_2 != 0 else 0,
                 'total_kg_defective': total_kg_defective,
                 'total_kg_released': total_kg_released,
                 'total_compliance_pnd': (
-                                                1 - total_kg_defective / total_kg_released) * 100 if total_kg_released != 0 else 0,
-                'total_objective_pnd': total_objective_pnd,
+                                                    1 - total_kg_defective / total_kg_released) * 100 if total_kg_released != 0 else 0,
+                'total_objective_pnd': total_objective_pnd / count_2 if count_2 != 0 else 0,
             }
             return Response({'result': serializer.data, 'summary': summary}, status=status.HTTP_200_OK)
         else:

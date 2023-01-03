@@ -82,8 +82,20 @@ const FormData = ({data, close, lot, entry, pallets, locations}) => {
                         <option key={pallet.id} value={pallet.id}>{pallet.name}</option>))}
                 </select>
             </div>
-            <div >
-                <p className={`${data?'mt-4':'mt-0'} mb-2 ${formik.errors.location ? "text-red-500" : "text-base font-medium leading-none text-gray-800"}`}>Ubicación:</p>
+            <div>
+                <p className={`${data ? 'mt-4' : 'mt-0'} mb-2 ${formik.errors.type ? "text-red-500" : "text-base font-medium leading-none text-gray-800"}`}>Tipo de pallet:</p>
+                <select value={formik.values.type}
+                        onChange={(value) => formik.setFieldValue('type', value.target.value)}
+                        className="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300       rounded transition       ease-in-out
+                    m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                        aria-label="Default select example">
+                    <option value={'C'}>Completo</option>
+                    <option value={'M'}>Modificado</option>
+                    <option value={'S'}>Partido</option>
+                </select>
+            </div>
+            <div>
+                <p className={`${data ? 'mt-4' : 'mt-0'} mb-2 ${formik.errors.location ? "text-red-500" : "text-base font-medium leading-none text-gray-800"}`}>Ubicación:</p>
                 <select value={formik.values.location}
                         onChange={(value) => formik.setFieldValue('location', value.target.value)}
                         className="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300       rounded transition       ease-in-out
@@ -94,6 +106,7 @@ const FormData = ({data, close, lot, entry, pallets, locations}) => {
                         <option key={loc.id} value={loc.id}>{loc.name}</option>))}
                 </select>
             </div>
+
             <div className={"flex flex-col "}>
                 <p className={`mb-2 ${formik.errors.indicted ? "text-red-500" : "text-base  font-medium leading-none text-gray-800"}`}>Procesado:</p>
                 <Switch
@@ -142,6 +155,7 @@ const initialValues = (data, lot) => {
         c14: data?.c14 || 0,
         tare: data?.tare || 0,
         indicted: data?.indicted || false,
+        type: data?.type || 'C',
         pallet: data?.pallet || "",
         lot: lot,
         location: data?.location || "",
@@ -167,6 +181,7 @@ const newSchema = () => {
         c12: Yup.number().min(0).max(42).integer("Ingrese un número entre 0 - 42").required(true),
         c14: Yup.number().min(0).max(42).integer("Ingrese un número entre 0 - 42").required(true),
         indicted: Yup.boolean().required(true),
+        type: Yup.string().required(true),
         pallet: Yup.number().required(true),
         location: Yup.number().required(true),
     }

@@ -115,6 +115,8 @@ class AnalysisAguaymanto(models.Model):
                                   verbose_name=u"Rajado")
     crushed = models.DecimalField(decimal_places=2, max_digits=4, default=0.0, blank=True, null=True,
                                   verbose_name=u"Aplastado")
+    small = models.DecimalField(decimal_places=2, max_digits=4, default=0.0, blank=True, null=True,verbose_name=u'Pequeño<17mm')
+    caliz = models.DecimalField(decimal_places=2, max_digits=4, default=0.0, blank=True, null=True,verbose_name=u'Caliz')
     phytosanitary = models.DecimalField(decimal_places=2, max_digits=4, default=0.0, blank=True, null=True,
                                         verbose_name='Fitosanitario')
     watery = models.DecimalField(decimal_places=2, max_digits=4, default=0.0, blank=True, null=True,

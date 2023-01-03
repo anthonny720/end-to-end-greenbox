@@ -33,6 +33,6 @@ class ILotAdmin(ImportExportModelAdmin,SimpleHistoryAdmin):
     list_per_page = 20
     search_fields = ('lot__lot', )
     list_filter = ('lot__category', 'indicted',)
-    list_editable = ('indicted', 'dateIndicted',)
+    list_editable = ('indicted','type', 'dateIndicted',)
     date_hierarchy = 'dateIndicted'
-    list_display = ('lot', 'number', 'weight', 'final_weight', 'dateIndicted', 'indicted',)
+    list_display = ('lot','type', 'number', 'weight', 'final_weight', 'dateIndicted', 'indicted',)

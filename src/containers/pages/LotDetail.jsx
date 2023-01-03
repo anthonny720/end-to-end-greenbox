@@ -178,7 +178,7 @@ const DetailLot = () => {
                 />
                 <Filter data={data ? data : []} lot={info ? info : []} ft={setOutput}/>
 
-                <Table omit_data={['pallet', 'id', 'indicted', 'location']} data={data} columns={columns}
+                <Table omit_data={['pallet', 'id', 'indicted', 'location','type']} data={data} columns={columns}
                        edit={handleOpenModalUpdateInfo} remove={handleDeleteInfo}/>
                 <Information data={info ? info : []}/>
                 <Summary info={info ? info : []}/>
@@ -187,7 +187,8 @@ const DetailLot = () => {
                 <ListDetail handleTc={handleSubmitTC} handleInvoice={handleSubmitInvoice} handleDelete={handleDeleteLot}
                             handleViewer={handleOpenModalViewer}
                             lot={info}/>
-                {info ? <BarChart title={"CALIBRES"} scores={map(info.calibers, (l, index) => l)}
+
+                {info && info?.category_name ==="Piña" ? <BarChart title={"CALIBRES"} scores={map(info.calibers, (l, index) => l)}
                                   labels={["c6", "c8", "c10", "c12", "c14"]}/> : <Skeleton count={10}/>}
                 {info ? <BarChart title={"JABAS"} scores={map(info.boxes, (l, index) => l)}
                                   labels={["GB", "CO", "T0", "T1", "T2", "Gn", "PAE", "MA"]}/> : <Skeleton count={10}/>}
