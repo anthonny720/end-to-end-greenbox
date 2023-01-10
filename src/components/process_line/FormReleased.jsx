@@ -52,7 +52,8 @@ const FormReleased = ({close, data, process, lot}) => {
                     m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     aria-label="Default select example">
                 <option value={''}>Seleccione una fecha del proceso previo</option>
-                {map(process, p => (<option key={p.id} value={p.id}>{p.packing_date}</option>))}
+                {map(process, p => (<option key={p.id} value={p.id}>{new Date(p?.packing_date).toLocaleDateString('es-PE', {
+                    timeZone: 'UTC'})} &nbsp;&nbsp;&nbsp;  {p.lot}</option>))}
             </select>
 
         </div>

@@ -2,6 +2,16 @@ import {
     GET_PROVIDERS_CATEGORY_FAIL,
     GET_PROVIDERS_CATEGORY_SUCCESS,
     GET_REPORT_FAIL,
+    GET_REPORT_PT_BANANA,
+    GET_REPORT_PT_BANANA_FAIL,
+    GET_REPORT_PT_BLUEBERRY,
+    GET_REPORT_PT_BLUEBERRY_FAIL,
+    GET_REPORT_PT_GOLDENBERRY,
+    GET_REPORT_PT_GOLDENBERRY_FAIL,
+    GET_REPORT_PT_MANGO,
+    GET_REPORT_PT_MANGO_FAIL,
+    GET_REPORT_PT_PINEAPPLE,
+    GET_REPORT_PT_PINEAPPLE_FAIL,
     GET_REPORT_SUCCESS,
     GET_SUMMARY_CATEGORY_FAIL,
     GET_SUMMARY_CATEGORY_SUCCESS,
@@ -149,5 +159,151 @@ export const update_packing = (form, id, category) => async dispatch => {
         });
         dispatch(setAlert(err.response.data['error'], 'error'));
 
+    }
+}
+
+export const get_report_pt_pineapple = (params) => async dispatch => {
+    const config = {
+        headers: {
+            'Authorization': `JWT ${localStorage.getItem('access')}`,
+            'Accept': 'application/json'
+        },
+        params: {
+            ...params
+        }
+
+    };
+    try {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/report/pt/pineapple`, config);
+        if (res.status === 200) {
+            dispatch({
+                type: GET_REPORT_PT_PINEAPPLE,
+                payload: res.data
+            });
+        } else {
+            dispatch({
+                type: GET_REPORT_PT_PINEAPPLE_FAIL
+            });
+        }
+    } catch (err) {
+        dispatch({
+            type: GET_REPORT_PT_PINEAPPLE_FAIL
+        });
+    }
+}
+export const get_report_pt_mango = (params) => async dispatch => {
+    const config = {
+        headers: {
+            'Authorization': `JWT ${localStorage.getItem('access')}`,
+            'Accept': 'application/json'
+        },
+        params: {
+            ...params
+        }
+
+    };
+    try {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/report/pt/mango`, config);
+        if (res.status === 200) {
+            dispatch({
+                type: GET_REPORT_PT_MANGO,
+                payload: res.data
+            });
+        } else {
+            dispatch({
+                type: GET_REPORT_PT_MANGO_FAIL
+            });
+        }
+    } catch (err) {
+        dispatch({
+            type: GET_REPORT_PT_MANGO_FAIL
+        });
+    }
+}
+export const get_report_pt_banano = (params) => async dispatch => {
+    const config = {
+        headers: {
+            'Authorization': `JWT ${localStorage.getItem('access')}`,
+            'Accept': 'application/json'
+        },
+        params: {
+            ...params
+        }
+
+    };
+    try {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/report/pt/banano`, config);
+        if (res.status === 200) {
+            dispatch({
+                type: GET_REPORT_PT_BANANA,
+                payload: res.data
+            });
+        } else {
+            dispatch({
+                type: GET_REPORT_PT_BANANA_FAIL
+            });
+        }
+    } catch (err) {
+        dispatch({
+            type: GET_REPORT_PT_BANANA_FAIL
+        });
+    }
+}
+export const get_report_pt_goldenberry = (params) => async dispatch => {
+    const config = {
+        headers: {
+            'Authorization': `JWT ${localStorage.getItem('access')}`,
+            'Accept': 'application/json'
+        },
+        params: {
+            ...params
+        }
+
+    };
+    try {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/report/pt/goldenberry`, config);
+        if (res.status === 200) {
+            dispatch({
+                type: GET_REPORT_PT_GOLDENBERRY,
+                payload: res.data
+            });
+        } else {
+            dispatch({
+                type: GET_REPORT_PT_GOLDENBERRY_FAIL
+            });
+        }
+    } catch (err) {
+        dispatch({
+            type: GET_REPORT_PT_GOLDENBERRY_FAIL
+        });
+    }
+}
+export const get_report_pt_blueberry = (params) => async dispatch => {
+    const config = {
+        headers: {
+            'Authorization': `JWT ${localStorage.getItem('access')}`,
+            'Accept': 'application/json'
+        },
+        params: {
+            ...params
+        }
+
+    };
+    try {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/report/pt/blueberry`, config);
+        if (res.status === 200) {
+            dispatch({
+                type: GET_REPORT_PT_BLUEBERRY,
+                payload: res.data
+            });
+        } else {
+            dispatch({
+                type: GET_REPORT_PT_BLUEBERRY_FAIL
+            });
+        }
+    } catch (err) {
+        dispatch({
+            type: GET_REPORT_PT_BLUEBERRY_FAIL
+        });
     }
 }

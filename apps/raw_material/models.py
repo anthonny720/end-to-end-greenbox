@@ -37,6 +37,7 @@ class Lot(models.Model):
     provider = models.ForeignKey(ProviderMP, on_delete=models.PROTECT, related_name="provider_entry",
                                  verbose_name="Proveedor")
     origin = models.CharField(max_length=100, verbose_name="Origen")
+
     parcel = models.CharField(max_length=100, blank=True, null=True, default="No Parcel", verbose_name="Parcela")
     carrierGuide = models.CharField(max_length=12, verbose_name="Guia de transporte")
     providerGuide = models.CharField(max_length=12, verbose_name="Guia de proveedor")
@@ -46,6 +47,7 @@ class Lot(models.Model):
                           validators=[FileExtensionValidator(allowed_extensions=["pdf"])])
     invoice = models.FileField(upload_to=custom_invoice_file_path, blank=True, null=True, verbose_name="Factura",
                                validators=[FileExtensionValidator(allowed_extensions=["pdf"])], )
+    invoice_code = models.CharField(max_length=100, blank=True, null=True, verbose_name="Codigo de factura")
     entryDate = models.DateField(verbose_name="Fecha de entrada")
     starting_point_date = models.DateField(verbose_name="Fecha de inicio de partida", blank=True, null=True)
     downloadDate = models.DateField(verbose_name="Fecha de descarga")
@@ -325,6 +327,7 @@ class Lot(models.Model):
             return ti
         except Exception as e:
             return str(e)
+
 
     def get_stock(self):
         try:

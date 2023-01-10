@@ -7,7 +7,7 @@ import React, {useRef} from "react";
 import Humanize from "humanize-plus";
 
 const Table = ({data, edit}) => {
-    const columns = ['Acciones', 'Semana', 'Mes', 'Año', 'Lote', 'Planta', 'Fecha de entrada', 'Fecha de descarga', 'Hora de salida Campo', 'Hora de llegada', 'Variedad', 'Condicion', 'Conductor', 'Transporte', 'Placa', 'Guia de transportista', 'Guia de proveedor', 'Proveedor', 'Procedencia', 'Parcela', 'Promedio jabas', 'Cantidad de jabas', 'Peso bruto', 'Tara', 'Peso neto', 'Peso guia', 'Diferencia netos con guia', '% Descuento', 'Kg descontados', 'Kg aprovechables', 'Precio Campo', 'Precio planta', 'Flete', 'Total a pagar', 'Observaciones']
+    const columns = ['Acciones', 'Semana', 'Mes', 'Año', 'Lote', 'Planta', 'Fecha de entrada', 'Fecha de descarga', 'Hora de salida Campo', 'Hora de llegada', 'Variedad', 'Condicion', 'Conductor', 'Transporte', 'Placa', 'Guia de transportista', 'Guia de proveedor','Factura', 'Proveedor', 'Procedencia', 'Parcela', 'Promedio jabas', 'Cantidad de jabas', 'Peso bruto', 'Tara', 'Peso neto', 'Peso guia', 'Diferencia netos con guia', '% Descuento', 'Kg descontados', 'Kg aprovechables', 'Precio Campo', 'Precio planta', 'Flete', 'Total a pagar', 'Observaciones']
     const tableRef = useRef(null);
     return (<div className="overflow-x-auto relative scrollbar-hide">
         <DownloadTableExcel
@@ -56,6 +56,7 @@ const Table = ({data, edit}) => {
                 <td className="py-4 px-6 whitespace-nowrap text-center">{row?.code}</td>
                 <td className="py-4 px-6 whitespace-nowrap text-center">{row?.carrier_guide}</td>
                 <td className="py-4 px-6 whitespace-nowrap text-center">{row?.provider_guide}</td>
+                <td className="py-4 px-6 whitespace-nowrap text-center">{row?.invoice}</td>
                 <td className="py-4 px-6 whitespace-nowrap text-center">{row?.provider}</td>
                 <td className="py-4 px-6 whitespace-nowrap text-center">{row?.origin}</td>
                 <td className="py-4 px-6 whitespace-nowrap text-center">{row?.parcel}</td>

@@ -2,6 +2,14 @@ import {
     GET_PROVIDERS_CATEGORY_FAIL,
     GET_PROVIDERS_CATEGORY_SUCCESS,
     GET_REPORT_FAIL,
+    GET_REPORT_PT_BANANA,
+    GET_REPORT_PT_BANANA_FAIL, GET_REPORT_PT_BLUEBERRY, GET_REPORT_PT_BLUEBERRY_FAIL,
+    GET_REPORT_PT_GOLDENBERRY,
+    GET_REPORT_PT_GOLDENBERRY_FAIL,
+    GET_REPORT_PT_MANGO,
+    GET_REPORT_PT_MANGO_FAIL,
+    GET_REPORT_PT_PINEAPPLE,
+    GET_REPORT_PT_PINEAPPLE_FAIL,
     GET_REPORT_SUCCESS,
     GET_SUMMARY_CATEGORY_FAIL,
     GET_SUMMARY_CATEGORY_SUCCESS,
@@ -19,13 +27,58 @@ const initialState = {
     summary_provider_month: null,
     count: null,
     next: null,
-    previous: null
+    previous: null,
+    pineapple:null,
+    banana:null,
+    mango:null,
+    goldenberry:null,
+    blueberry:null
 }
 
 export default function Report(state = initialState, action) {
     const {type, payload} = action;
 
     switch (type) {
+        case GET_REPORT_PT_PINEAPPLE:
+            return{
+                ...state,pineapple: payload.result
+            }
+            case GET_REPORT_PT_PINEAPPLE_FAIL:
+                return{
+                    ...state,pineapple: null
+                }
+            case GET_REPORT_PT_MANGO:
+                return{
+                    ...state,mango: payload.result
+                }
+            case GET_REPORT_PT_MANGO_FAIL:
+                return{
+                    ...state,mango: null
+                }
+            case GET_REPORT_PT_BANANA:
+                return{
+                    ...state, banana: payload.result
+                }
+            case GET_REPORT_PT_BANANA_FAIL:
+                return{
+                    ...state,banana: null
+                }
+            case GET_REPORT_PT_GOLDENBERRY:
+                return{
+                    ...state, goldenberry: payload.result
+                }
+            case GET_REPORT_PT_GOLDENBERRY_FAIL:
+                return{
+                    ...state, goldenberry: null
+                }
+            case GET_REPORT_PT_BLUEBERRY:
+                return{
+                    ...state, blueberry: payload.result
+                }
+            case GET_REPORT_PT_BLUEBERRY_FAIL:
+                return{
+                    ...state, blueberry: null
+                }
         case GET_REPORT_SUCCESS:
             return {
                 ...state,

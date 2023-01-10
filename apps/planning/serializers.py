@@ -67,20 +67,14 @@ class IndicatorAguaymantoSerializer(Indicator):
 
 
 class IndicatorMaintenanceSerializer(serializers.ModelSerializer):
-    week = serializers.CharField(source='get_week', read_only=True,)
-    consumption_real = serializers.DecimalField(source='get_consumption_real', read_only=True, max_digits=7,
-                                                decimal_places=2)
-    efficiency_machine = serializers.DecimalField(source='get_efficiency_machine', read_only=True, max_digits=7,
-                                                  decimal_places=2)
-    work_executed = serializers.DecimalField(source='get_work_executed', read_only=True, max_digits=7, decimal_places=2)
-    compliance_works = serializers.DecimalField(source='get_compliance_works', read_only=True, max_digits=7,
-                                                decimal_places=2)
-    compliance_corrective = serializers.DecimalField(source='get_compliance_corrective', read_only=True, max_digits=7,
-                                                     decimal_places=2)
-    compliance_preventive = serializers.DecimalField(source='get_compliance_preventive', read_only=True, max_digits=7,
-                                                     decimal_places=2)
-    efficiency_pnd = serializers.DecimalField(source='get_efficiency_pnd', read_only=True, max_digits=7,
-                                              decimal_places=2)
+    week = serializers.CharField(source='get_week', read_only=True, )
+    consumption_real = serializers.CharField(source='get_consumption_real', read_only=True, )
+    efficiency_machine = serializers.CharField(source='get_efficiency_machine', read_only=True, )
+    work_executed = serializers.CharField(source='get_work_executed', read_only=True)
+    compliance_works = serializers.CharField(source='get_compliance_works', read_only=True, )
+    compliance_corrective = serializers.CharField(source='get_compliance_corrective', read_only=True, )
+    compliance_preventive = serializers.CharField(source='get_compliance_preventive', read_only=True, )
+    efficiency_pnd = serializers.CharField(source='get_efficiency_pnd', read_only=True)
 
     class Meta:
         model = IndicatorMaintenance

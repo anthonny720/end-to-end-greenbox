@@ -3,6 +3,7 @@ from decimal import Decimal
 from django.db import models
 from simple_history.models import HistoricalRecords
 
+from apps.management.models import Location
 from apps.raw_material.models import Lot
 
 
@@ -205,3 +206,383 @@ class Report(models.Model):
 
     def get_provider(self):
         return self.lot.provider.name
+
+
+class ReportPT(models.Model):
+    date_process = models.DateField(verbose_name="Fecha de Proceso")
+    kg_processed = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Kg Procesados",default=0)
+    kg_discarded = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Kg Descartados",default=0)
+    merma = models.DecimalField(max_digits=4, decimal_places=2, verbose_name="Merma",default=0)
+    class Meta:
+        abstract = True
+
+    def get_percentage_discarded(self):
+        try:
+            return (Decimal(self.kg_discarded) * 100) / Decimal(self.kg_processed)*100
+        except:
+            return 0
+
+
+    def get_net_weight(self):
+        try:
+            return Decimal(self.kg_processed) - Decimal(self.kg_discarded)
+        except:
+            return 0
+
+    def get_percentage_merma(self):
+        try:
+            return (Decimal(self.merma) / Decimal(self.get_net_weight))*100
+        except:
+            return 0
+
+
+class ReportPTMango(ReportPT):
+    lot = models.ForeignKey(Lot, on_delete=models.CASCADE, verbose_name="Lote", related_name="report_pt_mango")
+    shell = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Cascara",default=0)
+    retail_slices= models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Slices retail",default=0)
+    retail_cachetes=models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Cachetes retail",default=0)
+    retail_chunks=models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Chunks retail",default=0)
+    retail_cubs=models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Cubs retail",default=0)
+    granel_slices=models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Slices granel",default=0)
+    granel_cachetes=models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Cachetes granel",default=0)
+    granel_chunks=models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Chunks granel",default=0)
+    granel_cubs=models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Cubs granel",default=0)
+    recoverable=models.DecimalField(max_digits=4,decimal_places=2,verbose_name="Recuperable",default=0)
+    target=models.IntegerField(verbose_name="Target",default=11)
+
+
+    def __str__(self):
+        return self.lot.lot
+
+    class Meta:
+        verbose_name = "Reporte PT Mango"
+        verbose_name_plural = "Reportes PT Mango"
+        ordering = ["-date_process"]
+
+    def get_lot_name(self):
+        return self.lot.lot
+    def get_dehydrated(self):
+        try:
+            return (float(self.lot.get_net_weight())-float(self.kg_processed))/float(self.lot.get_net_weight())
+        except:
+            return 0
+
+    def get_percentage_shell(self):
+        try:
+            return (Decimal(self.shell) * 100) / Decimal(self.kg_processed)
+        except:
+            return 0
+
+
+    def get_kg_enabled(self):
+        try:
+            return Decimal(self.get_net_weight()) - (Decimal(self.shell)+Decimal(self.merma))
+        except:
+            return 0
+
+    def get_percentage_enabled(self):
+        try:
+            return float(self.get_kg_enabled())/float(self.get_net_weight())*100
+        except:
+            return 0
+    def get_kg_pt(self):
+        try:
+            return self.retail_cubs+self.retail_chunks+self.retail_cachetes+self.retail_slices+self.granel_cubs+self.granel_chunks+self.granel_cachetes+self.granel_slices
+        except:
+            return 0
+
+    def get_performance_usable(self):
+        try:
+            return float(self.get_kg_pt()) / float(self.lot.report.get_kg_usable()) * 100
+        except:
+            return 0
+
+    def get_performance_net(self):
+        try:
+            return float(self.get_kg_pt()) / float(self.get_net_weight()) * 100
+        except:
+            return 0
+
+    def get_kg_usable(self):
+        try:
+            return self.lot.report.get_kg_usable()
+        except:
+            return 0
+
+class ReportPTBanana(ReportPT):
+    lot = models.ForeignKey(Lot, on_delete=models.CASCADE, verbose_name="Lote", related_name="report_pt_banana")
+    shell = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Cascara",default=0)
+    retail_slices= models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Slices retail",default=0)
+    retail_coins=models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Coins retail",default=0)
+    granel_slices=models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Slices granel",default=0)
+    granel_coins=models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Coins granel",default=0)
+    target=models.IntegerField(verbose_name="Target",default=11)
+
+
+    def __str__(self):
+        return self.lot.lot
+
+    class Meta:
+        verbose_name = "Reporte PT Banana"
+        verbose_name_plural = "Reportes PT Banana"
+        ordering = ["-date_process"]
+
+    def get_lot_name(self):
+        return self.lot.lot
+    def get_dehydrated(self):
+        try:
+            return (float(self.lot.get_net_weight())-float(self.kg_processed))/float(self.lot.get_net_weight())
+        except:
+            return 0
+
+    def get_percentage_shell(self):
+        try:
+            return (Decimal(self.kg_shell) * 100) / Decimal(self.kg_processed)
+        except:
+            return 0
+
+
+    def get_kg_enabled(self):
+        try:
+            return Decimal(self.get_net_weight()) - (Decimal(self.shell)+Decimal(self.merma))
+        except:
+            return 0
+
+    def get_percentage_enabled(self):
+        try:
+            return float(self.get_kg_enabled())/float(self.get_net_weight())*100
+        except:
+            return 0
+    def get_kg_pt(self):
+        try:
+            return self.retail_coins+self.retail_slices+self.granel_coins+self.granel_slices
+        except:
+            return 0
+    def get_performance_usable(self):
+        try:
+            return float(self.get_kg_pt())/float(self.lot.report.get_kg_usable())*100
+        except:
+            return 0
+
+    def get_performance_net(self):
+        try:
+            return float(self.get_kg_pt()) / float(self.get_net_weight()) * 100
+        except:
+            return 0
+
+    def get_kg_usable(self):
+        try:
+            return self.lot.report.get_kg_usable()
+        except:
+            return 0
+
+class ReportPTBlueberry(ReportPT):
+    lot = models.ForeignKey(Lot, on_delete=models.CASCADE, verbose_name="Lote", related_name="report_pt_blueberry")
+    retail_whole= models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Enteros retail",default=0)
+    retail_halves= models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Mitades retail",default=0)
+    granel_whole=models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Enteros granel",default=0)
+    granel_halves=models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Mitades granel",default=0)
+    target=models.IntegerField(verbose_name="Target",default=20)
+
+
+    def __str__(self):
+        return self.lot.lot
+
+    class Meta:
+        verbose_name = "Reporte PT Arándanos"
+        verbose_name_plural = "Reportes PT Arándanos"
+        ordering = ["-date_process"]
+
+    def get_lot_name(self):
+        return self.lot.lot
+    def get_dehydrated(self):
+        try:
+            return (float(self.lot.get_net_weight())-float(self.kg_processed))/float(self.lot.get_net_weight())
+        except:
+            return 0
+
+
+
+    def get_kg_enabled(self):
+        try:
+            return Decimal(self.get_net_weight()) - Decimal(self.merma)
+        except:
+            return 0
+
+    def get_percentage_enabled(self):
+        try:
+            return float(self.get_kg_enabled())/float(self.get_net_weight())*100
+        except:
+            return 0
+    def get_kg_pt(self):
+        try:
+            return self.retail_whole+self.retail_halves+self.granel_whole+self.granel_halves
+        except:
+            return 0
+    def get_performance_usable(self):
+        try:
+            return float(self.get_kg_pt())/float(self.lot.report.get_kg_usable())*100
+        except:
+            return 0
+
+    def get_performance_net(self):
+        try:
+            return float(self.get_kg_pt()) / float(self.get_net_weight()) * 100
+        except:
+            return 0
+
+    def get_kg_usable(self):
+        try:
+            return self.lot.report.get_kg_usable()
+        except:
+            return 0
+
+class ReportPTGoldenberry (ReportPT):
+    lot = models.ForeignKey(Lot, on_delete=models.CASCADE, verbose_name="Lote", related_name="report_pt_goldenberry")
+    caliz= models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Caliz",default=0)
+    retail_whole= models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Enteros retail",default=0)
+    retail_halves= models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Mitades retail",default=0)
+    retail_quarter= models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Cuartos retail",default=0)
+    granel_whole=models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Enteros granel",default=0)
+    granel_halves=models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Mitades granel",default=0)
+    granel_quarter=models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Cuartos granel",default=0)
+    target=models.IntegerField(verbose_name="Target",default=20)
+
+
+    def __str__(self):
+        return self.lot.lot
+
+    class Meta:
+        verbose_name = "Reporte PT Aguaymanto"
+        verbose_name_plural = "Reportes PT Aguaymanto"
+        ordering = ["-date_process"]
+
+    def get_lot_name(self):
+        return self.lot.lot
+    def get_dehydrated(self):
+        try:
+            return (float(self.lot.get_net_weight())-float(self.kg_processed))/float(self.lot.get_net_weight())
+        except:
+            return 0
+
+    def get_percentage_caliz(self):
+        try:
+            return (Decimal(self.caliz) * 100) / Decimal(self.kg_processed)
+        except:
+            return 0
+
+    def get_kg_enabled(self):
+        try:
+            return Decimal(self.get_net_weight()) - Decimal(self.merma) - Decimal(self.caliz)
+        except:
+            return 0
+
+    def get_percentage_enabled(self):
+        try:
+            return float(self.get_kg_enabled())/float(self.get_net_weight())*100
+        except:
+            return 0
+    def get_kg_pt(self):
+        try:
+            return self.retail_whole+self.retail_halves+self.retail_quarter+self.granel_whole+self.granel_halves+self.granel_quarter
+        except:
+            return 0
+    def get_performance_usable(self):
+        try:
+            return float(self.get_kg_pt())/float(self.lot.report.get_kg_usable())*100
+        except:
+            return 0
+
+    def get_performance_net(self):
+        try:
+            return float(self.get_kg_pt()) / float(self.get_net_weight()) * 100
+        except:
+            return 0
+
+    def get_kg_usable(self):
+        try:
+            return self.lot.report.get_kg_usable()
+        except:
+            return 0
+
+class ReportPTPineapple (ReportPT):
+    lot = models.ForeignKey(Lot, on_delete=models.CASCADE, verbose_name="Lote", related_name="report_pt_pineapple")
+    shell= models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Cascara y tronco",default=0)
+    crown= models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Corona",default=0)
+    juice_pulp=models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Jugo y pulpa",default=0)
+    retail_rings= models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Rings retail",default=0)
+    retail_1_8= models.DecimalField(max_digits=10, decimal_places=2, verbose_name="1/8 retail",default=0)
+    retail_1_16= models.DecimalField(max_digits=10, decimal_places=2, verbose_name="1/16 retail",default=0)
+    granel_rings=models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Rings granel",default=0)
+    granel_1_16=models.DecimalField(max_digits=10, decimal_places=2, verbose_name="1/16 granel",default=0)
+    granel_1_8=models.DecimalField(max_digits=10, decimal_places=2, verbose_name="1/8 granel",default=0)
+    target=models.IntegerField(verbose_name="Target",default=20)
+
+
+    def __str__(self):
+        return self.lot.lot
+
+    class Meta:
+        verbose_name = "Reporte PT Piña"
+        verbose_name_plural = "Reportes PT Piña"
+        ordering = ["-date_process"]
+
+    def get_lot_name(self):
+        return self.lot.lot
+    def get_dehydrated(self):
+        try:
+            return (float(self.lot.get_net_weight())-float(self.kg_processed))/float(self.lot.get_net_weight())
+        except:
+            return 0
+
+    def get_percentage_crown(self):
+        try:
+            return (Decimal(self.crown) * 100) / Decimal(self.kg_processed)
+        except:
+            return 0
+
+    def get_percentage_shell(self):
+        try:
+            return (Decimal(self.shell) * 100) / Decimal(self.kg_processed)
+        except:
+            return 0
+
+    def get_percentage_juice_pulp(self):
+        try:
+            return (Decimal(self.juice_pulp) * 100) / Decimal(self.kg_processed)
+        except:
+            return 0
+
+    def get_kg_enabled(self):
+        try:
+            return Decimal(self.get_net_weight()) - Decimal(self.merma) - Decimal(self.crown)- Decimal(self.juice_pulp)- Decimal(self.shell)
+        except:
+            return 0
+
+    def get_percentage_enabled(self):
+        try:
+            return float(self.get_kg_enabled())/float(self.get_net_weight())*100
+        except:
+            return 0
+    def get_kg_pt(self):
+        try:
+            return self.retail_rings+self.retail_1_8+self.retail_1_16+self.granel_rings+self.granel_1_16+self.granel_1_8
+        except:
+            return 0
+    def get_performance_usable(self):
+        try:
+            return float(self.get_kg_pt())/float(self.lot.report.get_kg_usable())*100
+        except:
+            return 0
+
+    def get_performance_net(self):
+        try:
+            return float(self.get_kg_pt()) / float(self.get_net_weight()) * 100
+        except:
+            return 0
+
+    def get_kg_usable(self):
+        try:
+            return self.lot.report.get_kg_usable()
+        except:
+            return 0

@@ -7,8 +7,10 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from apps.products.models import Fruits
-from apps.report.models import Report
-from apps.report.serializers import ReportSerializer
+from apps.report.models import Report, ReportPTMango, ReportPTPineapple, ReportPTBanana, ReportPTGoldenberry, \
+    ReportPTBlueberry
+from apps.report.serializers import ReportSerializer, ReportPTMangoSerializer, ReportPTPineappleSerializer, \
+    ReportPTBananaSerializer, ReportPTGoldenberrySerializer, ReportPTBlueberrySerializer
 from apps.util.pagination import SetPagination
 
 
@@ -182,3 +184,98 @@ class ProviderListView(APIView):
             print(e)
             return Response({'error': 'No se encontraron resultados', 'detail': str(e)},
                             status=status.HTTP_400_BAD_REQUEST)
+
+
+class ListPTMangoView(APIView):
+    def get(self, request, *args, **kwargs):
+        current_date = datetime.date(datetime.now())
+        queryset = ReportPTMango.objects.all().filter(date_process__year=current_date.year)
+        # FILTERS
+        year = request.query_params.get('year', None)
+        month = request.query_params.get('month', None)
+
+        if year:
+            queryset = queryset.filter(date_process__year=year)
+        if month:
+            queryset = queryset.filter(date_process__month=month)
+        try:
+            serializers = ReportPTMangoSerializer(queryset, many=True)
+            return Response({'result': serializers.data}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ListPTPineappleView(APIView):
+    def get(self, request, *args, **kwargs):
+        current_date = datetime.date(datetime.now())
+        queryset = ReportPTPineapple.objects.all().filter(date_process__year=current_date.year)
+        # FILTERS
+        year = request.query_params.get('year', None)
+        month = request.query_params.get('month', None)
+
+        if year:
+            queryset = queryset.filter(date_process__year=year)
+        if month:
+            queryset = queryset.filter(date_process__month=month)
+        try:
+            serializers = ReportPTPineappleSerializer(queryset, many=True)
+            return Response({'result': serializers.data}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ListPTBananaView(APIView):
+    def get(self, request, *args, **kwargs):
+        current_date = datetime.date(datetime.now())
+        queryset = ReportPTBanana.objects.all().filter(date_process__year=current_date.year)
+        # FILTERS
+        year = request.query_params.get('year', None)
+        month = request.query_params.get('month', None)
+
+        if year:
+            queryset = queryset.filter(date_process__year=year)
+        if month:
+            queryset = queryset.filter(date_process__month=month)
+        try:
+            serializers = ReportPTBananaSerializer(queryset, many=True)
+            return Response({'result': serializers.data}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ListPTGoldenberryView(APIView):
+    def get(self, request, *args, **kwargs):
+        current_date = datetime.date(datetime.now())
+        queryset = ReportPTGoldenberry.objects.all().filter(date_process__year=current_date.year)
+        # FILTERS
+        year = request.query_params.get('year', None)
+        month = request.query_params.get('month', None)
+
+        if year:
+            queryset = queryset.filter(date_process__year=year)
+        if month:
+            queryset = queryset.filter(date_process__month=month)
+        try:
+            serializers = ReportPTGoldenberrySerializer(queryset, many=True)
+            return Response({'result': serializers.data}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ListPTBlueberryView(APIView):
+    def get(self, request, *args, **kwargs):
+        current_date = datetime.date(datetime.now())
+        queryset = ReportPTBlueberry.objects.all().filter(date_process__year=current_date.year)
+        # FILTERS
+        year = request.query_params.get('year', None)
+        month = request.query_params.get('month', None)
+
+        if year:
+            queryset = queryset.filter(date_process__year=year)
+        if month:
+            queryset = queryset.filter(date_process__month=month)
+        try:
+            serializers = ReportPTBlueberrySerializer(queryset, many=True)
+            return Response({'result': serializers.data}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)

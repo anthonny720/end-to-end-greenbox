@@ -63,7 +63,8 @@ const FormTerminated = ({close, data, cuts, process,lot}) => {
                     aria-label="Default select example">
                 <option value={''}>Seleccione una fecha del proceso previo</option>
                 {map(process, p => (
-                    <option key={p.id} value={p.id}>{p.process_date}</option>))}
+                    <option key={p.id} value={p.id}>{new Date(p?.process_date).toLocaleDateString('es-PE', {
+                    timeZone: 'UTC'})}</option>))}
             </select>
 
         </div>

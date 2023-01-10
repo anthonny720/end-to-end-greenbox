@@ -37,6 +37,11 @@ import AnalysisPineapple from "./containers/pages/AnalysisPineapple";
 import Commercial from "./containers/pages/Comercial";
 import CommercialDetail from "./containers/pages/ComercialDetail";
 import KPI from "./containers/pages/KPI";
+import ReportPTPineapple from "./containers/pages/ReportPTPineapple";
+import ReportPTBlueberry from "./containers/pages/ReportPTBlueberry";
+import ReportPTBanano from "./containers/pages/ReportPTBanano";
+import ReportPTGoldenberry from "./containers/pages/ReportPTGoldenberry";
+import ReportPTMango from "./containers/pages/ReportPTMango";
 
 
 const App = () => {
@@ -80,6 +85,7 @@ const App = () => {
                     <Route exact path="quality/analysis/blueberry" element={<AnalysisBlueberry/>}/>
                     <Route exact path="quality/analysis/aguaymanto" element={<AnalysisAguaymanto/>}/>
                     <Route exact path="quality/analysis/mango" element={<AnalysisMango/>}/>
+
                     {/*Process Line*/}
                     <Route exact path="quality/conditioning" element={<Conditioning/>}/>
                     <Route exact path="quality/terminated" element={<Terminated/>}/>
@@ -94,6 +100,11 @@ const App = () => {
 
                     {/*Report*/}
                     <Route exact path="report/:category" element={<Report/>}/>
+                    <Route exact path="report/pt/mango" element={<ReportPTMango/>}/>
+                    <Route exact path="report/pt/piña" element={<ReportPTPineapple/>}/>
+                    <Route exact path="report/pt/arandanos" element={<ReportPTBlueberry/>}/>
+                    <Route exact path="report/pt/banano" element={<ReportPTBanano/>}/>
+                    <Route exact path="report/pt/aguaymanto" element={<ReportPTGoldenberry/>}/>
 
                     {/*Comercial*/}
                     <Route exact path="commercial/" element={<Commercial/>}/>

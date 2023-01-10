@@ -9,7 +9,7 @@ class SalesSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Lot
-        fields = ('lot', 'entryDate', 'condition', 'origin', 'parcel', 'net_weight')
+        fields = ('lot', 'entryDate', 'condition', 'origin', 'parcel', 'net_weight',)
 
 
 class LotListSerializer(serializers.ModelSerializer):
@@ -21,7 +21,7 @@ class LotListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lot
         fields = ('id', 'downloadDate', 'category_name', 'lot', 'condition', 'variety', 'stock', 'net_weight',
-                  'business_maquila')
+                  'business_maquila', 'carrierGuide', 'providerGuide', 'invoice_code')
 
 
 class LotSerializer(serializers.ModelSerializer):
@@ -76,7 +76,7 @@ class ILotSerializer(serializers.ModelSerializer):
         fields = (
             'number', 'indicted_type', 'dateIndicted', 'location_name', 'weight', 'net_weight', 'tare', 'final_weight',
             'net_final_weight', 'gb', 'pa', 'co', 't0', 't1', 't2', 'gn', 'ma', 'c6', 'c8', 'c10', 'c12', 'c14',
-            'pallet_name', 'boxes', 'pallet', 'id', 'indicted', 'location','type')
+            'pallet_name', 'boxes', 'pallet', 'id', 'indicted', 'location', 'type')
 
 
 class ILotCRUDSerializer(serializers.ModelSerializer):

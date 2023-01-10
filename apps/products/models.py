@@ -41,12 +41,10 @@ class Fruits(models.Model):
         t = 0
         try:
             for c in self.fruit_entry.all():
-                t += c.get_stock()
-            self.stock = t
-            self.save()
+                    t += c.get_stock()
             return t
-        except:
-            return 0
+        except Exception as e:
+            return str(e)
 
     def get_motions(self):
         current_date = datetime.datetime.now().date()
