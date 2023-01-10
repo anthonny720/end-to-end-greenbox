@@ -121,7 +121,6 @@ export default function Report(state = initialState, action) {
                 summary_provider_month: null
 
             }
-
         default:
             return state
     }

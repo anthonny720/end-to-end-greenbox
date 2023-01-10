@@ -15,6 +15,8 @@ const FormInvoice = ({close, lot}) => {
         initialValues: initialValues(), validateOnChange: true,
         onSubmit: (form) => {
             let data = new FormData();
+            data.append('invoice_code', form.invoice_code);
+
             if (form.invoice !== '') {
                 data.append('invoice', form.invoice);
             }
@@ -27,11 +29,17 @@ const FormInvoice = ({close, lot}) => {
     return (
         <div className="w-full z-20">
             <form className="bg-white px-8 pt-6 pb-8 mb-4">
+                <p className={"text-base mt-4 font-medium leading-none text-gray-800"}>Factura:</p>
+
                 <div>
-                    <p className={`${formik.errors.invoice ? "text-red-500" : "text-base mt-4 font-medium leading-none text-gray-800"}`}>Factura:</p>
                     <input type={"file"} accept={"application/pdf"}
                            className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50 "
                            onChange={text => formik.setFieldValue('invoice', text.target.files[0])}/>
+                </div>
+                <div>
+                    <input type={"text"}
+                           className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50 "
+                           onChange={text => formik.setFieldValue('invoice_code', text.target.value)}/>
                 </div>
                 <div className="w-full flex justify-center">
                     <button onClick={formik.handleSubmit} type="button"
@@ -49,6 +57,7 @@ const FormInvoice = ({close, lot}) => {
 const initialValues = () => {
     return {
         invoice: '',
+        invoice_code: '',
     }
 }
 

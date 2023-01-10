@@ -10,8 +10,6 @@ import {
     GET_KPI_PINEAPPLE_SUCCESS,
     UPDATE_KPI_AGUAYMANTO_FAIL,
     UPDATE_KPI_AGUAYMANTO_SUCCESS,
-    UPDATE_KPI_MAINTENANCE_FAIL,
-    UPDATE_KPI_MAINTENANCE_SUCCESS,
     UPDATE_KPI_MANGO_FAIL,
     UPDATE_KPI_MANGO_SUCCESS,
     UPDATE_KPI_PINEAPPLE_FAIL,
@@ -45,32 +43,7 @@ export const get_kpi_pineapple = (params) => async dispatch => {
 
     }
 }
-export const get_kpi_maintenance = (params) => async dispatch => {
-    const config = {
-        headers: {
-            'Authorization': `JWT ${localStorage.getItem('access')}`, 'Accept': 'application/json'
-        }, params: {
-            ...params
-        }
-    };
-    try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/planning/kpi/maintenance`, config);
-        if (res.status === 200) {
-            dispatch({
-                type: GET_KPI_MAINTENANCE_SUCCESS, payload: res.data
-            });
-        } else {
-            dispatch({
-                type: GET_KPI_MAINTENANCE_FAIL
-            });
-        }
-    } catch (err) {
-        dispatch({
-            type: GET_KPI_MAINTENANCE_FAIL
-        });
 
-    }
-}
 export const get_kpi_mango = (params) => async dispatch => {
     const config = {
         headers: {
@@ -206,30 +179,3 @@ export const update_kpi_mango = (form, id, params) => async dispatch => {
     }
 }
 
-export const update_kpi_maintenance = (form, id, params) => async dispatch => {
-    const config = {
-        headers: {
-            'Authorization': `JWT ${localStorage.getItem('access')}`, 'Accept': 'application/json'
-        },
-    };
-    try {
-        const res = await axios.patch(`${process.env.REACT_APP_API_URL}/api/planning/kpi/maintenance/${id}`, form, config);
-        if (res.status === 200) {
-            dispatch({
-                type: UPDATE_KPI_MAINTENANCE_SUCCESS
-            });
-            dispatch(get_kpi_maintenance(params));
-            dispatch(setAlert(res.data.message, 'success'));
-        } else {
-            dispatch({
-                type: UPDATE_KPI_MAINTENANCE_FAIL
-            });
-        }
-    } catch (err) {
-        dispatch({
-            type: UPDATE_KPI_MAINTENANCE_FAIL
-        });
-        dispatch(setAlert(err.response.data['error'], 'error'));
-
-    }
-}

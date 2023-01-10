@@ -3,9 +3,9 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.planning.models import IndicatorKPIPineapple, IndicatorKPIMango, IndicatorKPIAguaymanto, IndicatorMaintenance
+from apps.planning.models import IndicatorKPIPineapple, IndicatorKPIMango, IndicatorKPIAguaymanto
 from apps.planning.serializers import IndicatorPineappleSerializer, IndicatorMangoSerializer, \
-    IndicatorAguaymantoSerializer, IndicatorMaintenanceSerializer
+    IndicatorAguaymantoSerializer
 
 
 # Create your views here.
@@ -107,40 +107,6 @@ class UpdateMangoView(APIView):
         if IndicatorKPIMango.objects.filter(id=kwargs['id']).exists():
             data = IndicatorKPIMango.objects.get(id=kwargs['id'])
             serializer = IndicatorMangoSerializer(data, data=request.data, partial=True)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            return Response({'message': 'Registro actualizado correctamente'}, status=status.HTTP_200_OK)
-        else:
-            return Response({'error': 'No se encontraron registros'}, status=status.HTTP_404_NOT_FOUND)
-
-
-class ListMaintenanceView(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
-
-    def get(self, request):
-        queryset = IndicatorMaintenance.objects.all().order_by('-date')
-        week = request.query_params.get('week', None)
-        year = request.query_params.get('year', None)
-        if week:
-            queryset = queryset.filter(date__week=week)[:7]
-        if year:
-            queryset = queryset.filter(date__year=year)
-        if queryset.exists():
-            serializer = IndicatorMaintenanceSerializer(queryset, many=True)
-            return Response({'result': serializer.data}, status=status.HTTP_200_OK)
-        else:
-            return Response({'error': 'No se encontraron registros'},
-                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
-class UpdateMaintenanceView(APIView):
-    def patch(self, request, *args, **kwargs):
-        if request.user.role != "1" and request.user.role != "10":
-            return Response({'error': 'No tiene permisos para realizar esta acción'},
-                            status=status.HTTP_401_UNAUTHORIZED)
-        if IndicatorMaintenance.objects.filter(id=kwargs['id']).exists():
-            data = IndicatorMaintenance.objects.get(id=kwargs['id'])
-            serializer = IndicatorMaintenanceSerializer(data, data=request.data, partial=True)
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response({'message': 'Registro actualizado correctamente'}, status=status.HTTP_200_OK)

@@ -10,7 +10,7 @@ import {
     faLeaf,
     faLock,
     faLockOpen,
-    faPersonChalkboard,
+    faPersonChalkboard, faReceipt,
     faTrash,
     faUsers
 } from "@fortawesome/free-solid-svg-icons";
@@ -158,6 +158,22 @@ const ListDetail = ({lot, handleDelete, handleViewer, handleInvoice, handleTc}) 
 
                                         <div
                                             className="flex items-center justify-center px-2 py-1 mt-2 bg-green-100 rounded-full">
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div className="flex items-center mt-2">
+                                    <div className="bg-red-400 text-white  rounded-full p-2.5">
+                                        <FontAwesomeIcon icon={faReceipt} width="20"/>
+                                    </div>
+                                    <div className="pl-3">
+                                        <div className="flex items-center text-sm leading-none">
+                                            <p className="font-semibold text-gray-800 dark:text-white ">Factura</p>
+                                        </div>
+                                        <span className="text-sm text-gray-400 ">{lot?.invoice_code}</span>
+                                        <div
+                                            className="flex items-center justify-center px-1 py-1 mt-2 bg-green-100 rounded-full">
                                         </div>
                                     </div>
                                 </div>

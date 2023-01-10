@@ -13,5 +13,6 @@ urlpatterns = [
     path('<int:id>', ReportView.as_view(), name='update-report'),
     path('<category>', ListReportView.as_view(), name='get-report'),
     path('summary/<category>', SummaryView.as_view(), name='get-summary-category'),
+    path('providers/<category>', ProviderListView.as_view(), name='get-providers-category'),
 
 ]

@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
-from apps.planning.models import IndicatorKPIPineapple, IndicatorKPIMango, IndicatorKPIAguaymanto, IndicatorKPI, \
-    IndicatorMaintenance
+from apps.planning.models import IndicatorKPIPineapple, IndicatorKPIMango, IndicatorKPIAguaymanto, IndicatorKPI
 from apps.raw_material.models import Lot
 
 
@@ -66,16 +65,3 @@ class IndicatorAguaymantoSerializer(Indicator):
         fields = '__all__'
 
 
-class IndicatorMaintenanceSerializer(serializers.ModelSerializer):
-    week = serializers.CharField(source='get_week', read_only=True, )
-    consumption_real = serializers.CharField(source='get_consumption_real', read_only=True, )
-    efficiency_machine = serializers.CharField(source='get_efficiency_machine', read_only=True, )
-    work_executed = serializers.CharField(source='get_work_executed', read_only=True)
-    compliance_works = serializers.CharField(source='get_compliance_works', read_only=True, )
-    compliance_corrective = serializers.CharField(source='get_compliance_corrective', read_only=True, )
-    compliance_preventive = serializers.CharField(source='get_compliance_preventive', read_only=True, )
-    efficiency_pnd = serializers.CharField(source='get_efficiency_pnd', read_only=True)
-
-    class Meta:
-        model = IndicatorMaintenance
-        fields = '__all__'

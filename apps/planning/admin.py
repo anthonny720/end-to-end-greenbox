@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 from simple_history.admin import SimpleHistoryAdmin
 
-from apps.planning.models import IndicatorKPIAguaymanto, IndicatorKPIMango, IndicatorKPIPineapple, IndicatorMaintenance
+from apps.planning.models import IndicatorKPIAguaymanto, IndicatorKPIMango, IndicatorKPIPineapple
 
 
 # Register your models here.
@@ -31,13 +31,3 @@ class LotAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
     date_hierarchy = 'date'
 
 
-@admin.register(IndicatorMaintenance)
-class LotAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    list_display = ('get_week', 'date', 'objective_glp',
-                    'objective_machine',
-                    'objective_works',
-                    'objective_corrective',
-                    'objective_preventive',
-                    'objective_pnd',)
-
-    date_hierarchy = 'date'

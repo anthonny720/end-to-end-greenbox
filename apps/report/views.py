@@ -26,7 +26,7 @@ class ListReportView(APIView):
     def get(self, request, *args, **kwargs):
         category = kwargs["category"].capitalize()
         current_date = datetime.date(datetime.now())
-        queryset = Report.objects.all().filter(lot__category__name=category, lot__entryDate__year=current_date.year)
+        queryset = Report.objects.all().filter(lot__category__name=category)
         # FILTERS
         provider = request.query_params.get('provider', None)
         year = request.query_params.get('year', None)

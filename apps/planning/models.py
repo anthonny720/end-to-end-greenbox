@@ -71,13 +71,13 @@ class IndicatorKPIPineapple(IndicatorKPI):
             return 0
 
     def get_calibers_maduration(self):
-        caliber_6 =0
-        caliber_8_10_12 =0
-        caliber_14 =0
-        maduration_0 =0
-        maduration_1 =0
-        maduration_2_3 =0
-        maduration_4_5 =0
+        caliber_6 = 0
+        caliber_8_10_12 = 0
+        caliber_14 = 0
+        maduration_0 = 0
+        maduration_1 = 0
+        maduration_2_3 = 0
+        maduration_4_5 = 0
         information = {'caliber_6': caliber_6,
                        'caliber_8_10_12': caliber_8_10_12,
                        'caliber_14': caliber_14,
@@ -156,7 +156,7 @@ class IndicatorKPIPineapple(IndicatorKPI):
 class IndicatorKPIMango(IndicatorKPI):
     objective = models.IntegerField(default=97, verbose_name='Objetivo de producción', blank=True)
     price_objective = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Precio objetivo',
-                                          blank=True, null=True,default=1.66)
+                                          blank=True, null=True, default=1.66)
     lots = models.ManyToManyField(Lot, blank=True, verbose_name='Lotes', )
 
     class Meta:
@@ -383,85 +383,5 @@ class IndicatorKPIAguaymanto(IndicatorKPI):
         try:
             q = Kardex.objects.filter(date=self.date, category__name='Aguaymanto').first()
             return q.stock
-        except:
-            return 0
-
-
-class IndicatorMaintenance(models.Model):
-    date = models.DateField(verbose_name="Fecha de ingreso", unique=True)
-    # GLP
-    consumption = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Consumo GLP', blank=True, null=True)
-    kg_terminated = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Kg terminados',
-                                        blank=True, null=True)
-    objective_glp = models.DecimalField(max_digits=3, decimal_places=2, default=0.33, verbose_name='Objetivo GLP',
-                                        blank=True, null=True)
-    # MACHINE
-    kg_executed = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Kg ejecutados',
-                                      blank=True, null=True)
-    ability = models.IntegerField(verbose_name='Capacidad', blank=True, null=True)
-    objective_machine = models.IntegerField(default=90, verbose_name='Objetivo picadora', blank=True)
-    # WORKS
-    works_scheduled = models.IntegerField(default=0, verbose_name='Trabajos programados', blank=True)
-    objective_works = models.IntegerField(default=98, verbose_name='Objetivo de trabajos', blank=True)
-    work_corrective = models.IntegerField(default=0, verbose_name='Trabajos correctivos', blank=True)
-    objective_corrective = models.IntegerField(default=20, verbose_name='Objetivo de trabajos correctivos', blank=True)
-    objective_preventive = models.IntegerField(default=80, verbose_name='Objetivo de trabajos preventivos', blank=True)
-    work_preventive = models.IntegerField(default=0, verbose_name='Trabajos preventivos', blank=True)
-    # PND  MACHINE
-    kg_defective = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Kg defectuosos', null=True,
-                                       blank=True)
-    kg_released = models.DecimalField(max_digits=7, decimal_places=2, verbose_name='Kg lanzados', blank=True, null=True)
-    objective_pnd = models.IntegerField(default=94, verbose_name='Objetivo de PND', blank=True)
-
-    class Meta:
-        verbose_name = "Indicador de Mantenimiento"
-        verbose_name_plural = "Indicador de Mantenimiento"
-        ordering = ['-date']
-
-    def __str__(self):
-        return str(self.date)
-
-    def get_week(self):
-        return self.date.isocalendar()[1]
-
-    def get_consumption_real(self):
-        try:
-            return self.consumption / self.kg_terminated
-        except:
-            return 0
-
-    def get_efficiency_machine(self):
-        try:
-            return self.kg_executed / self.ability * 100
-        except:
-            return 0
-
-    def get_work_executed(self):
-        try:
-            return self.work_preventive + self.work_corrective
-        except:
-            return 0
-
-    def get_compliance_works(self):
-        try:
-            return self.get_work_executed() / self.works_scheduled * 100
-        except:
-            return 0
-
-    def get_compliance_corrective(self):
-        try:
-            return self.work_corrective / self.works_scheduled * 100
-        except:
-            return 0
-
-    def get_compliance_preventive(self):
-        try:
-            return self.work_preventive / self.works_scheduled * 100
-        except:
-            return 0
-
-    def get_efficiency_pnd(self):
-        try:
-            return (1 - self.kg_defective / self.kg_released) * 100
         except:
             return 0

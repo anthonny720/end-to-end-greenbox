@@ -1,16 +1,12 @@
 import {
     GET_KPI_AGUAYMANTO_FAIL,
     GET_KPI_AGUAYMANTO_SUCCESS,
-    GET_KPI_MAINTENANCE_FAIL,
-    GET_KPI_MAINTENANCE_SUCCESS,
     GET_KPI_MANGO_FAIL,
     GET_KPI_MANGO_SUCCESS,
     GET_KPI_PINEAPPLE_FAIL,
     GET_KPI_PINEAPPLE_SUCCESS,
     UPDATE_KPI_AGUAYMANTO_FAIL,
     UPDATE_KPI_AGUAYMANTO_SUCCESS,
-    UPDATE_KPI_MAINTENANCE_FAIL,
-    UPDATE_KPI_MAINTENANCE_SUCCESS,
     UPDATE_KPI_MANGO_FAIL,
     UPDATE_KPI_MANGO_SUCCESS,
     UPDATE_KPI_PINEAPPLE_FAIL,
@@ -21,11 +17,7 @@ const initialState = {
     pineapple: null,
     mango: null,
     aguaymanto: null,
-    summary_pineapple: null,
-    summary_mango: null,
-    summary_aguaymanto: null,
     maintenance: null,
-    summary_maintenance: null,
 };
 
 export default function Planning(state = initialState, action) {
@@ -34,35 +26,27 @@ export default function Planning(state = initialState, action) {
     switch (type) {
         case GET_KPI_PINEAPPLE_SUCCESS:
             return {
-                ...state, pineapple: payload.result, summary_pineapple: payload.summary
+                ...state, pineapple: payload.result
             }
         case GET_KPI_PINEAPPLE_FAIL:
             return {
-                ...state, pineapple: null, summary_pineapple: null
+                ...state, pineapple: null
             }
         case GET_KPI_MANGO_SUCCESS:
             return {
-                ...state, mango: payload.result, summary_mango: payload.summary
+                ...state, mango: payload.result
             }
         case GET_KPI_MANGO_FAIL:
             return {
-                ...state, mango: null, summary_mango: null
+                ...state, mango: null
             }
         case GET_KPI_AGUAYMANTO_SUCCESS:
             return {
-                ...state, aguaymanto: payload.result, summary_aguaymanto: payload.summary
+                ...state, aguaymanto: payload.result
             }
         case GET_KPI_AGUAYMANTO_FAIL:
             return {
-                ...state, aguaymanto: null, summary_aguaymanto: null
-            }
-        case GET_KPI_MAINTENANCE_SUCCESS:
-            return {
-                ...state, maintenance: payload.result, summary_maintenance: payload.summary
-            }
-        case GET_KPI_MAINTENANCE_FAIL:
-            return {
-                ...state, maintenance: null, summary_maintenance: null
+                ...state, aguaymanto: null
             }
         case UPDATE_KPI_PINEAPPLE_SUCCESS:
         case UPDATE_KPI_PINEAPPLE_FAIL:
@@ -70,8 +54,6 @@ export default function Planning(state = initialState, action) {
         case UPDATE_KPI_MANGO_FAIL:
         case UPDATE_KPI_AGUAYMANTO_SUCCESS:
         case UPDATE_KPI_AGUAYMANTO_FAIL:
-        case UPDATE_KPI_MAINTENANCE_SUCCESS:
-        case UPDATE_KPI_MAINTENANCE_FAIL:
             return {
                 ...state
             }

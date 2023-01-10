@@ -5,7 +5,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.planning.models import IndicatorKPIPineapple, IndicatorKPIMango, IndicatorKPIAguaymanto, IndicatorMaintenance
+from apps.planning.models import IndicatorKPIPineapple, IndicatorKPIMango, IndicatorKPIAguaymanto
 from apps.quality.models import AnalysisPineapple, CutTest, AnalysisBanano, AnalysisMango, AnalysisAguaymanto, \
     AnalysisBlueberry
 from apps.raw_material.models import Lot, ILot
@@ -23,7 +23,6 @@ class ListCreateLotView(APIView):
             IndicatorKPIPineapple.objects.get_or_create(date=datetime.now())
             IndicatorKPIMango.objects.get_or_create(date=datetime.now())
             IndicatorKPIAguaymanto.objects.get_or_create(date=datetime.now())
-            IndicatorMaintenance.objects.get_or_create(date=datetime.now())
         except:
             pass
         queryset = Lot.objects.all()
