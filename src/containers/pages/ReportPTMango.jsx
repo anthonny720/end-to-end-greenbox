@@ -29,7 +29,7 @@ const ReportPTMango = () => {
     }, []);
 
     const columns = ['', 'Semana', 'Mes','Guia remitente','Factura', 'Fecha de ingreso', 'Fecha de producción', 'Variedad', 'Condición', 'Lote', 'Proveedor', 'Procedencia', 'Kg guia', 'KG neto recibido', 'Descuento', 'Kg aprovechables',
-        'Kg procesados', '% Deshidratación', 'Kd descarte', '% Descarte', 'Kg MP neta', 'Kg cáscara y pepa', '% Cáscara y pepa', 'Merma', '% Merma', 'Kg habilitados', '% Habilitado', 'Kg PT', 'Slices', 'Cachete', 'Chunks','Cubos', 'Slices', 'Cachete', 'Chunks','Cubos', 'Recuperable', '% Rendimiento pagados','% Rendimiento neto', '% Objetivo'
+        'Kg procesados', '% Deshidratación', 'Kg descarte', '% Descarte', 'Kg MP neta', 'Kg cáscara y pepa', '% Cáscara y pepa', 'Merma', '% Merma', 'Kg habilitados', '% Habilitado', 'Kg PT', 'Slices', 'Cachete', 'Chunks','Cubos', 'Slices', 'Cachete', 'Chunks','Cubos', 'Recuperable', '% Rendimiento pagados','% Rendimiento neto', '% Objetivo'
     ]
 
      const handleOpenModalEdit = (data) => {

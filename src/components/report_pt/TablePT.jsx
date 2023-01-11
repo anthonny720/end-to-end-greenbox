@@ -40,7 +40,7 @@ const TablePT = ({data, update,header,columns}) => {
                         />
 
                 </td>
-                {map(row,(value, index) => (<td key={index}
+                {map(omit(row,['id']),(value, index) => (<td key={index}
                                                                       className="py-4 px-6 whitespace-nowrap text-center">{typeof (value) === 'number' ? Humanize.formatNumber(value,2) : value
                     }</td>))}
             </tr>)) : <tr>

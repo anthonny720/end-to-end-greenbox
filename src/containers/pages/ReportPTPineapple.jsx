@@ -16,7 +16,7 @@ const ReportPTPineapple = () => {
         dispatch(get_report_pt_pineapple(params))
     }, []);
     const columns = ['', 'Semana', 'Mes', 'Guia remitente', 'Factura', 'Fecha de ingreso', 'Fecha de producción', 'Variedad', 'Condición', 'Lote', 'Proveedor', 'Procedencia', 'Kg guia', 'KG neto recibido', 'Descuento', 'Kg aprovechables',
-        'Kg procesados', '% Deshidratación', 'Kd descarte', '% Descarte', 'Kg MP neta', 'Kg corona', '% Corona', 'Kg cáscara y tronco', '% Cáscara y tronco', 'Kg jugo/pulpa', '% Jugo/pulpa', 'Merma', '% Merma', 'Kg habilitados', '% Habilitado', 'Kg PT', 'Rings', '1/8', '1/16', 'Rings', '1/8', '1/16', '% Rendimiento pagados', '% Rendimiento neto', '% Objetivo'
+        'Kg procesados', '% Deshidratación', 'Kg descarte', '% Descarte', 'Kg MP neta', 'Kg corona', '% Corona', 'Kg cáscara y tronco', '% Cáscara y tronco', 'Kg jugo/pulpa', '% Jugo/pulpa', 'Merma', '% Merma', 'Kg habilitados', '% Habilitado', 'Kg PT', 'Rings', '1/8', '1/16', 'Rings', '1/8', '1/16', '% Rendimiento pagados', '% Rendimiento neto', '% Objetivo'
     ]
 
     /*MODAL*/

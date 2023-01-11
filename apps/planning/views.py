@@ -18,11 +18,10 @@ class ListPineappleView(APIView):
         week = request.query_params.get('week', None)
         year = request.query_params.get('year', None)
 
-        if week:
-            queryset = queryset.filter(date__week=week)[:7]
         if year:
             queryset = queryset.filter(date__year=year)
-
+        if week:
+            queryset = queryset.filter(date__week=week)[:7]
         if queryset.exists():
             serializer = IndicatorPineappleSerializer(queryset, many=True)
             return Response({'result': serializer.data}, status=status.HTTP_200_OK)
@@ -38,10 +37,10 @@ class ListMangoView(APIView):
         queryset = IndicatorKPIMango.objects.all().order_by('-date')
         week = request.query_params.get('week', None)
         year = request.query_params.get('year', None)
-        if week:
-            queryset = queryset.filter(date__week=week)[:7]
         if year:
             queryset = queryset.filter(date__year=year)
+        if week:
+            queryset = queryset.filter(date__week=week)[:7]
         if queryset.exists():
             serializer = IndicatorMangoSerializer(queryset, many=True)
             return Response({'result': serializer.data}, status=status.HTTP_200_OK)
@@ -57,10 +56,10 @@ class ListAguaymantoView(APIView):
         queryset = IndicatorKPIAguaymanto.objects.all().order_by('-date')
         week = request.query_params.get('week', None)
         year = request.query_params.get('year', None)
-        if week:
-            queryset = queryset.filter(date__week=week)[:7]
         if year:
             queryset = queryset.filter(date__year=year)
+        if week:
+            queryset = queryset.filter(date__week=week)[:7]
         if queryset.exists():
             serializer = IndicatorAguaymantoSerializer(queryset, many=True)
             return Response({'result': serializer.data}, status=status.HTTP_200_OK)

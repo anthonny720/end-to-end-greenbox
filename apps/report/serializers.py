@@ -79,7 +79,7 @@ class ReportPTMangoSerializer(ReportPTSerializer):
 
     class Meta:
         model = ReportPTMango
-        fields = ('week', 'month', 'guide', 'invoice', 'entryDate', 'date_process',
+        fields = ('id','week', 'month', 'guide', 'invoice', 'entryDate', 'date_process',
                   'variety', 'condition', 'lot', 'provider', 'origin',
                   'kg_guide', 'kg_net',
                   'discount_percentage', 'kg_usable',
@@ -124,7 +124,7 @@ class ReportPTPineappleSerializer(ReportPTSerializer):
 
     class Meta:
         model = ReportPTPineapple
-        fields = ('week', 'month', 'guide', 'invoice', 'entryDate', 'date_process',
+        fields = ('id','week', 'month', 'guide', 'invoice', 'entryDate', 'date_process',
                   'variety', 'condition', 'lot', 'provider', 'origin',
                   'kg_guide', 'kg_net',
                   'discount_percentage', 'kg_usable',
@@ -166,7 +166,7 @@ class ReportPTBananaSerializer(ReportPTSerializer):
 
     class Meta:
         model = ReportPTBanana
-        fields = ('week', 'month', 'guide', 'invoice', 'entryDate', 'date_process',
+        fields = ('id','week', 'month', 'guide', 'invoice', 'entryDate', 'date_process',
                   'variety', 'condition', 'lot', 'provider', 'origin',
                   'kg_guide', 'kg_net',
                   'discount_percentage', 'kg_usable',
@@ -205,7 +205,7 @@ class ReportPTGoldenberrySerializer(ReportPTSerializer):
 
     class Meta:
         model = ReportPTGoldenberry
-        fields = ('week', 'month', 'guide', 'invoice', 'entryDate', 'date_process',
+        fields = ('id','week', 'month', 'guide', 'invoice', 'entryDate', 'date_process',
                   'variety', 'condition', 'lot', 'provider', 'origin',
                   'kg_guide', 'kg_net',
                   'discount_percentage', 'kg_usable',
@@ -245,7 +245,7 @@ class ReportPTBlueberrySerializer(ReportPTSerializer):
 
     class Meta:
         model = ReportPTBlueberry
-        fields = ('week', 'month', 'guide', 'invoice', 'entryDate', 'date_process',
+        fields = ('id','week', 'month', 'guide', 'invoice', 'entryDate', 'date_process',
                   'variety', 'condition', 'lot', 'provider', 'origin',
                   'kg_guide', 'kg_net',
                   'discount_percentage', 'kg_usable',
