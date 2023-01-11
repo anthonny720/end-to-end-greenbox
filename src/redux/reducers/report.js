@@ -3,7 +3,9 @@ import {
     GET_PROVIDERS_CATEGORY_SUCCESS,
     GET_REPORT_FAIL,
     GET_REPORT_PT_BANANA,
-    GET_REPORT_PT_BANANA_FAIL, GET_REPORT_PT_BLUEBERRY, GET_REPORT_PT_BLUEBERRY_FAIL,
+    GET_REPORT_PT_BANANA_FAIL,
+    GET_REPORT_PT_BLUEBERRY,
+    GET_REPORT_PT_BLUEBERRY_FAIL,
     GET_REPORT_PT_GOLDENBERRY,
     GET_REPORT_PT_GOLDENBERRY_FAIL,
     GET_REPORT_PT_MANGO,
@@ -13,6 +15,16 @@ import {
     GET_REPORT_SUCCESS,
     GET_SUMMARY_CATEGORY_FAIL,
     GET_SUMMARY_CATEGORY_SUCCESS,
+    UPDATE_REPORT_PT_BANANA,
+    UPDATE_REPORT_PT_BANANA_FAIL,
+    UPDATE_REPORT_PT_BLUEBERRY,
+    UPDATE_REPORT_PT_BLUEBERRY_FAIL,
+    UPDATE_REPORT_PT_GOLDENBERRY,
+    UPDATE_REPORT_PT_GOLDENBERRY_FAIL,
+    UPDATE_REPORT_PT_MANGO,
+    UPDATE_REPORT_PT_MANGO_FAIL,
+    UPDATE_REPORT_PT_PINEAPPLE,
+    UPDATE_REPORT_PT_PINEAPPLE_FAIL,
 } from "../actions/types";
 
 const initialState = {
@@ -28,11 +40,11 @@ const initialState = {
     count: null,
     next: null,
     previous: null,
-    pineapple:null,
-    banana:null,
-    mango:null,
-    goldenberry:null,
-    blueberry:null
+    pineapple: null,
+    banana: null,
+    mango: null,
+    goldenberry: null,
+    blueberry: null
 }
 
 export default function Report(state = initialState, action) {
@@ -40,45 +52,45 @@ export default function Report(state = initialState, action) {
 
     switch (type) {
         case GET_REPORT_PT_PINEAPPLE:
-            return{
-                ...state,pineapple: payload.result
+            return {
+                ...state, pineapple: payload.result
             }
-            case GET_REPORT_PT_PINEAPPLE_FAIL:
-                return{
-                    ...state,pineapple: null
-                }
-            case GET_REPORT_PT_MANGO:
-                return{
-                    ...state,mango: payload.result
-                }
-            case GET_REPORT_PT_MANGO_FAIL:
-                return{
-                    ...state,mango: null
-                }
-            case GET_REPORT_PT_BANANA:
-                return{
-                    ...state, banana: payload.result
-                }
-            case GET_REPORT_PT_BANANA_FAIL:
-                return{
-                    ...state,banana: null
-                }
-            case GET_REPORT_PT_GOLDENBERRY:
-                return{
-                    ...state, goldenberry: payload.result
-                }
-            case GET_REPORT_PT_GOLDENBERRY_FAIL:
-                return{
-                    ...state, goldenberry: null
-                }
-            case GET_REPORT_PT_BLUEBERRY:
-                return{
-                    ...state, blueberry: payload.result
-                }
-            case GET_REPORT_PT_BLUEBERRY_FAIL:
-                return{
-                    ...state, blueberry: null
-                }
+        case GET_REPORT_PT_PINEAPPLE_FAIL:
+            return {
+                ...state, pineapple: null
+            }
+        case GET_REPORT_PT_MANGO:
+            return {
+                ...state, mango: payload.result
+            }
+        case GET_REPORT_PT_MANGO_FAIL:
+            return {
+                ...state, mango: null
+            }
+        case GET_REPORT_PT_BANANA:
+            return {
+                ...state, banana: payload.result
+            }
+        case GET_REPORT_PT_BANANA_FAIL:
+            return {
+                ...state, banana: null
+            }
+        case GET_REPORT_PT_GOLDENBERRY:
+            return {
+                ...state, goldenberry: payload.result
+            }
+        case GET_REPORT_PT_GOLDENBERRY_FAIL:
+            return {
+                ...state, goldenberry: null
+            }
+        case GET_REPORT_PT_BLUEBERRY:
+            return {
+                ...state, blueberry: payload.result
+            }
+        case GET_REPORT_PT_BLUEBERRY_FAIL:
+            return {
+                ...state, blueberry: null
+            }
         case GET_REPORT_SUCCESS:
             return {
                 ...state,
@@ -120,6 +132,19 @@ export default function Report(state = initialState, action) {
                 summary_provider_kg: null,
                 summary_provider_month: null
 
+            }
+        case UPDATE_REPORT_PT_PINEAPPLE:
+        case UPDATE_REPORT_PT_PINEAPPLE_FAIL:
+        case UPDATE_REPORT_PT_MANGO:
+        case UPDATE_REPORT_PT_MANGO_FAIL:
+        case UPDATE_REPORT_PT_BANANA:
+        case UPDATE_REPORT_PT_BANANA_FAIL:
+        case UPDATE_REPORT_PT_GOLDENBERRY:
+        case UPDATE_REPORT_PT_GOLDENBERRY_FAIL:
+        case UPDATE_REPORT_PT_BLUEBERRY:
+        case UPDATE_REPORT_PT_BLUEBERRY_FAIL:
+            return {
+                ...state
             }
         default:
             return state

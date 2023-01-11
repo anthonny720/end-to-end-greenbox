@@ -34,11 +34,11 @@ const TablePT = ({data, update,header,columns}) => {
             <tbody>
             {data !== null && size(data) > 0 ? map(data, (row, index) => (<tr key={index} className="bg-white border-b">
                 <td className="px-6 py-4 text-center gap-x">
-                    {user && user !== undefined && user !== null && user.get_role_name === 'Logistica' && <>
+
                         <FontAwesomeIcon icon={faEdit} onClick={() => update(row)}
                                          className={"text-blue-400 cursor-pointer"}
                         />
-                    </>}
+
                 </td>
                 {map(row,(value, index) => (<td key={index}
                                                                       className="py-4 px-6 whitespace-nowrap text-center">{typeof (value) === 'number' ? Humanize.formatNumber(value,2) : value

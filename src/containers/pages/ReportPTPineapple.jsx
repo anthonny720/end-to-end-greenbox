@@ -2,20 +2,39 @@ import React, {useEffect, useState} from 'react';
 import Layout from "../../hocs/Layout";
 import TablePT from "../../components/report_pt/TablePT";
 import {useDispatch, useSelector} from "react-redux";
-import {get_report_pt_mango, get_report_pt_pineapple} from "../../redux/actions/report";
+import {get_report_pt_pineapple} from "../../redux/actions/report";
 import Filter from "../../components/report_pt/Filter";
+import Modal from "../../components/util/Modal";
+import FormPTPineapple from "../../components/report_pt/FormPineapple";
 
 const ReportPTPineapple = () => {
-    const dispatch= useDispatch();
+    const dispatch = useDispatch();
     const [params, setParams] = useState({year: '', month: ''});
 
-    const data=useSelector(state=>state.Report.pineapple);
+    const data = useSelector(state => state.Report.pineapple);
     useEffect(() => {
         dispatch(get_report_pt_pineapple(params))
     }, []);
-    const columns = ['', 'Semana', 'Mes','Guia remitente','Factura', 'Fecha de ingreso', 'Fecha de producción', 'Variedad', 'Condición', 'Lote', 'Proveedor', 'Procedencia', 'Kg guia', 'KG neto recibido', 'Descuento', 'Kg aprovechables',
-        'Kg procesados', '% Deshidratación', 'Kd descarte', '% Descarte', 'Kg MP neta', 'Kg corona', '% Corona','Kg cáscara y tronco','% Cáscara y tronco','Kg jugo/pulpa','% Jugo/pulpa', 'Merma', '% Merma', 'Kg habilitados', '% Habilitado', 'Kg PT', 'Rings', '1/8', '1/16', 'Rings', '1/8', '1/16', '% Rendimiento pagados','% Rendimiento neto', '% Objetivo'
+    const columns = ['', 'Semana', 'Mes', 'Guia remitente', 'Factura', 'Fecha de ingreso', 'Fecha de producción', 'Variedad', 'Condición', 'Lote', 'Proveedor', 'Procedencia', 'Kg guia', 'KG neto recibido', 'Descuento', 'Kg aprovechables',
+        'Kg procesados', '% Deshidratación', 'Kd descarte', '% Descarte', 'Kg MP neta', 'Kg corona', '% Corona', 'Kg cáscara y tronco', '% Cáscara y tronco', 'Kg jugo/pulpa', '% Jugo/pulpa', 'Merma', '% Merma', 'Kg habilitados', '% Habilitado', 'Kg PT', 'Rings', '1/8', '1/16', 'Rings', '1/8', '1/16', '% Rendimiento pagados', '% Rendimiento neto', '% Objetivo'
     ]
+
+    /*MODAL*/
+    const [title, setTitle] = useState();
+    const [content, setContent] = useState();
+    let [isOpen, setIsOpen] = useState(false)
+
+
+    const openModal = () => {
+        setIsOpen((prev) => !prev)
+    }
+    const handleOpenModalEdit = (data) => {
+        setTitle("Registrar lote de materia prima")
+        setIsOpen(true)
+        setContent(<FormPTPineapple data={data} params={params} close={openModal}/>)
+    }
+
+
     const header = <tr>
         <th className={"text-center bg-gray-300 text-white px-2 py-2 "} colSpan={16}>RECEPCIÓN MP</th>
         <th className={"text-center bg-orange-300 text-white px-2 py-2 "} colSpan={15}>ACONDICIONADO</th>
@@ -24,8 +43,9 @@ const ReportPTPineapple = () => {
         <th className={"text-center bg-green-400 text-white px-2 py-2 "} colSpan={3}>GRANEL</th>
     </tr>
     return (<Layout>
-        <Filter action={get_report_pt_mango} setParams={setParams}/>
-        <TablePT header={header} columns={columns} data={data?data:[]}/>
+        <Modal isOpen={isOpen} close={openModal} title={title} children={content}/>
+        <Filter action={get_report_pt_pineapple} setParams={setParams}/>
+        <TablePT header={header} columns={columns} data={data ? data : []} update={handleOpenModalEdit}/>
     </Layout>);
 };
 

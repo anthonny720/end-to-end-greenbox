@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from apps.report.models import Report, ReportPT, ReportPTMango, ReportPTPineapple, ReportPTGoldenberry, \
-    ReportPTBlueberry
+    ReportPTBlueberry, ReportPTBanana
 
 
 class ReportSerializer(serializers.ModelSerializer):
@@ -37,7 +37,7 @@ class ReportSerializer(serializers.ModelSerializer):
     driver = serializers.CharField(source='lot.get_driver', read_only=True)
     carrier = serializers.CharField(source='lot.get_carrier', read_only=True)
     code = serializers.CharField(source='lot.get_carrier_code', read_only=True)
-    invoice= serializers.CharField(source='lot.invoice_code', read_only=True)
+    invoice = serializers.CharField(source='lot.invoice_code', read_only=True)
 
     class Meta:
         model = Report
@@ -80,7 +80,7 @@ class ReportPTMangoSerializer(ReportPTSerializer):
     class Meta:
         model = ReportPTMango
         fields = ('week', 'month', 'guide', 'invoice', 'entryDate', 'date_process',
-                                                                    'variety', 'condition', 'lot', 'provider', 'origin',
+                  'variety', 'condition', 'lot', 'provider', 'origin',
                   'kg_guide', 'kg_net',
                   'discount_percentage', 'kg_usable',
                   'kg_processed', 'dehydrated', 'kg_discarded', 'percentage_discarded',
@@ -125,7 +125,7 @@ class ReportPTPineappleSerializer(ReportPTSerializer):
     class Meta:
         model = ReportPTPineapple
         fields = ('week', 'month', 'guide', 'invoice', 'entryDate', 'date_process',
-                                                                    'variety', 'condition', 'lot', 'provider', 'origin',
+                  'variety', 'condition', 'lot', 'provider', 'origin',
                   'kg_guide', 'kg_net',
                   'discount_percentage', 'kg_usable',
                   'kg_processed', 'dehydrated', 'kg_discarded', 'percentage_discarded',
@@ -165,8 +165,9 @@ class ReportPTBananaSerializer(ReportPTSerializer):
     kg_usable = serializers.FloatField(source='get_kg_usable', read_only=True)
 
     class Meta:
+        model = ReportPTBanana
         fields = ('week', 'month', 'guide', 'invoice', 'entryDate', 'date_process',
-                                                                    'variety', 'condition', 'lot', 'provider', 'origin',
+                  'variety', 'condition', 'lot', 'provider', 'origin',
                   'kg_guide', 'kg_net',
                   'discount_percentage', 'kg_usable',
                   'kg_processed', 'dehydrated', 'kg_discarded', 'percentage_discarded',
@@ -205,7 +206,7 @@ class ReportPTGoldenberrySerializer(ReportPTSerializer):
     class Meta:
         model = ReportPTGoldenberry
         fields = ('week', 'month', 'guide', 'invoice', 'entryDate', 'date_process',
-                                                                    'variety', 'condition', 'lot', 'provider', 'origin',
+                  'variety', 'condition', 'lot', 'provider', 'origin',
                   'kg_guide', 'kg_net',
                   'discount_percentage', 'kg_usable',
                   'kg_processed', 'dehydrated', 'kg_discarded', 'percentage_discarded',
@@ -213,7 +214,6 @@ class ReportPTGoldenberrySerializer(ReportPTSerializer):
                   'kg_enabled', 'percentage_enabled', 'kg_pt',
                   'retail_whole',
                   'retail_halves',
-                  'retail_chunks',
                   'retail_quarter',
                   'granel_whole',
                   'granel_halves',
@@ -246,7 +246,7 @@ class ReportPTBlueberrySerializer(ReportPTSerializer):
     class Meta:
         model = ReportPTBlueberry
         fields = ('week', 'month', 'guide', 'invoice', 'entryDate', 'date_process',
-                                                                    'variety', 'condition', 'lot', 'provider', 'origin',
+                  'variety', 'condition', 'lot', 'provider', 'origin',
                   'kg_guide', 'kg_net',
                   'discount_percentage', 'kg_usable',
                   'kg_processed', 'dehydrated', 'kg_discarded', 'percentage_discarded',
@@ -257,3 +257,29 @@ class ReportPTBlueberrySerializer(ReportPTSerializer):
                   'granel_whole',
                   'granel_halves',
                   'performance_usable', 'performance_net', 'target')
+
+
+class ReportPTMangoUpdateSerializer(ReportPTSerializer):
+    class Meta:
+        model = ReportPTMango
+        fields = '__all__'
+
+class ReportPTPineappleUpdateSerializer(ReportPTSerializer):
+    class Meta:
+        model = ReportPTPineapple
+        fields = '__all__'
+
+class ReportPTBananaUpdateSerializer(ReportPTSerializer):
+    class Meta:
+        model = ReportPTBanana
+        fields = '__all__'
+
+class ReportPTGoldenberryUpdateSerializer(ReportPTSerializer):
+    class Meta:
+        model = ReportPTGoldenberry
+        fields = '__all__'
+
+class ReportPTBlueberryUpdateSerializer(ReportPTSerializer):
+    class Meta:
+        model = ReportPTBlueberry
+        fields = '__all__'

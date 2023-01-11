@@ -57,9 +57,8 @@ const Table = ({data, update, remove}) => {
                 <td className="px-6 py-4 text-center">{row?.presentation_name}</td>
                 <td className="px-6 py-4 text-center">{Humanize.formatNumber(row?.pesticides, 2)} %</td>
                 <td className="px-6 py-4 text-center">{Humanize.formatNumber(row?.fosetyl, 2)} %</td>
-
-                <td className="px-6 py-4 text-center">{row?.packaging_name}</td>
                 <td className="px-6 py-4 text-center">{row?.packing_name}</td>
+                <td className="px-6 py-4 text-center">{row?.packaging_name}</td>
                 <td className="px-6 py-4 text-center">{new Date(row?.production_date).toLocaleDateString('es-PE', {
                     timeZone: 'UTC', day: 'numeric', month: 'long', year: 'numeric'
                 })}</td>

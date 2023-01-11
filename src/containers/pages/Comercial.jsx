@@ -39,8 +39,8 @@ const Commercial = () => {
     const type_inf = useSelector(state => state.Commercial.type_inf);
     const condition = useSelector(state => state.Commercial.condition);
     const presentation = useSelector(state => state.Commercial.presentation);
-    const packaging = useSelector(state => state.Commercial.packaging);
-    const packing = useSelector(state => state.Commercial.packing);
+    const packaging = useSelector(state => state.Commercial.packing);
+    const packing = useSelector(state => state.Commercial.packaging);
     const fcl = useSelector(state => state.Logistic.full_packing_list);
     const user = useSelector(state => state.Auth.user);
     const maquila = useSelector(state => state.Business.maquila);

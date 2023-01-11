@@ -5,7 +5,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPaperPlane} from "@fortawesome/free-solid-svg-icons";
 import {map} from "lodash";
 import {useDispatch} from "react-redux";
-import {update_packing} from "../../redux/actions/report";
+import {update_report} from "../../redux/actions/report";
 
 
 const Form = ({close, data, category}) => {
@@ -22,7 +22,7 @@ const Form = ({close, data, category}) => {
         validationSchema: Yup.object(newSchema()),
         validateOnChange: true,
         onSubmit: (form) => {
-            dispatch(update_packing(form, data.id, category))
+            dispatch(update_report(form, data.id, category))
             close()
         }
     })

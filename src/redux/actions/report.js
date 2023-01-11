@@ -16,6 +16,14 @@ import {
     GET_SUMMARY_CATEGORY_FAIL,
     GET_SUMMARY_CATEGORY_SUCCESS,
     UPDATE_REPORT_FAIL,
+    UPDATE_REPORT_PT_BANANA,
+    UPDATE_REPORT_PT_BANANA_FAIL, UPDATE_REPORT_PT_BLUEBERRY, UPDATE_REPORT_PT_BLUEBERRY_FAIL,
+    UPDATE_REPORT_PT_GOLDENBERRY,
+    UPDATE_REPORT_PT_GOLDENBERRY_FAIL,
+    UPDATE_REPORT_PT_MANGO,
+    UPDATE_REPORT_PT_MANGO_FAIL,
+    UPDATE_REPORT_PT_PINEAPPLE,
+    UPDATE_REPORT_PT_PINEAPPLE_FAIL,
     UPDATE_REPORT_SUCCESS,
 } from "./types";
 import axios from "axios";
@@ -131,7 +139,7 @@ export const getSummaryCategory = (category) => async dispatch => {
     }
 }
 
-export const update_packing = (form, id, category) => async dispatch => {
+export const update_report = (form, id, category) => async dispatch => {
     const config = {
         headers: {
             'Authorization': `JWT ${localStorage.getItem('access')}`, 'Accept': 'application/json'
@@ -305,5 +313,146 @@ export const get_report_pt_blueberry = (params) => async dispatch => {
         dispatch({
             type: GET_REPORT_PT_BLUEBERRY_FAIL
         });
+    }
+}
+
+export const update_report_pt_mango = (form, id, params) => async dispatch => {
+    const config = {
+        headers: {
+            'Authorization': `JWT ${localStorage.getItem('access')}`, 'Accept': 'application/json'
+        }
+    };
+
+    try {
+        const res = await axios.patch(`${process.env.REACT_APP_API_URL}/api/report/pt/mango/${id}`, form, config);
+        if (res.status === 200) {
+            dispatch({
+                type: UPDATE_REPORT_PT_MANGO,
+            });
+            dispatch(get_report_pt_mango(params));
+            dispatch(setAlert(res.data.message, 'success'));
+        } else {
+            dispatch({
+                type: UPDATE_REPORT_PT_MANGO_FAIL
+            });
+        }
+    } catch (err) {
+        dispatch({
+            type: UPDATE_REPORT_PT_MANGO_FAIL
+        });
+        dispatch(setAlert(err.response.data['error'], 'error'));
+
+    }
+}
+export const update_report_pt_pineapple = (form, id, params) => async dispatch => {
+    const config = {
+        headers: {
+            'Authorization': `JWT ${localStorage.getItem('access')}`, 'Accept': 'application/json'
+        }
+    };
+
+    try {
+        const res = await axios.patch(`${process.env.REACT_APP_API_URL}/api/report/pt/pineapple/${id}`, form, config);
+        if (res.status === 200) {
+            dispatch({
+                type: UPDATE_REPORT_PT_PINEAPPLE,
+            });
+            dispatch(get_report_pt_pineapple(params));
+            dispatch(setAlert(res.data.message, 'success'));
+        } else {
+            dispatch({
+                type: UPDATE_REPORT_PT_PINEAPPLE_FAIL
+            });
+        }
+    } catch (err) {
+        dispatch({
+            type: UPDATE_REPORT_PT_PINEAPPLE_FAIL
+        });
+        dispatch(setAlert(err.response.data['error'], 'error'));
+
+    }
+}
+export const update_report_pt_banana = (form, id, params) => async dispatch => {
+    const config = {
+        headers: {
+            'Authorization': `JWT ${localStorage.getItem('access')}`, 'Accept': 'application/json'
+        }
+    };
+
+    try {
+        const res = await axios.patch(`${process.env.REACT_APP_API_URL}/api/report/pt/banana/${id}`, form, config);
+        if (res.status === 200) {
+            dispatch({
+                type: UPDATE_REPORT_PT_BANANA,
+            });
+            dispatch(get_report_pt_banano(params));
+            dispatch(setAlert(res.data.message, 'success'));
+        } else {
+            dispatch({
+                type: UPDATE_REPORT_PT_BANANA_FAIL
+            });
+        }
+    } catch (err) {
+        dispatch({
+            type: UPDATE_REPORT_PT_BANANA_FAIL
+        });
+        dispatch(setAlert(err.response.data['error'], 'error'));
+
+    }
+}
+export const update_report_pt_goldenberry = (form, id, params) => async dispatch => {
+    const config = {
+        headers: {
+            'Authorization': `JWT ${localStorage.getItem('access')}`, 'Accept': 'application/json'
+        }
+    };
+
+    try {
+        const res = await axios.patch(`${process.env.REACT_APP_API_URL}/api/report/pt/goldenberry/>${id}`, form, config);
+        if (res.status === 200) {
+            dispatch({
+                type: UPDATE_REPORT_PT_GOLDENBERRY,
+            });
+            dispatch(get_report_pt_goldenberry(params));
+            dispatch(setAlert(res.data.message, 'success'));
+        } else {
+            dispatch({
+                type: UPDATE_REPORT_PT_GOLDENBERRY_FAIL
+            });
+        }
+    } catch (err) {
+        dispatch({
+            type: UPDATE_REPORT_PT_GOLDENBERRY_FAIL
+        });
+        dispatch(setAlert(err.response.data['error'], 'error'));
+
+    }
+}
+export const update_report_pt_blueberry = (form, id, params) => async dispatch => {
+    const config = {
+        headers: {
+            'Authorization': `JWT ${localStorage.getItem('access')}`, 'Accept': 'application/json'
+        }
+    };
+
+    try {
+        const res = await axios.patch(`${process.env.REACT_APP_API_URL}/api/report/pt/blueberry/${id}`, form, config);
+        if (res.status === 200) {
+            dispatch({
+                type: UPDATE_REPORT_PT_BLUEBERRY,
+            });
+            dispatch(get_report_pt_blueberry(params));
+            dispatch(setAlert(res.data.message, 'success'));
+        } else {
+            dispatch({
+                type: UPDATE_REPORT_PT_BLUEBERRY_FAIL
+            });
+        }
+    } catch (err) {
+        dispatch({
+            type: UPDATE_REPORT_PT_BLUEBERRY_FAIL
+        });
+        dispatch(setAlert(err.response.data['error'], 'error'));
+
     }
 }

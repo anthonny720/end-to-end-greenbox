@@ -26,6 +26,8 @@ const Form = ({
     const variety = useSelector(state => state.Commercial.variety);
     const cut = useSelector(state => state.Commercial.cut);
 
+    console.log(data)
+
 
     /*Formik*/
     const formik = useFormik({
@@ -146,9 +148,9 @@ const Form = ({
 
                     {/*Packaging*/}
                     <div>
-                        <p className={`${formik.errors.packaging ? "text-red-500" : "text-base mt-4 font-medium leading-none text-gray-800"}`}>Embalaje:</p>
-                        <select value={formik.values.packaging}
-                                onChange={(value) => formik.setFieldValue('packaging', value.target.value)}
+                        <p className={`${formik.errors.packing ? "text-red-500" : "text-base mt-4 font-medium leading-none text-gray-800"}`}>Embalaje:</p>
+                        <select value={formik.values.packing}
+                                onChange={(value) => formik.setFieldValue('packing', value.target.value)}
                                 className="scrollbar-hide mt-4 form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300       rounded transition       ease-in-out
                     m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                 aria-label="Default select example">
@@ -159,9 +161,9 @@ const Form = ({
                     </div>
                     {/*Packing*/}
                     <div>
-                        <p className={`${formik.errors.packing ? "text-red-500" : "text-base mt-4 font-medium leading-none text-gray-800"}`}>Empaque:</p>
-                        <select value={formik.values.packing}
-                                onChange={(value) => formik.setFieldValue('packing', value.target.value)}
+                        <p className={`${formik.errors.packaging ? "text-red-500" : "text-base mt-4 font-medium leading-none text-gray-800"}`}>Empaque:</p>
+                        <select value={formik.values.packaging}
+                                onChange={(value) => formik.setFieldValue('packaging', value.target.value)}
                                 className="scrollbar-hide mt-4 form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300       rounded transition       ease-in-out
                     m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                 aria-label="Default select example">

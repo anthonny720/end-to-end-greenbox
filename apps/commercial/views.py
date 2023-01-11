@@ -9,7 +9,7 @@ from apps.commercial.models import Product, Condition, Packing, Presentation, Va
 from apps.commercial.serializers import ProductSerializer, ConditionSerializer, PackingSerializer, \
     PresentationSerializer, ClientSerializer, VarietySerializer, CutSerializer, TypeSerializer, GroupSerializer, \
     LotSerializer, KardexSerializer
-from apps.util.pagination import SetPagination
+from apps.util.pagination import SetPagination, FullSetPagination
 
 
 # Create your views here.
@@ -200,7 +200,7 @@ class ListLotView(APIView):
         if cut:
             queryset = queryset.filter(cut_id=cut)
         if queryset.exists():
-            paginator = SetPagination()
+            paginator = FullSetPagination()
             results = paginator.paginate_queryset(queryset, request)
             serializer = LotSerializer(results, many=True)
             return paginator.get_paginated_response(serializer.data)

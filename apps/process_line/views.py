@@ -277,7 +277,7 @@ class CreateReleasedView(APIView):
 
 class ListReleasedReceptionView(APIView):
     def get(self, request, *args, **kwargs):
-        queryset = ProcessLineReleased.objects.all().filter(observations='1').order_by('-updated_at')[0:100]
+        queryset = ProcessLineReleased.objects.all().filter(observations='1').order_by('-updated')[0:100]
         try:
             serializers = LiberatedReceptionListSerializer(queryset, many=True)
             return Response({'result': serializers.data}, status=status.HTTP_200_OK)

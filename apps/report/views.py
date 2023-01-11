@@ -10,7 +10,9 @@ from apps.products.models import Fruits
 from apps.report.models import Report, ReportPTMango, ReportPTPineapple, ReportPTBanana, ReportPTGoldenberry, \
     ReportPTBlueberry
 from apps.report.serializers import ReportSerializer, ReportPTMangoSerializer, ReportPTPineappleSerializer, \
-    ReportPTBananaSerializer, ReportPTGoldenberrySerializer, ReportPTBlueberrySerializer
+    ReportPTBananaSerializer, ReportPTGoldenberrySerializer, ReportPTBlueberrySerializer, \
+    ReportPTBlueberryUpdateSerializer, ReportPTGoldenberryUpdateSerializer, ReportPTPineappleUpdateSerializer, \
+    ReportPTMangoUpdateSerializer, ReportPTBananaUpdateSerializer
 from apps.util.pagination import SetPagination
 
 
@@ -27,17 +29,18 @@ class ListReportView(APIView):
         category = kwargs["category"].capitalize()
         current_date = datetime.date(datetime.now())
         queryset = Report.objects.all().filter(lot__category__name=category)
+
         # FILTERS
         provider = request.query_params.get('provider', None)
-        year = request.query_params.get('year', None)
+        year = request.query_params.get('year', current_date.year)
         month = request.query_params.get('month', None)
 
         if provider:
             queryset = queryset.filter(lot__provider__name__icontains=provider)
-        if year:
-            queryset = queryset.filter(lot__entryDate__year=year)
         if month:
             queryset = queryset.filter(lot__entryDate__month=month)
+        if year:
+            queryset = queryset.filter(lot__entryDate__year=year)
         try:
             report = []
             kg = 0
@@ -58,9 +61,7 @@ class ListReportView(APIView):
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-
 months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
-
 
 class ReportView(APIView):
     def patch(self, request, *args, **kwargs):
@@ -279,3 +280,64 @@ class ListPTBlueberryView(APIView):
             return Response({'result': serializers.data}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UpdatePTBlueberryView(APIView):
+    def patch(self,request,*args,**kwargs):
+        try:
+            pk = kwargs['id']
+            queryset = ReportPTBlueberry.objects.get(pk=pk)
+            serializer = ReportPTBlueberryUpdateSerializer(queryset,data=request.data,partial=True)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response({'message':'Registro actualizado correctamente'},status=status.HTTP_200_OK)
+        except:
+            return Response({'error':'No se pudo actualizar el registro'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class UpdatePTGoldenberryView(APIView):
+    def patch(self,request,*args,**kwargs):
+        try:
+            pk = kwargs['id']
+            queryset = ReportPTGoldenberry.objects.get(pk=pk)
+            serializer = ReportPTGoldenberryUpdateSerializer(queryset,data=request.data,partial=True)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response({'message':'Registro actualizado correctamente'},status=status.HTTP_200_OK)
+        except:
+            return Response({'error':'No se pudo actualizar el registro'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class UpdatePTPineappleView(APIView):
+    def patch(self,request,*args,**kwargs):
+        try:
+            pk = kwargs['id']
+            queryset = ReportPTPineapple.objects.get(pk=pk)
+            serializer = ReportPTPineappleUpdateSerializer(queryset,data=request.data,partial=True)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response({'message':'Registro actualizado correctamente'},status=status.HTTP_200_OK)
+        except:
+            return Response({'error':'No se pudo actualizar el registro'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class UpdatePTMangoView(APIView):
+    def patch(self,request,*args,**kwargs):
+        try:
+            pk = kwargs['id']
+            queryset = ReportPTMango.objects.get(pk=pk)
+            serializer = ReportPTMangoUpdateSerializer(queryset,data=request.data,partial=True)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response({'message':'Registro actualizado correctamente'},status=status.HTTP_200_OK)
+        except:
+            return Response({'error':'No se pudo actualizar el registro'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class UpdatePTBananaView(APIView):
+    def patch(self,request,*args,**kwargs):
+        try:
+            pk = kwargs['id']
+            queryset = ReportPTBanana.objects.get(pk=pk)
+            serializer = ReportPTBananaUpdateSerializer(queryset,data=request.data,partial=True)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response({'message':'Registro actualizado correctamente'},status=status.HTTP_200_OK)
+        except:
+            return Response({'error':'No se pudo actualizar el registro'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)

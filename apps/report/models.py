@@ -401,8 +401,6 @@ class ReportPTBlueberry(ReportPT):
         except:
             return 0
 
-
-
     def get_kg_enabled(self):
         try:
             return Decimal(self.get_net_weight()) - Decimal(self.merma)

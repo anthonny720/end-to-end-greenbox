@@ -9,3 +9,8 @@ class SetPagination(PageNumberPagination):
 
 
 
+class FullSetPagination(PageNumberPagination):
+    page_query_param = 'p'
+    page_size = 400
+    page_size_query_param = 'page_size'
+    max_page_size = 400

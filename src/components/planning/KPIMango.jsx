@@ -83,56 +83,6 @@ const KPIMango = ({data,week,update}) => {
                     <th key={index} className="px-6 py-3 text-center"><Skeleton count={20}/></th>))}
             </tr>}
 
-            <tr className={"font-bold text-black"}>
-                <CustomTd></CustomTd>
-                <CustomTd>Acumulado {week && week}</CustomTd>
-                <CustomTd></CustomTd>
-                <CustomTd></CustomTd>
-                <CustomTd>{summary ? Humanize.formatNumber(summary?.total_entry, 2) : <Skeleton count={1}/>}</CustomTd>
-                <CustomTd>{summary ? Humanize.formatNumber(summary?.total_real_entry, 2) :
-                    <Skeleton count={1}/>}</CustomTd>
-                <CustomTd>{summary ? Humanize.formatNumber(summary?.total_compliance_entry, 0) :
-                    <Skeleton count={1}/>}</CustomTd>
-                 <CustomTd>{summary ? Humanize.formatNumber(summary?.total_objective_entry, 0) :
-                    <Skeleton count={1}/>}</CustomTd>
-                <CustomTd>{summary ? Humanize.formatNumber(summary?.total_wt_280, 2) : <Skeleton count={1}/>}</CustomTd>
-                <CustomTd>{summary ? Humanize.formatNumber(summary?.total_wt_280_300, 2) :
-                    <Skeleton count={1}/>}</CustomTd>
-                <CustomTd>{summary ? Humanize.formatNumber(summary?.total_wt_300, 2) : <Skeleton count={1}/>}</CustomTd>
-                <CustomTd>{summary ? Humanize.formatNumber(summary?.total_color_1, 2) :
-                    <Skeleton count={1}/>}</CustomTd>
-                <CustomTd>{summary ? Humanize.formatNumber(summary?.total_color_1_5_2_5, 2) :
-                    <Skeleton count={1}/>}</CustomTd>
-                <CustomTd>{summary ? Humanize.formatNumber(summary?.total_color_3, 2) :
-                    <Skeleton count={1}/>}</CustomTd>
-                <CustomTd>{summary ? Humanize.formatNumber(summary?.total_mechanical_damage, 2) :
-                    <Skeleton count={1}/>}</CustomTd>
-                <CustomTd>{summary ? Humanize.formatNumber(summary?.total_physical_damage, 2) :
-                    <Skeleton count={1}/>}</CustomTd>
-                <CustomTd>{summary ? Humanize.formatNumber(summary?.total_plagues, 2) :
-                    <Skeleton count={1}/>}</CustomTd>
-                <CustomTd>{summary ? Humanize.formatNumber(summary?.total_others, 2) : <Skeleton count={1}/>}</CustomTd>
-                <CustomTd>{summary ? Humanize.formatNumber(summary?.total_defects, 2) :
-                    <Skeleton count={1}/>}</CustomTd>
-
-                <CustomTd>{summary ? Humanize.formatNumber(summary?.total_discard, 2) :
-                    <Skeleton count={1}/>}</CustomTd>
-                <CustomTd>{summary ? Humanize.formatNumber(summary?.total_kg_brute, 2) :
-                    <Skeleton count={1}/>}</CustomTd>
-                <CustomTd>{summary ? Humanize.formatNumber(summary?.total_compliance_production, 0) :
-                    <Skeleton count={1}/>}</CustomTd>
-               <CustomTd>{summary ? Humanize.formatNumber(summary?.total_objective_production, 0) :
-                    <Skeleton count={1}/>}</CustomTd>
-                <CustomTd>{summary ? Humanize.formatNumber(summary?.total_price, 2) : <Skeleton count={1}/>}</CustomTd>
-                <CustomTd>{summary ? Humanize.formatNumber(summary?.total_objective_price, 2) : <Skeleton count={1}/>}</CustomTd>
-                <CustomTd>{summary ? Humanize.formatNumber(summary?.total_kent, 2) :
-                    <Skeleton count={1}/>}</CustomTd>
-                <CustomTd>{summary ? Humanize.formatNumber(summary?.total_edward, 2) :
-                    <Skeleton count={1}/>}</CustomTd><CustomTd>{summary ? Humanize.formatNumber(summary?.total_haden, 2) :
-                    <Skeleton count={1}/>}</CustomTd><CustomTd>{summary ? Humanize.formatNumber(summary?.total_other, 2) :
-                    <Skeleton count={1}/>}</CustomTd>
-            </tr>
-
 
             </tbody>
         </table>

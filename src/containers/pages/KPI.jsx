@@ -17,7 +17,7 @@ function classNames(...classes) {
 }
 
 const KPI = () => {
-    let [categories] = useState(["Piña", 'Mango', 'Aguaymanto', "Mantenimiento"])
+    let [categories] = useState(["Piña", 'Mango', 'Aguaymanto'])
     const dispatch = useDispatch();
     const [params, setParams] = useState({year: '', week: ''});
 

@@ -54,7 +54,7 @@ const Filter = ({action, setParams}) => {
 };
 const initialValues = () => {
     return {
-        year: "", month: "",
+        year: new Date().getFullYear(), month: new Date().getMonth() + 1,
     }
 }
 
