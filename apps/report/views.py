@@ -295,6 +295,9 @@ class ListPTBlueberryView(APIView):
 
 class UpdatePTBlueberryView(APIView):
     def patch(self,request,*args,**kwargs):
+        if request.user.role != "7":
+            return Response({'error': 'No tiene permisos para realizar esta acción'},
+                            status=status.HTTP_401_UNAUTHORIZED)
         try:
             pk = kwargs['id']
             queryset = ReportPTBlueberry.objects.get(pk=pk)
@@ -302,11 +305,15 @@ class UpdatePTBlueberryView(APIView):
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response({'message':'Registro actualizado correctamente'},status=status.HTTP_200_OK)
-        except:
-            return Response({'error':'No se pudo actualizar el registro'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except Exception as e:
+            return Response({'error': 'No se pudo actualizar el registro', 'detail': str(e)},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class UpdatePTGoldenberryView(APIView):
     def patch(self,request,*args,**kwargs):
+        if request.user.role != "7":
+            return Response({'error': 'No tiene permisos para realizar esta acción'},
+                            status=status.HTTP_401_UNAUTHORIZED)
         try:
             pk = kwargs['id']
             queryset = ReportPTGoldenberry.objects.get(pk=pk)
@@ -314,11 +321,15 @@ class UpdatePTGoldenberryView(APIView):
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response({'message':'Registro actualizado correctamente'},status=status.HTTP_200_OK)
-        except:
-            return Response({'error':'No se pudo actualizar el registro'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except Exception as e:
+            return Response({'error': 'No se pudo actualizar el registro', 'detail': str(e)},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class UpdatePTPineappleView(APIView):
     def patch(self,request,*args,**kwargs):
+        if request.user.role != "7":
+            return Response({'error': 'No tiene permisos para realizar esta acción'},
+                            status=status.HTTP_401_UNAUTHORIZED)
         try:
             pk = kwargs['id']
             queryset = ReportPTPineapple.objects.get(pk=pk)
@@ -326,11 +337,15 @@ class UpdatePTPineappleView(APIView):
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response({'message':'Registro actualizado correctamente'},status=status.HTTP_200_OK)
-        except:
-            return Response({'error':'No se pudo actualizar el registro'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except Exception as e:
+            return Response({'error': 'No se pudo actualizar el registro', 'detail': str(e)},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class UpdatePTMangoView(APIView):
     def patch(self,request,*args,**kwargs):
+        if request.user.role != "7":
+            return Response({'error': 'No tiene permisos para realizar esta acción'},
+                            status=status.HTTP_401_UNAUTHORIZED)
         try:
             pk = kwargs['id']
             queryset = ReportPTMango.objects.get(pk=pk)
@@ -343,6 +358,9 @@ class UpdatePTMangoView(APIView):
 
 class UpdatePTBananaView(APIView):
     def patch(self,request,*args,**kwargs):
+        if request.user.role != "7":
+            return Response({'error': 'No tiene permisos para realizar esta acción'},
+                            status=status.HTTP_401_UNAUTHORIZED)
         try:
             pk = kwargs['id']
             queryset = ReportPTBanana.objects.get(pk=pk)
@@ -350,5 +368,6 @@ class UpdatePTBananaView(APIView):
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response({'message':'Registro actualizado correctamente'},status=status.HTTP_200_OK)
-        except:
-            return Response({'error':'No se pudo actualizar el registro'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except Exception as e:
+            return Response({'error': 'No se pudo actualizar el registro', 'detail': str(e)},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)

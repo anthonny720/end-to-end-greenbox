@@ -29,7 +29,7 @@ const FormPTBanana = ({data, close, params}) => {
         validationSchema: Yup.object(newSchema()),
         validateOnChange: true,
         onSubmit: (form, onSubmitProps) => {
-            dispatch(update_report_pt_banana(form, data.id, params))
+            dispatch(update_report_pt_banana(form, data?.id, params))
             close()
         }
     })

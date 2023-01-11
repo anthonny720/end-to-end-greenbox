@@ -33,12 +33,11 @@ const FormPTMango = ({data, close, params}) => {
         validationSchema: Yup.object(newSchema()),
         validateOnChange: true,
         onSubmit: (form, onSubmitProps) => {
-            dispatch(update_report_pt_mango(form, data.id, params))
+            dispatch(update_report_pt_mango(form, data?.id, params))
             close()
         }
     })
 
-    console.log(data)
 
 
     return (<form className="bg-white  rounded px-8 pt-6 pb-8 mb-4">
