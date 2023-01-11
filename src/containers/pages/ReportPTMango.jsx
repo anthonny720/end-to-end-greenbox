@@ -33,7 +33,7 @@ const ReportPTMango = () => {
     ]
 
      const handleOpenModalEdit = (data) => {
-        setTitle("Registrar lote de materia prima")
+        setTitle(data?.lot)
         setIsOpen(true)
         setContent(<FormPTMango data={data} params={params} close={openModal}/>)
     }

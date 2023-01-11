@@ -31,7 +31,7 @@ const ReportPTGoldenberry = () => {
         setIsOpen((prev) => !prev)
     }
     const handleOpenModalEdit = (data) => {
-        setTitle("Registrar lote de materia prima")
+        setTitle(data?.lot)
         setIsOpen(true)
         setContent(<FormPTGoldenberry data={data} params={params} close={openModal}/>)
     }

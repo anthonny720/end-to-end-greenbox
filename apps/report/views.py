@@ -190,7 +190,7 @@ class ProviderListView(APIView):
 class ListPTMangoView(APIView):
     def get(self, request, *args, **kwargs):
         current_date = datetime.date(datetime.now())
-        queryset = ReportPTMango.objects.all().filter(date_process__year=current_date.year)
+        queryset = ReportPTMango.objects.all()
         # FILTERS
         year = request.query_params.get('year', None)
         month = request.query_params.get('month', None)
@@ -199,6 +199,8 @@ class ListPTMangoView(APIView):
             queryset = queryset.filter(date_process__year=year)
         if month:
             queryset = queryset.filter(date_process__month=month)
+        if not year:
+            queryset = queryset.filter(date_process__year=current_date.year)
         try:
             serializers = ReportPTMangoSerializer(queryset, many=True)
             return Response({'result': serializers.data}, status=status.HTTP_200_OK)
@@ -209,13 +211,15 @@ class ListPTMangoView(APIView):
 class ListPTPineappleView(APIView):
     def get(self, request, *args, **kwargs):
         current_date = datetime.date(datetime.now())
-        queryset = ReportPTPineapple.objects.all().filter(date_process__year=current_date.year)
+        queryset = ReportPTPineapple.objects.all()
         # FILTERS
         year = request.query_params.get('year', None)
         month = request.query_params.get('month', None)
 
         if year:
             queryset = queryset.filter(date_process__year=year)
+        if not year:
+            queryset = queryset.filter(date_process__year=current_date.year)
         if month:
             queryset = queryset.filter(date_process__month=month)
         try:
@@ -228,13 +232,16 @@ class ListPTPineappleView(APIView):
 class ListPTBananaView(APIView):
     def get(self, request, *args, **kwargs):
         current_date = datetime.date(datetime.now())
-        queryset = ReportPTBanana.objects.all().filter(date_process__year=current_date.year)
+        queryset = ReportPTBanana.objects.all()
         # FILTERS
         year = request.query_params.get('year', None)
+
         month = request.query_params.get('month', None)
 
         if year:
             queryset = queryset.filter(date_process__year=year)
+        if not year:
+                queryset = queryset.filter(date_process__year=current_date.year)
         if month:
             queryset = queryset.filter(date_process__month=month)
         try:
@@ -247,13 +254,15 @@ class ListPTBananaView(APIView):
 class ListPTGoldenberryView(APIView):
     def get(self, request, *args, **kwargs):
         current_date = datetime.date(datetime.now())
-        queryset = ReportPTGoldenberry.objects.all().filter(date_process__year=current_date.year)
+        queryset = ReportPTGoldenberry.objects.all()
         # FILTERS
         year = request.query_params.get('year', None)
         month = request.query_params.get('month', None)
 
         if year:
             queryset = queryset.filter(date_process__year=year)
+        if not year:
+                queryset = queryset.filter(date_process__year=current_date.year)
         if month:
             queryset = queryset.filter(date_process__month=month)
         try:
@@ -266,13 +275,15 @@ class ListPTGoldenberryView(APIView):
 class ListPTBlueberryView(APIView):
     def get(self, request, *args, **kwargs):
         current_date = datetime.date(datetime.now())
-        queryset = ReportPTBlueberry.objects.all().filter(date_process__year=current_date.year)
+        queryset = ReportPTBlueberry.objects.all()
         # FILTERS
         year = request.query_params.get('year', None)
         month = request.query_params.get('month', None)
 
         if year:
             queryset = queryset.filter(date_process__year=year)
+        if not year:
+                queryset = queryset.filter(date_process__year=current_date.year)
         if month:
             queryset = queryset.filter(date_process__month=month)
         try:
@@ -327,8 +338,8 @@ class UpdatePTMangoView(APIView):
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response({'message':'Registro actualizado correctamente'},status=status.HTTP_200_OK)
-        except:
-            return Response({'error':'No se pudo actualizar el registro'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except Exception as e:
+            return Response({'error':'No se pudo actualizar el registro','detail':str(e)},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class UpdatePTBananaView(APIView):
     def patch(self,request,*args,**kwargs):

@@ -34,6 +34,13 @@ const Filter = ({dispatch, setParams}) => {
                     onChange={text => formik.setFieldValue('condition', text.target.value)}/>
             </div>
             <div className={"flex w-max flex-col"}>
+                <p className={`${formik.errors.guide ? "text-red-500" : "text-base mt-4 font-medium leading-none text-gray-800"}`}>Guia:</p>
+                <input
+                    className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50 uppercase"
+                    value={formik.values.guide}
+                    onChange={text => formik.setFieldValue('guide', text.target.value)}/>
+            </div>
+            <div className={"flex w-max flex-col"}>
                 <p className={`${formik.errors.category ? "text-red-500" : "text-base mt-4 font-medium leading-none text-gray-800"}`}>Producto:</p>
                 <input
                     className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50 uppercase"
@@ -46,7 +53,7 @@ const Filter = ({dispatch, setParams}) => {
 };
 const initialValues = () => {
     return {
-        lot: '', category: '', variety: '',condition:''
+        lot: '', category: '', variety: '',condition:'',guide:''
     }
 }
 

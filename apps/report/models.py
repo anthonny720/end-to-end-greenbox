@@ -211,27 +211,27 @@ class Report(models.Model):
 class ReportPT(models.Model):
     date_process = models.DateField(verbose_name="Fecha de Proceso")
     kg_processed = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Kg Procesados",default=0)
+    merma = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="Merma",default=0)
     kg_discarded = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Kg Descartados",default=0)
-    merma = models.DecimalField(max_digits=4, decimal_places=2, verbose_name="Merma",default=0)
     class Meta:
         abstract = True
 
     def get_percentage_discarded(self):
         try:
-            return (Decimal(self.kg_discarded) * 100) / Decimal(self.kg_processed)*100
+            return float(self.kg_discarded) / float(self.kg_processed)*100
         except:
             return 0
 
 
     def get_net_weight(self):
         try:
-            return Decimal(self.kg_processed) - Decimal(self.kg_discarded)
+            return float(self.kg_processed) - float(self.kg_discarded)
         except:
             return 0
 
     def get_percentage_merma(self):
         try:
-            return (Decimal(self.merma) / Decimal(self.get_net_weight))*100
+            return (float(self.merma) / float(self.get_net_weight()))*100
         except:
             return 0
 
@@ -263,20 +263,20 @@ class ReportPTMango(ReportPT):
         return self.lot.lot
     def get_dehydrated(self):
         try:
-            return (float(self.lot.get_net_weight())-float(self.kg_processed))/float(self.lot.get_net_weight())
+            return (float(self.lot.get_total_net_weight())-float(self.kg_processed))/float(self.lot.get_total_net_weight())*100
         except:
             return 0
 
     def get_percentage_shell(self):
         try:
-            return (Decimal(self.shell) * 100) / Decimal(self.kg_processed)
+            return float(self.shell)  / float(self.get_net_weight()) * 100
         except:
             return 0
 
 
     def get_kg_enabled(self):
         try:
-            return Decimal(self.get_net_weight()) - (Decimal(self.shell)+Decimal(self.merma))
+            return float(self.get_net_weight()) - (float(self.shell)+float(self.merma))
         except:
             return 0
 
@@ -331,20 +331,20 @@ class ReportPTBanana(ReportPT):
         return self.lot.lot
     def get_dehydrated(self):
         try:
-            return (float(self.lot.get_net_weight())-float(self.kg_processed))/float(self.lot.get_net_weight())
+            return (float(self.lot.get_total_net_weight())-float(self.kg_processed))/float(self.lot.get_total_net_weight())*100
         except:
             return 0
 
     def get_percentage_shell(self):
         try:
-            return (Decimal(self.kg_shell) * 100) / Decimal(self.kg_processed)
+            return float(self.kg_shell) / float(self.get_net_weight())*100
         except:
             return 0
 
 
     def get_kg_enabled(self):
         try:
-            return Decimal(self.get_net_weight()) - (Decimal(self.shell)+Decimal(self.merma))
+            return float(self.get_net_weight()) - (float(self.shell)+float(self.merma))
         except:
             return 0
 
@@ -397,13 +397,13 @@ class ReportPTBlueberry(ReportPT):
         return self.lot.lot
     def get_dehydrated(self):
         try:
-            return (float(self.lot.get_net_weight())-float(self.kg_processed))/float(self.lot.get_net_weight())
+            return (float(self.lot.get_total_net_weight())-float(self.kg_processed))/float(self.lot.get_total_net_weight())*100
         except:
             return 0
 
     def get_kg_enabled(self):
         try:
-            return Decimal(self.get_net_weight()) - Decimal(self.merma)
+            return float(self.get_net_weight()) - float(self.merma)
         except:
             return 0
 
@@ -459,19 +459,19 @@ class ReportPTGoldenberry (ReportPT):
         return self.lot.lot
     def get_dehydrated(self):
         try:
-            return (float(self.lot.get_net_weight())-float(self.kg_processed))/float(self.lot.get_net_weight())
+            return (float(self.lot.get_total_net_weight())-float(self.kg_processed))/float(self.lot.get_total_net_weight())*100
         except:
             return 0
 
     def get_percentage_caliz(self):
         try:
-            return (Decimal(self.caliz) * 100) / Decimal(self.kg_processed)
+            return (float(self.caliz)  / float(self.get_net_weight()))*100
         except:
             return 0
 
     def get_kg_enabled(self):
         try:
-            return Decimal(self.get_net_weight()) - Decimal(self.merma) - Decimal(self.caliz)
+            return float(self.get_net_weight()) - float(self.merma) - float(self.caliz)
         except:
             return 0
 
@@ -529,31 +529,31 @@ class ReportPTPineapple (ReportPT):
         return self.lot.lot
     def get_dehydrated(self):
         try:
-            return (float(self.lot.get_net_weight())-float(self.kg_processed))/float(self.lot.get_net_weight())
+            return (float(self.lot.get_total_net_weight())-float(self.kg_processed))/float(self.lot.get_total_net_weight())*100
         except:
             return 0
 
     def get_percentage_crown(self):
         try:
-            return (Decimal(self.crown) * 100) / Decimal(self.kg_processed)
+            return (float(self.crown) ) / float(self.get_net_weight())*100
         except:
             return 0
 
     def get_percentage_shell(self):
         try:
-            return (Decimal(self.shell) * 100) / Decimal(self.kg_processed)
+            return (float(self.shell) / float(self.get_net_weight()))*100
         except:
             return 0
 
     def get_percentage_juice_pulp(self):
         try:
-            return (Decimal(self.juice_pulp) * 100) / Decimal(self.kg_processed)
+            return (float(self.juice_pulp)  / float(self.get_net_weight()))*100
         except:
             return 0
 
     def get_kg_enabled(self):
         try:
-            return Decimal(self.get_net_weight()) - Decimal(self.merma) - Decimal(self.crown)- Decimal(self.juice_pulp)- Decimal(self.shell)
+            return float(self.get_net_weight()) - float(self.merma) - float(self.crown)- float(self.juice_pulp)- float(self.shell)
         except:
             return 0
 

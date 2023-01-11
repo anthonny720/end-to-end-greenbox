@@ -29,7 +29,7 @@ const ReportPTPineapple = () => {
         setIsOpen((prev) => !prev)
     }
     const handleOpenModalEdit = (data) => {
-        setTitle("Registrar lote de materia prima")
+        setTitle(data?.lot)
         setIsOpen(true)
         setContent(<FormPTPineapple data={data} params={params} close={openModal}/>)
     }

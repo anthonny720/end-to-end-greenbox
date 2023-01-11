@@ -25,7 +25,7 @@ const ReportPTBanano = () => {
         setIsOpen((prev) => !prev)
     }
     const handleOpenModalEdit = (data) => {
-        setTitle("Registrar lote de materia prima")
+        setTitle(data?.lot)
         setIsOpen(true)
         setContent(<FormPTBanana data={data} params={params} close={openModal}/>)
     }

@@ -26,7 +26,7 @@ const ReportPTBlueberry = () => {
         setIsOpen((prev) => !prev)
     }
     const handleOpenModalEdit = (data) => {
-        setTitle("Registrar lote de materia prima")
+        setTitle(data?.lot)
         setIsOpen(true)
         setContent(<FormPTBlueberry data={data} params={params} close={openModal}/>)
     }

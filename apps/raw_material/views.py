@@ -11,7 +11,8 @@ from apps.quality.models import AnalysisPineapple, CutTest, AnalysisBanano, Anal
 from apps.raw_material.models import Lot, ILot
 from apps.raw_material.serializers import LotListSerializer, LotSerializer, LotDetailSerializer, ILotSerializer, \
     ILotCRUDSerializer
-from apps.report.models import Report
+from apps.report.models import Report, ReportPTPineapple, ReportPTBanana, ReportPTGoldenberry, ReportPTBlueberry, \
+    ReportPTMango
 from apps.util.pagination import SetPagination
 
 
@@ -30,6 +31,7 @@ class ListCreateLotView(APIView):
         category = request.query_params.get('category', None)
         variety = request.query_params.get('variety', None)
         condition = request.query_params.get('condition', None)
+        guide = request.query_params.get('guide', None)
         if lot:
             queryset = queryset.filter(lot__icontains=lot)
         if category:
@@ -38,6 +40,8 @@ class ListCreateLotView(APIView):
             queryset = queryset.filter(variety__icontains=variety)
         if condition:
             queryset = queryset.filter(condition__icontains=condition)
+        if guide:
+            queryset = queryset.filter(providerGuide__icontains=guide)
         if queryset.exists():
             paginator = SetPagination()
             results = paginator.paginate_queryset(queryset, request)
@@ -57,6 +61,7 @@ class ListCreateLotView(APIView):
             serializer.save()
             lot = get_object_or_404(Lot, lot=serializer.data['lot'])
             if lot.category.name == "Piña":
+                pt=get_object_or_404(ReportPTPineapple, lot=lot,date_process=datetime.now())
                 AnalysisPineapple.objects.create(lot=lot)
                 CutTest.objects.create(lot=lot)
                 try:
@@ -67,8 +72,11 @@ class ListCreateLotView(APIView):
                 except:
                     pass
             elif lot.category.name == "Banano":
+                pt=get_object_or_404(ReportPTBanana, lot=lot,date_process=datetime.now())
                 AnalysisBanano.objects.create(lot=lot)
             elif lot.category.name == "Mango":
+                pt=get_object_or_404(ReportPTMango, lot=lot,date_process=datetime.now())
+
                 AnalysisMango.objects.create(lot=lot)
                 try:
                     i, created = IndicatorKPIMango.objects.get_or_create(date=lot.entryDate)
@@ -78,6 +86,7 @@ class ListCreateLotView(APIView):
                 except:
                     pass
             elif lot.category.name == "Aguaymanto":
+                pt=get_object_or_404(ReportPTGoldenberry, lot=lot,date_process=datetime.now())
                 AnalysisAguaymanto.objects.create(lot=lot)
                 try:
                     i, created = IndicatorKPIAguaymanto.objects.get_or_create(date=lot.entryDate)
@@ -86,7 +95,10 @@ class ListCreateLotView(APIView):
                     i.save()
                 except Exception as e:
                     pass
+            elif lot.category.name == "Fresa":
+                pass
             else:
+                pt=get_object_or_404(ReportPTBlueberry, lot=lot,date_process=datetime.now())
                 AnalysisBlueberry.objects.create(lot=lot)
             Report.objects.create(lot=lot)
             return Response({'message': 'Lote registrado correctamente'}, status=status.HTTP_201_CREATED)
