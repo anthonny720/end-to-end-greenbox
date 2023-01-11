@@ -28,7 +28,7 @@ const ReportPTBlueberry = () => {
     const handleOpenModalEdit = (data) => {
         setTitle(data?.lot)
         setIsOpen(true)
-        setContent(<FormPTBlueberry data={data} params={params} close={openModal}/>)
+        setContent(<FormPTBlueberry data={data} params={params} close={openModal} id={data?.id}/>)
     }
 
     const columns = ['', 'Semana', 'Mes', 'Guia remitente', 'Factura', 'Fecha de ingreso', 'Fecha de producción', 'Variedad', 'Condición', 'Lote', 'Proveedor', 'Procedencia', 'Kg guia', 'KG neto recibido', 'Descuento', 'Kg aprovechables', 'Kg procesados', '% Deshidratación', 'Kg descarte', '% Descarte', 'Kg MP neta', 'Merma', '% Merma', 'Kg habilitados', '% Habilitado', 'Kg PT', 'Entero', 'Mitades', 'Entero', 'Mitades', '% Rendimiento pagados', '% Rendimiento neto', '% Objetivo']

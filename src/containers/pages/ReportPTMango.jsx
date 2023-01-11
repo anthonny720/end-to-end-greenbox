@@ -35,7 +35,7 @@ const ReportPTMango = () => {
      const handleOpenModalEdit = (data) => {
         setTitle(data?.lot)
         setIsOpen(true)
-        setContent(<FormPTMango data={data} params={params} close={openModal}/>)
+        setContent(<FormPTMango data={data} params={params} close={openModal} id={data?.id}/>)
     }
 
     const header = <tr>

@@ -8,7 +8,7 @@ import {map} from "lodash";
 import {update_report_pt_pineapple} from "../../redux/actions/report";
 
 
-const FormPTPineapple = ({data, close, params}) => {
+const FormPTPineapple = ({data, close, params,id}) => {
     const columns = [
         {name: 'date_process', title: 'Fecha de proceso', type: 'date', maxLength: 8},
         {name: 'kg_processed', title: 'Kg procesados', type: 'text', maxLength: 8},
@@ -32,7 +32,7 @@ const FormPTPineapple = ({data, close, params}) => {
         validationSchema: Yup.object(newSchema()),
         validateOnChange: true,
         onSubmit: (form, onSubmitProps) => {
-            dispatch(update_report_pt_pineapple(form, data?.id, params))
+            dispatch(update_report_pt_pineapple(form, id, params))
             close()
         }
     })

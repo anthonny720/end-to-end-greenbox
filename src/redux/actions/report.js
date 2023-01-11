@@ -408,7 +408,7 @@ export const update_report_pt_goldenberry = (form, id, params) => async dispatch
     };
 
     try {
-        const res = await axios.patch(`${process.env.REACT_APP_API_URL}/api/report/pt/goldenberry/>${id}`, form, config);
+        const res = await axios.patch(`${process.env.REACT_APP_API_URL}/api/report/pt/goldenberry/${id}`, form, config);
         if (res.status === 200) {
             dispatch({
                 type: UPDATE_REPORT_PT_GOLDENBERRY,

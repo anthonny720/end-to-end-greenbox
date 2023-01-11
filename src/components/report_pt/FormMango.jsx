@@ -8,7 +8,7 @@ import {map} from "lodash";
 import {update_report_pt_mango} from "../../redux/actions/report";
 
 
-const FormPTMango = ({data, close, params}) => {
+const FormPTMango = ({data, close, params,id}) => {
     const columns = [
         {name: 'date_process', title: 'Fecha de proceso', type: 'date', maxLength: 8},
         {name: 'kg_processed', title: 'Kg procesados', type: 'text', maxLength: 8},
@@ -33,7 +33,7 @@ const FormPTMango = ({data, close, params}) => {
         validationSchema: Yup.object(newSchema()),
         validateOnChange: true,
         onSubmit: (form, onSubmitProps) => {
-            dispatch(update_report_pt_mango(form, data?.id, params))
+            dispatch(update_report_pt_mango(form, id, params))
             close()
         }
     })

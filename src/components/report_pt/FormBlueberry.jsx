@@ -8,7 +8,7 @@ import {map} from "lodash";
 import {update_report_pt_blueberry} from "../../redux/actions/report";
 
 
-const FormPTBlueberry = ({data, close, params}) => {
+const FormPTBlueberry = ({data, close, params,id}) => {
     const columns = [
         {name: 'date_process', title: 'Fecha de proceso', type: 'date', maxLength: 8},
         {name: 'kg_processed', title: 'Kg procesados', type: 'text', maxLength: 8},
@@ -28,7 +28,7 @@ const FormPTBlueberry = ({data, close, params}) => {
         validationSchema: Yup.object(newSchema()),
         validateOnChange: true,
         onSubmit: (form, onSubmitProps) => {
-            dispatch(update_report_pt_blueberry(form, data?.id, params))
+            dispatch(update_report_pt_blueberry(form, id, params))
             close()
         }
     })

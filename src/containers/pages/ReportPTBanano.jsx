@@ -27,7 +27,7 @@ const ReportPTBanano = () => {
     const handleOpenModalEdit = (data) => {
         setTitle(data?.lot)
         setIsOpen(true)
-        setContent(<FormPTBanana data={data} params={params} close={openModal}/>)
+        setContent(<FormPTBanana data={data} params={params} close={openModal} id={data?.id}/>)
     }
 
     const columns = ['', 'Semana', 'Mes', 'Guia remitente', 'Factura', 'Fecha de ingreso', 'Fecha de producción', 'Variedad', 'Condición', 'Lote', 'Proveedor', 'Procedencia', 'Kg guia', 'KG neto recibido', 'Descuento', 'Kg aprovechables',
@@ -43,7 +43,7 @@ const ReportPTBanano = () => {
     return (<Layout>
         <Modal isOpen={isOpen} close={openModal} title={title} children={content}/>
         <Filter action={get_report_pt_banano} setParams={setParams}/>
-        <TablePT header={header} columns={columns} data={data ? data : []} update={handleOpenModalEdit}/>
+        <TablePT header={header} columns={columns} data={data ? data : []} update={handleOpenModalEdit} />
     </Layout>);
 };
 

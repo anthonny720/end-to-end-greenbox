@@ -31,7 +31,7 @@ const ReportPTPineapple = () => {
     const handleOpenModalEdit = (data) => {
         setTitle(data?.lot)
         setIsOpen(true)
-        setContent(<FormPTPineapple data={data} params={params} close={openModal}/>)
+        setContent(<FormPTPineapple data={data} params={params} close={openModal} id={data?.id}/>)
     }
 
 
