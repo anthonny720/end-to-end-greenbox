@@ -3,7 +3,7 @@ from django.urls import path
 from apps.report.views import ListReportView, \
     ProviderListView, SummaryView, ReportView, ListPTMangoView, ListPTGoldenberryView, ListPTBlueberryView, \
     ListPTBananaView, ListPTPineappleView, UpdatePTMangoView, UpdatePTGoldenberryView, UpdatePTBlueberryView, \
-    UpdatePTBananaView, UpdatePTPineappleView
+    UpdatePTBananaView, UpdatePTPineappleView, ListDataReportExcelView
 
 urlpatterns = [
     path('pt/mango', ListPTMangoView.as_view(), name='get-pt-mango'),
@@ -18,6 +18,7 @@ urlpatterns = [
     path('pt/pineapple/<int:id>', UpdatePTPineappleView.as_view(), name='update-pt-pineapple'),
     path('<int:id>', ReportView.as_view(), name='update-report'),
     path('<category>', ListReportView.as_view(), name='get-report'),
+    path('excel/<category>', ListDataReportExcelView.as_view(), name='get-report-excel'),
     path('summary/<category>', SummaryView.as_view(), name='get-summary-category'),
     path('providers/<category>', ProviderListView.as_view(), name='get-providers-category'),
 ]

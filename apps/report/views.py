@@ -3,6 +3,7 @@ from datetime import datetime
 
 from django.shortcuts import get_object_or_404
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -24,6 +25,23 @@ def generate_color(transparency=1):
 
 
 # Create your views here.
+class ListDataReportExcelView(APIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    def get(self, request, *args, **kwargs):
+        category = kwargs["category"].capitalize()
+        current_date = datetime.date(datetime.now())
+        queryset = Report.objects.all().filter(lot__category__name=category)
+
+        # FILTERS
+        year = request.query_params.get('year', current_date.year)
+        if year:
+            queryset = queryset.filter(lot__entryDate__year=year)
+        try:
+            serializers = ReportSerializer(queryset, many=True)
+            return Response({'result': serializers.data}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
 class ListReportView(APIView):
     def get(self, request, *args, **kwargs):
         category = kwargs["category"].capitalize()
