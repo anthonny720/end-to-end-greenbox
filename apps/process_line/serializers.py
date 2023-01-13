@@ -4,11 +4,9 @@ from apps.process_line.models import ProcessLineConditioning, ProcessLineTermina
 
 
 class TypeCutSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = TypesCut
         fields = '__all__'
-
 
 
 class ConditioningSerializer(serializers.ModelSerializer):
@@ -21,6 +19,7 @@ class TerminatedSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProcessLineTerminated
         exclude = ('lot',)
+
 
 class ReleasedSerializer(serializers.ModelSerializer):
     lot = serializers.CharField(source='get_lot_pt', read_only=True)
@@ -40,8 +39,9 @@ class ConditioningListSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProcessLineConditioning
         fields = (
-            'id', 'week', 'month', 'year', 'process_date', 'lot', 'chlorine', 'disinfection', 'brix', 'ph', 'width',
-            'aspect', 'oven', 'h1',
+            'id', 'week', 'month', 'year', 'process_date', 'lot', 'kg_processed', 'chlorine', 'disinfection', 'brix',
+            'ph', 'width',
+            'appearance', 'flavor', 'oven', 'h1',
             'h2',
             'h3', 'h4', 'h5', 'h6', 'h7', 'h8', 'h9', 'h10', 'h11', 'h12', 'h13', 'h14', 'h15', 'h16', 'h17', 'h18',
             'h19',
@@ -66,10 +66,12 @@ class TerminatedListSerializer(serializers.ModelSerializer):
 
 
 class LiberatedReceptionListSerializer(serializers.ModelSerializer):
-    summary=serializers.CharField(source='get_summary', read_only=True)
+    summary = serializers.CharField(source='get_summary', read_only=True)
+
     class Meta:
         model = ProcessLineReleased
         fields = ('id', 'summary',)
+
 
 class LiberatedListSerializer(serializers.ModelSerializer):
     observations = serializers.SerializerMethodField()
@@ -90,7 +92,7 @@ class LiberatedListSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProcessLineReleased
         fields = (
-            'id', 'week', 'month', 'year', 'packing_date', 'release_date', 'lot', 'quantity','kg', 'client',
+            'id', 'week', 'month', 'year', 'packing_date', 'release_date', 'lot', 'quantity', 'kg', 'client',
             'expiration_date', 'lot_boxes',
             'lot_bags',
             'observations', 'lot_mp', 'process_id',
@@ -109,14 +111,14 @@ class LiberatedSalesSerializer(serializers.ModelSerializer):
     observations = serializers.SerializerMethodField()
     lot_mp = serializers.CharField(source='get_lot_mp', read_only=True)
     lot_pt = serializers.CharField(source='get_lot_pt', read_only=True)
-    lot=serializers.CharField(source='get_lot_pt', read_only=True)
+    lot = serializers.CharField(source='get_lot_pt', read_only=True)
 
     class Meta:
         model = ProcessLineReleased
-        fields = ('lot_mp','lot_pt',
-            'release_date', 'quantity',
-            'expiration_date',
-            'observations','lot')
+        fields = ('lot_mp', 'lot_pt',
+                  'release_date', 'quantity',
+                  'expiration_date',
+                  'observations', 'lot')
 
     def get_observations(self, obj):
         return obj.get_observations_display()

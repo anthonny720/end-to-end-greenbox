@@ -135,7 +135,7 @@ const ProcessLine = () => {
     }
 
 
-    const columns_conditioning = ['Acciones', 'Fecha de Proceso', 'Lote', 'Cloro en red', 'Cloro en tina', 'Brix', 'pH', 'Espesor', 'Aspecto', 'Horno', '1hr', '2hr', '3hr', '4hr', '5hr', '6hr', '7hr', '8hr', '9hr', '10hr', '11hr', '12hr', '13hr', '14hr', '15hr', '16hr', '17hr', '18hr', '19hr', '20hr', '21hr', '22hr', '23hr', '24hr']
+    const columns_conditioning = ['Acciones', 'Fecha de Proceso', 'Lote', 'Kg procesados','Cloro en red', 'Cloro en tina', 'Brix', 'pH', 'Espesor', 'Apariencia','Sabor', 'Horno', '1hr', '2hr', '3hr', '4hr', '5hr', '6hr', '7hr', '8hr', '9hr', '10hr', '11hr', '12hr', '13hr', '14hr', '15hr', '16hr', '17hr', '18hr', '19hr', '20hr', '21hr', '22hr', '23hr', '24hr']
     const columns_terminated = ['Acciones', 'Fecha de Proceso', 'Fecha de Envasado', 'Lote', 'Brix', 'pH', 'Humedad', 'Aroma', 'Color', 'Sabor', 'Textura', 'Espesor', 'Defectos', 'Cantidad']
     const columns_liberated = ['Acciones', 'Fecha de Envasado', 'Fecha de Liberación', 'Lote', 'Cantidad','Kg por caja', 'Cliente', 'Fecha de vencimiento', 'Cajas', 'Bolsas', 'Observaciones']
 

@@ -12,12 +12,22 @@ const FormConditioning = ({close, data, lot, id}) => {
 
     const columns = [// lote
         {name: 'process_date', title: 'Fecha de proceso', type: 'date', maxLength: 50,}, {
+            name: 'kg_processed',
+            title: 'Kg Procesados',
+            type: 'number',
+            maxLength: 9,
+        }, {
             name: 'chlorine', title: 'Cloro en red', type: 'text', maxLength: 3,
         }, {name: 'disinfection', title: 'Linea de desinfección', type: 'text', maxLength: 3,}, {
             name: 'brix', title: 'Brix', type: 'text', maxLength: 5,
         }, {name: 'ph', title: 'pH', type: 'text', maxLength: 5,}, {
             name: 'width', title: 'Espesor', type: 'text', maxLength: 5,
-        }, {name: 'aspect', title: 'Aspecto', type: 'text', maxLength: 1,}, {
+        }, {name: 'appearance', title: 'Apariencia', type: 'text', maxLength: 1,}, {
+            name: 'flavor',
+            title: 'Sabor',
+            type: 'text',
+            maxLength: 1,
+        }, {
             name: 'oven', title: 'Horno', type: 'text', maxLength: 1,
         }, {name: 'h1', title: '1 hrs', type: 'text', maxLength: 2,}, {
             name: 'h2', title: '2 hrs', type: 'text', maxLength: 2,
@@ -80,12 +90,14 @@ const FormConditioning = ({close, data, lot, id}) => {
 const initialValues = (data) => {
     return {
         process_date: data?.process_date || "",
+        kg_processed: data?.kg_processed || 0,
         chlorine: data?.chlorine || 0,
         disinfection: data?.disinfection || 0,
         brix: data?.brix || 0,
         ph: data?.ph || 0,
         width: data?.width || 0,
-        aspect: data?.aspect || 1,
+        appearance: data?.appearance || 1,
+        flavor: data?.flavor || 1,
         oven: data?.oven || 1,
         h1: data?.h1 || 0,
         h2: data?.h2 || 0,
@@ -118,12 +130,14 @@ const initialValues = (data) => {
 const newSchema = () => {
     return {
         process_date: Yup.string().required(true),
+        kg_processed: Yup.number().min(0).required(true),
         chlorine: Yup.number().min(0).integer().max(100).required(true),
         disinfection: Yup.number().integer().min(0).max(100).required(true),
         brix: Yup.number().min(0).max(100).required(true),
         ph: Yup.number().min(0).max(100).required(true),
         width: Yup.number().min(0).max(100).required(true),
-        aspect: Yup.number().min(1).max(3).required(true),
+        appearance: Yup.number().min(1).max(5).required(true),
+        flavor: Yup.number().min(1).max(5).required(true),
         oven: Yup.number().min(1).max(7).required(true),
         h1: Yup.number().integer().min(0).max(100).required(true),
         h2: Yup.number().integer().min(0).max(100).required(true),

@@ -26,6 +26,7 @@ class TypesCut(models.Model):
 
 class ProcessLineConditioning(models.Model):
     process_date = models.DateField(verbose_name='Fecha de Proceso', default=now)
+    kg_processed = models.DecimalField(verbose_name='Kg Procesados', max_digits=10, decimal_places=2, default=0)
     lot = models.ForeignKey(Lot, on_delete=models.PROTECT, related_name='conditioning',
                             verbose_name='Lote Materia Prima')
     chlorine = models.IntegerField(verbose_name='Cloro en red', default=0)
@@ -33,9 +34,12 @@ class ProcessLineConditioning(models.Model):
     brix = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='°Brix', blank=True, null=True, default=0)
     ph = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='pH', blank=True, null=True, default=0)
     width = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='Espesor(mm)', default=0)
-    aspect = models.CharField(
-        choices=(('1', '1'), ('2', '2'), ('3', '3')), max_length=1,
-        verbose_name='Aspecto', default='1')
+    appearance = models.CharField(
+        choices=(('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5'),), max_length=1,
+        verbose_name='Apariencia', default='1')
+    flavor = models.CharField(
+        choices=(('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5'),), max_length=1,
+        verbose_name='Sabor', default='1')
     oven = models.CharField(
         choices=(('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5'), ('6', '6'), ('7', '7')), max_length=1,
         verbose_name='Horno')
@@ -161,7 +165,8 @@ class ProcessLineReleased(models.Model):
     process = models.ForeignKey(ProcessLineTerminated, on_delete=models.PROTECT, related_name='process_line_released',
                                 verbose_name='Proceso Terminado')
     quantity = models.IntegerField(verbose_name='Cantidad liberada', blank=True, null=True, default=0)
-    kg = models.DecimalField(verbose_name='Kg por caja', blank=True, null=True, default=0, max_digits=7, decimal_places=2)
+    kg = models.DecimalField(verbose_name='Kg por caja', blank=True, null=True, default=0, max_digits=7,
+                             decimal_places=2)
     client = models.ForeignKey(Client, on_delete=models.PROTECT, related_name='client_released', verbose_name='Cliente')
     expiration_date = models.DateField(verbose_name='Fecha de Vencimiento', blank=True, null=True)
     lot_bags = models.ForeignKey(PackingProduct, on_delete=models.PROTECT, related_name='lot_bags_released',

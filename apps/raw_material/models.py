@@ -72,6 +72,7 @@ class Lot(models.Model):
     closed = models.BooleanField(default=False, verbose_name="Cerrado/Abierto")
     history = HistoricalRecords()
 
+
     class Meta:
         verbose_name = "Lote"
         verbose_name_plural = "Lotes"
@@ -79,6 +80,8 @@ class Lot(models.Model):
 
     def __str__(self):
         return self.lot
+
+
 
     def get_departure_time(self):
         try:

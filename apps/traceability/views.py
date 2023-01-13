@@ -8,8 +8,9 @@ from apps.quality.serializers import AnalysisMangoSerializer, AnalysisAguaymanto
 from apps.raw_material.models import Lot
 from apps.raw_material.serializers import LotDetailSerializer
 from apps.report.models import ReportPTMango, ReportPTPineapple, ReportPTBanana, ReportPTBlueberry, ReportPTGoldenberry
-from apps.report.serializers import ReportSerializer, ReportPTMangoSerializer, ReportPTPineappleSerializer, \
-    ReportPTBananaSerializer, ReportPTBlueberrySerializer, ReportPTGoldenberrySerializer
+from apps.report.serializers import ReportSerializer, ReportTraceabilityBlueberrySerializer, \
+    ReportTraceabilityMangoSerializer, ReportTraceabilityPineappleSerializer, \
+    ReportTraceabilityBananaSerializer, ReportTraceabilityGoldenberrySerializer
 
 
 # Create your views here.
@@ -31,19 +32,19 @@ class Traceability(APIView):
             try:
                 if category == 'Mango':
                     lot_pt = ReportPTMango.objects.get(lot=lot)
-                    serializer_report_pt = ReportPTMangoSerializer(lot_pt, many=False)
+                    serializer_report_pt = ReportTraceabilityMangoSerializer(lot_pt, many=False)
                 elif category == 'Piña':
                     lot_pt = ReportPTPineapple.objects.get(lot=lot)
-                    serializer_report_pt = ReportPTPineappleSerializer(lot_pt, many=False)
+                    serializer_report_pt = ReportTraceabilityPineappleSerializer(lot_pt, many=False)
                 elif category == 'Banano':
                     lot_pt = ReportPTBanana.objects.get(lot=lot)
-                    serializer_report_pt = ReportPTBananaSerializer(lot_pt, many=False)
+                    serializer_report_pt = ReportTraceabilityBananaSerializer(lot_pt, many=False)
                 elif category == 'Arandanos':
                     lot_pt = ReportPTBlueberry.objects.get(lot=lot)
-                    serializer_report_pt = ReportPTBlueberrySerializer(lot_pt, many=False)
+                    serializer_report_pt = ReportTraceabilityBlueberrySerializer(lot_pt, many=False)
                 elif category == 'Aguaymanto':
                     lot_pt = ReportPTGoldenberry.objects.get(lot=lot)
-                    serializer_report_pt = ReportPTGoldenberrySerializer(lot_pt, many=False)
+                    serializer_report_pt = ReportTraceabilityGoldenberrySerializer(lot_pt, many=False)
                 else:
                     serializer_report_pt = []
             except:

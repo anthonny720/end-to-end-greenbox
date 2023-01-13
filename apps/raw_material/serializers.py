@@ -57,6 +57,8 @@ class LotDetailSerializer(serializers.ModelSerializer):
     stock = serializers.CharField(source='get_stock', read_only=True)
     brute_weight = serializers.CharField(source='get_total_brute_weight', read_only=True)
     business_maquila = serializers.CharField(source='maquila.name', read_only=True)
+    driver_name=serializers.CharField(source='get_driver',read_only=True)
+    carrier_name=serializers.CharField(source='get_carrier',read_only=True)
 
     class Meta:
         model = Lot
