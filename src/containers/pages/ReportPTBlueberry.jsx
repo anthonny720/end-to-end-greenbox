@@ -6,10 +6,12 @@ import {get_report_pt_blueberry} from "../../redux/actions/report";
 import Filter from "../../components/report_pt/Filter";
 import FormPTBlueberry from "../../components/report_pt/FormBlueberry";
 import Modal from "../../components/util/Modal";
+import BadgePT from "../../components/report_pt/BadgePT";
 
 const ReportPTBlueberry = () => {
     const dispatch = useDispatch();
     const [params, setParams] = useState({year: '', month: ''});
+    const summary=useSelector(state=>state.Report.summary);
 
     const data = useSelector(state => state.Report.blueberry);
     useEffect(() => {
@@ -40,6 +42,7 @@ const ReportPTBlueberry = () => {
         <th className={"text-center bg-green-400 text-white px-2 py-2 "} colSpan={2}>GRANEL</th>
     </tr>
     return (<Layout>
+        <BadgePT report={summary} total={data}/>
         <Modal isOpen={isOpen} close={openModal} title={title} children={content}/>
         <Filter action={get_report_pt_blueberry} setParams={setParams}/>
         <TablePT header={header} columns={columns} data={data ? data : []} update={handleOpenModalEdit}/>

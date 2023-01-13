@@ -44,7 +44,8 @@ const initialState = {
     banana: null,
     mango: null,
     goldenberry: null,
-    blueberry: null
+    blueberry: null,
+    summary: null,
 }
 
 export default function Report(state = initialState, action) {
@@ -53,43 +54,43 @@ export default function Report(state = initialState, action) {
     switch (type) {
         case GET_REPORT_PT_PINEAPPLE:
             return {
-                ...state, pineapple: payload.result
+                ...state, pineapple: payload.result, summary: payload.summary
             }
         case GET_REPORT_PT_PINEAPPLE_FAIL:
             return {
-                ...state, pineapple: null
+                ...state, pineapple: null, summary: null
             }
         case GET_REPORT_PT_MANGO:
             return {
-                ...state, mango: payload.result
+                ...state, mango: payload.result, summary: payload.summary
             }
         case GET_REPORT_PT_MANGO_FAIL:
             return {
-                ...state, mango: null
+                ...state, mango: null, summary: null
             }
         case GET_REPORT_PT_BANANA:
             return {
-                ...state, banana: payload.result
+                ...state, banana: payload.result, summary: payload.summary
             }
         case GET_REPORT_PT_BANANA_FAIL:
             return {
-                ...state, banana: null
+                ...state, banana: null, summary: null
             }
         case GET_REPORT_PT_GOLDENBERRY:
             return {
-                ...state, goldenberry: payload.result
+                ...state, goldenberry: payload.result, summary: payload.summary
             }
         case GET_REPORT_PT_GOLDENBERRY_FAIL:
             return {
-                ...state, goldenberry: null
+                ...state, goldenberry: null, summary: null
             }
         case GET_REPORT_PT_BLUEBERRY:
             return {
-                ...state, blueberry: payload.result
+                ...state, blueberry: payload.result, summary: payload.summary
             }
         case GET_REPORT_PT_BLUEBERRY_FAIL:
             return {
-                ...state, blueberry: null
+                ...state, blueberry: null, summary: null
             }
         case GET_REPORT_SUCCESS:
             return {

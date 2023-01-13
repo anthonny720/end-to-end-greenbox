@@ -42,6 +42,7 @@ import ReportPTBlueberry from "./containers/pages/ReportPTBlueberry";
 import ReportPTBanano from "./containers/pages/ReportPTBanano";
 import ReportPTGoldenberry from "./containers/pages/ReportPTGoldenberry";
 import ReportPTMango from "./containers/pages/ReportPTMango";
+import Traceability from "./components/traceability/TraceabilityMango";
 
 
 const App = () => {
@@ -113,6 +114,9 @@ const App = () => {
                     {/*Planning*/}
                     <Route exact path="planning/kpi" element={<KPI/>}/>
 
+
+                    {/* Traceability   */}
+                    <Route exact path="traceability/:lot" element={<Traceability/>}/>
 
                 </Routes>
             </Router>

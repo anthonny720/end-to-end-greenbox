@@ -1,5 +1,5 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEye, faFileExcel, faWorm} from "@fortawesome/free-solid-svg-icons";
+import {faEye, faFile, faFileExcel, faWorm} from "@fortawesome/free-solid-svg-icons";
 import Skeleton from "react-loading-skeleton";
 import {map, size} from "lodash";
 import {DownloadTableExcel} from 'react-export-table-to-excel';
@@ -56,6 +56,11 @@ const Table = ({data}) => {
                             <FontAwesomeIcon className={"text-[#26d07d] ml-2 hover:text-green-600"}
                                              title={"Linea de Proceso"}
                                              icon={faWorm}/>
+                        </Link>
+                        <Link to={`/traceability/${row.lot}`}>
+                            <FontAwesomeIcon className={"text-gray-400 ml-2 hover:text-gray-600"}
+                                             title={"Trazabilidad"}
+                                             icon={faFile}/>
                         </Link>
                     </div>
                 </td>

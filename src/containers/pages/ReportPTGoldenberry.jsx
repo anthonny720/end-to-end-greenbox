@@ -6,11 +6,12 @@ import {get_report_pt_goldenberry} from "../../redux/actions/report";
 import Filter from "../../components/report_pt/Filter";
 import Modal from "../../components/util/Modal";
 import FormPTGoldenberry from "../../components/report_pt/FormGoldenberry";
+import BadgePT from "../../components/report_pt/BadgePT";
 
 const ReportPTGoldenberry = () => {
     const dispatch = useDispatch();
     const [params, setParams] = useState({year: '', month: ''});
-
+    const summary=useSelector(state=>state.Report.summary);
     const data = useSelector(state => state.Report.goldenberry);
 
     useEffect(() => {
@@ -44,6 +45,7 @@ const ReportPTGoldenberry = () => {
         <th className={"text-center bg-green-400 text-white px-2 py-2 "} colSpan={3}>GRANEL</th>
     </tr>
     return (<Layout>
+        <BadgePT report={summary} total={data}/>
         <Modal isOpen={isOpen} close={openModal} title={title} children={content}/>
         <Filter action={get_report_pt_goldenberry} setParams={setParams}/>
         <TablePT header={header} columns={columns} data={data ? data : []} update={handleOpenModalEdit}/>

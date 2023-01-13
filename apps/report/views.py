@@ -1,6 +1,7 @@
 import random
 from datetime import datetime
 
+from django.db.models import Sum
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
@@ -27,6 +28,7 @@ def generate_color(transparency=1):
 # Create your views here.
 class ListDataReportExcelView(APIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
+
     def get(self, request, *args, **kwargs):
         category = kwargs["category"].capitalize()
         current_date = datetime.date(datetime.now())
@@ -41,6 +43,7 @@ class ListDataReportExcelView(APIView):
             return Response({'result': serializers.data}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
 
 class ListReportView(APIView):
     def get(self, request, *args, **kwargs):
@@ -79,7 +82,9 @@ class ListReportView(APIView):
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
+
 months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+
 
 class ReportView(APIView):
     def patch(self, request, *args, **kwargs):
@@ -220,8 +225,24 @@ class ListPTMangoView(APIView):
         if not year:
             queryset = queryset.filter(date_process__year=current_date.year)
         try:
+            retail_slices = queryset.aggregate(Sum('retail_slices'))['retail_slices__sum']
+            retail_cachetes = queryset.aggregate(Sum('retail_cachetes'))['retail_cachetes__sum']
+            retail_chunks = queryset.aggregate(Sum('retail_chunks'))['retail_chunks__sum']
+            retail_cubs = queryset.aggregate(Sum('retail_cubs'))['retail_cubs__sum']
+            granel_slices = queryset.aggregate(Sum('granel_slices'))['granel_slices__sum']
+            granel_cachetes = queryset.aggregate(Sum('granel_cachetes'))['granel_cachetes__sum']
+            granel_chunks = queryset.aggregate(Sum('granel_chunks'))['granel_chunks__sum']
+            granel_cubs = queryset.aggregate(Sum('granel_cubs'))['granel_cubs__sum']
+            recoverable = queryset.aggregate(Sum('recoverable'))['recoverable__sum']
+            retail = {'slices': retail_slices, 'cachetes': retail_cachetes, 'chunks': retail_chunks,
+                      'cubs': retail_cubs}
+            granel = {'slices': granel_slices, 'cachetes': granel_cachetes, 'chunks': granel_chunks,
+                      'cubs': granel_cubs}
+            recoverable = {'recuperable': recoverable}
             serializers = ReportPTMangoSerializer(queryset, many=True)
-            return Response({'result': serializers.data}, status=status.HTTP_200_OK)
+            return Response({'result': serializers.data,
+                             'summary': {'retail': retail, 'granel': granel, 'recoverable': recoverable}},
+                            status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -241,8 +262,17 @@ class ListPTPineappleView(APIView):
         if month:
             queryset = queryset.filter(date_process__month=month)
         try:
+            retail_rings = queryset.aggregate(Sum('retail_rings'))['retail_rings__sum']
+            retail_1_8 = queryset.aggregate(Sum('retail_1_8'))['retail_1_8__sum']
+            retail_1_16 = queryset.aggregate(Sum('retail_1_16'))['retail_1_16__sum']
+            granel_rings = queryset.aggregate(Sum('granel_rings'))['granel_rings__sum']
+            granel_1_16 = queryset.aggregate(Sum('granel_1_16'))['granel_1_16__sum']
+            granel_1_8 = queryset.aggregate(Sum('granel_1_8'))['granel_1_8__sum']
+            retail = {'rings': retail_rings, '1/8': retail_1_8, '1/16': retail_1_16}
+            granel = {'rings': granel_rings, '1/8': granel_1_8, '1/16': granel_1_16}
             serializers = ReportPTPineappleSerializer(queryset, many=True)
-            return Response({'result': serializers.data}, status=status.HTTP_200_OK)
+            return Response({'result': serializers.data, 'summary': {'retail': retail, 'granel': granel}},
+                            status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -259,12 +289,19 @@ class ListPTBananaView(APIView):
         if year:
             queryset = queryset.filter(date_process__year=year)
         if not year:
-                queryset = queryset.filter(date_process__year=current_date.year)
+            queryset = queryset.filter(date_process__year=current_date.year)
         if month:
             queryset = queryset.filter(date_process__month=month)
         try:
+            retail_slices = queryset.aggregate(Sum('retail_slices'))['retail_slices__sum']
+            retail_coins = queryset.aggregate(Sum('retail_coins'))['retail_coins__sum']
+            granel_slices = queryset.aggregate(Sum('granel_slices'))['granel_slices__sum']
+            granel_coins = queryset.aggregate(Sum('granel_coins'))['granel_coins__sum']
+            retail = {'slices': retail_slices, 'coins': retail_coins}
+            granel = {'slices': granel_slices, 'coins': granel_coins}
             serializers = ReportPTBananaSerializer(queryset, many=True)
-            return Response({'result': serializers.data}, status=status.HTTP_200_OK)
+            return Response({'result': serializers.data, 'summary': {'retail': retail, 'granel': granel}},
+                            status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -280,12 +317,21 @@ class ListPTGoldenberryView(APIView):
         if year:
             queryset = queryset.filter(date_process__year=year)
         if not year:
-                queryset = queryset.filter(date_process__year=current_date.year)
+            queryset = queryset.filter(date_process__year=current_date.year)
         if month:
             queryset = queryset.filter(date_process__month=month)
         try:
+            retail_whole = queryset.aggregate(Sum('retail_whole'))['retail_whole__sum']
+            retail_halves = queryset.aggregate(Sum('retail_halves'))['retail_halves__sum']
+            retail_quarter = queryset.aggregate(Sum('retail_quarter'))['retail_quarter__sum']
+            granel_whole = queryset.aggregate(Sum('granel_whole'))['granel_whole__sum']
+            granel_halves = queryset.aggregate(Sum('granel_halves'))['granel_halves__sum']
+            granel_quarter = queryset.aggregate(Sum('granel_quarter'))['granel_quarter__sum']
+            retail = {'whole': retail_whole, 'halves': retail_halves, 'quarter': retail_quarter}
+            granel = {'whole': granel_whole, 'halves': granel_halves, 'quarter': granel_quarter}
             serializers = ReportPTGoldenberrySerializer(queryset, many=True)
-            return Response({'result': serializers.data}, status=status.HTTP_200_OK)
+            return Response({'result': serializers.data, 'summary': {'retail': retail, 'granel': granel}},
+                            status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -301,91 +347,103 @@ class ListPTBlueberryView(APIView):
         if year:
             queryset = queryset.filter(date_process__year=year)
         if not year:
-                queryset = queryset.filter(date_process__year=current_date.year)
+            queryset = queryset.filter(date_process__year=current_date.year)
         if month:
             queryset = queryset.filter(date_process__month=month)
         try:
+            retail_whole = queryset.aggregate(Sum('retail_whole'))['retail_whole__sum']
+            retail_halves = queryset.aggregate(Sum('retail_halves'))['retail_halves__sum']
+            granel_whole = queryset.aggregate(Sum('granel_whole'))['granel_whole__sum']
+            granel_halves = queryset.aggregate(Sum('granel_halves'))['granel_halves__sum']
+            retail = {'whole': retail_whole, 'halves': retail_halves}
+            granel = {'whole': granel_whole, 'halves': granel_halves}
             serializers = ReportPTBlueberrySerializer(queryset, many=True)
-            return Response({'result': serializers.data}, status=status.HTTP_200_OK)
+            return Response({'result': serializers.data, 'summary': {'retail': retail, 'granel': granel}},
+                            status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UpdatePTBlueberryView(APIView):
-    def patch(self,request,*args,**kwargs):
+    def patch(self, request, *args, **kwargs):
         if request.user.role != "7":
             return Response({'error': 'No tiene permisos para realizar esta acción'},
                             status=status.HTTP_401_UNAUTHORIZED)
         try:
             pk = kwargs['id']
             queryset = ReportPTBlueberry.objects.get(pk=pk)
-            serializer = ReportPTBlueberryUpdateSerializer(queryset,data=request.data,partial=True)
+            serializer = ReportPTBlueberryUpdateSerializer(queryset, data=request.data, partial=True)
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            return Response({'message':'Registro actualizado correctamente'},status=status.HTTP_200_OK)
+            return Response({'message': 'Registro actualizado correctamente'}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': 'No se pudo actualizar el registro', 'detail': str(e)},
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
 class UpdatePTGoldenberryView(APIView):
-    def patch(self,request,*args,**kwargs):
+    def patch(self, request, *args, **kwargs):
         if request.user.role != "7":
             return Response({'error': 'No tiene permisos para realizar esta acción'},
                             status=status.HTTP_401_UNAUTHORIZED)
         try:
             pk = kwargs['id']
             queryset = ReportPTGoldenberry.objects.get(pk=pk)
-            serializer = ReportPTGoldenberryUpdateSerializer(queryset,data=request.data,partial=True)
+            serializer = ReportPTGoldenberryUpdateSerializer(queryset, data=request.data, partial=True)
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            return Response({'message':'Registro actualizado correctamente'},status=status.HTTP_200_OK)
+            return Response({'message': 'Registro actualizado correctamente'}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': 'No se pudo actualizar el registro', 'detail': str(e)},
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
 class UpdatePTPineappleView(APIView):
-    def patch(self,request,*args,**kwargs):
+    def patch(self, request, *args, **kwargs):
         if request.user.role != "7":
             return Response({'error': 'No tiene permisos para realizar esta acción'},
                             status=status.HTTP_401_UNAUTHORIZED)
         try:
             pk = kwargs['id']
             queryset = ReportPTPineapple.objects.get(pk=pk)
-            serializer = ReportPTPineappleUpdateSerializer(queryset,data=request.data,partial=True)
+            serializer = ReportPTPineappleUpdateSerializer(queryset, data=request.data, partial=True)
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            return Response({'message':'Registro actualizado correctamente'},status=status.HTTP_200_OK)
+            return Response({'message': 'Registro actualizado correctamente'}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': 'No se pudo actualizar el registro', 'detail': str(e)},
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
 class UpdatePTMangoView(APIView):
-    def patch(self,request,*args,**kwargs):
+    def patch(self, request, *args, **kwargs):
         if request.user.role != "7":
             return Response({'error': 'No tiene permisos para realizar esta acción'},
                             status=status.HTTP_401_UNAUTHORIZED)
         try:
             pk = kwargs['id']
             queryset = ReportPTMango.objects.get(pk=pk)
-            serializer = ReportPTMangoUpdateSerializer(queryset,data=request.data,partial=True)
+            serializer = ReportPTMangoUpdateSerializer(queryset, data=request.data, partial=True)
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            return Response({'message':'Registro actualizado correctamente'},status=status.HTTP_200_OK)
+            return Response({'message': 'Registro actualizado correctamente'}, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response({'error':'No se pudo actualizar el registro','detail':str(e)},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': 'No se pudo actualizar el registro', 'detail': str(e)},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 class UpdatePTBananaView(APIView):
-    def patch(self,request,*args,**kwargs):
+    def patch(self, request, *args, **kwargs):
         if request.user.role != "7":
             return Response({'error': 'No tiene permisos para realizar esta acción'},
                             status=status.HTTP_401_UNAUTHORIZED)
         try:
             pk = kwargs['id']
             queryset = ReportPTBanana.objects.get(pk=pk)
-            serializer = ReportPTBananaUpdateSerializer(queryset,data=request.data,partial=True)
+            serializer = ReportPTBananaUpdateSerializer(queryset, data=request.data, partial=True)
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            return Response({'message':'Registro actualizado correctamente'},status=status.HTTP_200_OK)
+            return Response({'message': 'Registro actualizado correctamente'}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': 'No se pudo actualizar el registro', 'detail': str(e)},
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)

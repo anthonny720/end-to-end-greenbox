@@ -7,9 +7,11 @@ import Filter from "../../components/report_pt/Filter";
 import Modal from "../../components/util/Modal";
 import Form from "../../components/home/Form";
 import FormPTMango from "../../components/report_pt/FormMango";
+import BadgePT from "../../components/report_pt/BadgePT";
 
 const ReportPTMango = () => {
     const data=useSelector(state=>state.Report.mango);
+    const summary=useSelector(state=>state.Report.summary);
     const [params, setParams] = useState({year: '', month: ''});
 
     /*MODAL*/
@@ -46,6 +48,7 @@ const ReportPTMango = () => {
         <th className={"text-center bg-green-400 text-white px-2 py-2 "} colSpan={4}>GRANEL</th>
     </tr>
     return (<Layout>
+        <BadgePT report={summary} total={data}/>
         <Modal isOpen={isOpen} close={openModal} title={title} children={content}/>
         <Filter action={get_report_pt_mango} setParams={setParams}/>
         <TablePT update={handleOpenModalEdit} header={header} columns={columns} data={data?data:[]}/>

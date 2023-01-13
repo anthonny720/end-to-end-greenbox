@@ -1,7 +1,7 @@
 from django.urls import path
 
-from apps.traceability.views import TraceabilityMango
+from apps.traceability.views import Traceability
 
 urlpatterns = [
-    path('mango/<lot>', TraceabilityMango.as_view(), name='get-traceability-mango'),
+    path('<lot>', Traceability.as_view(), name='get-traceability'),
 ]
