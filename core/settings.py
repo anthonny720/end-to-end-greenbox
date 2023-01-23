@@ -37,7 +37,7 @@ PROJECT_APPS = ['apps.users',
                 'apps.products', 'apps.business_partners',
                 'apps.raw_material', 'apps.management',
                 'apps.quality', 'apps.process_line', 'apps.warehouse', 'apps.report', 'apps.commercial',
-                'apps.planning'
+                'apps.planning','apps.costs',
                 ]
 
 THIRD_PARTY_APPS = ['corsheaders', 'simple_history', 'rest_framework', 'import_export', 'djoser',
@@ -95,8 +95,8 @@ MEDIA_URL = '/media/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'build/static')]
 
 # Rest Framework
-REST_FRAMEWORK = {'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated', ],
-                  'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',), }
+# REST_FRAMEWORK = {'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated', ],
+#                   'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',), }
 
 # JWT
 

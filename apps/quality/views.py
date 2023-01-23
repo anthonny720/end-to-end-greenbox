@@ -40,7 +40,7 @@ class DetailCutTestView(APIView):
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-# Analysis Fruits
+# AnalysisMango Fruits
 class ListAnalysisPineappleView(APIView):
     def get(self, request, *args, **kwargs):
         try:

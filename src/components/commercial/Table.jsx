@@ -5,12 +5,10 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEdit, faEye, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {Link} from "react-router-dom";
 import Humanize from "humanize-plus";
-import ColorScale from "color-scales";
 import {useSelector} from "react-redux";
 
 const Table = ({data, update, remove}) => {
-    const color = new ColorScale(0, 100, ["#ff0000", "#00ff00"]);
-    const columns = ['', 'Lote', 'Stock', 'Objetivo', 'Progreso', 'Fcl', 'Cliente', 'Grupo', 'Certificación', 'Descripción', 'Variedad', 'Presentación', 'Pesticidas', 'Fosetyl', 'Embalaje', 'Empaque', 'Fecha de proceso', 'Fecha de vencimiento', 'N° Caja', 'N° Bolsas', 'Proveedor', 'Observación']
+    const columns = ['', 'Lote', 'Stock', 'Fcl', 'Cliente', 'Grupo', 'Certificación', 'Descripción', 'Variedad', 'Presentación', 'Pesticidas', 'Fosetyl', 'Embalaje', 'Empaque', 'Fecha de proceso', 'Fecha de vencimiento', 'N° Caja', 'N° Bolsas', 'Proveedor', 'Observación']
     const tableRef = useRef(null);
     const user = useSelector(state => state.Auth.user);
 
@@ -39,15 +37,7 @@ const Table = ({data, update, remove}) => {
                 <td className={`px-6 py-4 text-center `}
                 >
                     {Humanize.formatNumber(row?.stock, 2)}</td>
-                <td className="px-6 py-4 text-center"
-                >{Humanize.formatNumber(row?.objective, 2)}</td>
-                <td className="px-6 py-4 text-center text-white font-bold text-xs "
-                ><p className={"rounded-full"} style={{
-                    width: "10px !important",
-                    padding: "5px",
-                    background: "rgba" + "(" + color.getColor(row?.progress).r + ',' + color.getColor(row?.progress).g + ',' + color.getColor(row?.progress).b + ',' + color.getColor(row?.progress).a + ")"
-                }}> {Humanize.formatNumber(row?.progress, 2)} %</p>
-                </td>
+
                 <td className="px-6 py-4 text-center">{row?.fcl_short_name}</td>
                 <td className="px-6 py-4 text-center">{row?.client_name}</td>
                 <td className="px-6 py-4 text-center">{row?.group_name}</td>

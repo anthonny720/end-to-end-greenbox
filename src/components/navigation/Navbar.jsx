@@ -12,7 +12,7 @@ import Dropdown from "./Dropdown";
 import {logout} from "../../redux/actions/auth";
 
 const list = {
-    'Planificación': [{name: 'KPI', href: '/planning/kpi'},],
+    'Planificación': [{name: 'KPI', href: '/planning/kpi'},{name:'Costos',href:'/planning/costs'}],
     'Comercial': [{name: 'Stock', href: '/commercial/'},],
     'Calidad': [{name: 'Prueba de corte', href: '/quality/cut-test/'}, {
         name: 'Piña',

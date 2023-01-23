@@ -1,5 +1,5 @@
 import React from 'react';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -9,24 +9,17 @@ import {add_process_conditioning, update_process_conditioning} from "../../redux
 
 const FormConditioning = ({close, data, lot, id}) => {
     const dispatch = useDispatch();
+    const user = useSelector(state => state.Auth.user);
 
     const columns = [// lote
         {name: 'process_date', title: 'Fecha de proceso', type: 'date', maxLength: 50,}, {
-            name: 'kg_processed',
-            title: 'Kg Procesados',
-            type: 'number',
-            maxLength: 9,
-        }, {
             name: 'chlorine', title: 'Cloro en red', type: 'text', maxLength: 3,
         }, {name: 'disinfection', title: 'Linea de desinfección', type: 'text', maxLength: 3,}, {
             name: 'brix', title: 'Brix', type: 'text', maxLength: 5,
         }, {name: 'ph', title: 'pH', type: 'text', maxLength: 5,}, {
             name: 'width', title: 'Espesor', type: 'text', maxLength: 5,
         }, {name: 'appearance', title: 'Apariencia', type: 'text', maxLength: 1,}, {
-            name: 'flavor',
-            title: 'Sabor',
-            type: 'text',
-            maxLength: 1,
+            name: 'flavor', title: 'Sabor', type: 'text', maxLength: 1,
         }, {
             name: 'oven', title: 'Horno', type: 'text', maxLength: 1,
         }, {name: 'h1', title: '1 hrs', type: 'text', maxLength: 2,}, {
@@ -69,14 +62,25 @@ const FormConditioning = ({close, data, lot, id}) => {
 
     return (<form className="bg-white px-8 pt-6 pb-8 mb-4">
         <div className={`grid grid-cols-2 gap-3 justify-center items-center`}>
-            {map(columns, (column, index) => (<div key={index}>
-                <p className={`${formik.errors[column.name] ? "text-red-500" : "text-base mt-4 font-medium leading-none text-gray-800"}`}>{column.title}:</p>
-                <input type={column.type} maxLength={column.maxLength}
+            {user && user !== undefined && user !== null && user.get_role_name === 'Producción' && <div>
+                <p className={`${formik.errors.kg_processed ? "text-red-500" : "text-base mt-4 font-medium leading-none text-gray-800"}`}>Kg
+                    Procesados:</p>
+                <input type={'text'} maxLength={9}
                        className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50 uppercase"
-                       value={`${formik.values[column.name]}`}
-                       onChange={text => formik.setFieldValue(column.name, text.target.value)}/>
+                       value={`${formik.values.kg_processed}`}
+                       onChange={text => formik.setFieldValue('kg_processed', text.target.value)}/>
 
-            </div>))}
+            </div>}
+
+            {user && user !== undefined && user !== null && user.get_role_name === 'Calidad' && map(columns, (column, index) => (
+                <div key={index}>
+                    <p className={`${formik.errors[column.name] ? "text-red-500" : "text-base mt-4 font-medium leading-none text-gray-800"}`}>{column.title}:</p>
+                    <input type={column.type} maxLength={column.maxLength}
+                           className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50 uppercase"
+                           value={`${formik.values[column.name]}`}
+                           onChange={text => formik.setFieldValue(column.name, text.target.value)}/>
+
+                </div>))}
         </div>
         <div className="w-full flex justify-center">
             <button onClick={formik.handleSubmit} type="button"

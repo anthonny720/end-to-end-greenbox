@@ -4,6 +4,8 @@ from apps.products.models import PackingProduct, Fruits
 
 
 class PackingContainersSerializer(serializers.ModelSerializer):
+    provider_name=serializers.CharField(source='provider.business_name', read_only=True)
+    provider_ruc=serializers.CharField(source='provider.ruc', read_only=True)
     class Meta:
         model = PackingProduct
         fields = '__all__'

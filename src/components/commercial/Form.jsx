@@ -273,16 +273,7 @@ const Form = ({
                     </div>
                 </div>}
 
-            {user && user !== undefined && user !== null && user.get_role_name === 'Operaciones' &&
-                <div>
-                    <p className={`${formik.errors.objective ? "text-red-500" : " text-base mt-4 font-medium leading-none text-gray-800"}`}>
-                        Objetivo kg:</p>
-                    <input type={"text"} maxLength={9}
-                           className="w-full p-3 mt-4 border border-gray-300 rounded outline-none focus:bg-gray-50 "
-                           value={`${formik.values.objective}`}
-                           onChange={text => formik.setFieldValue('objective', text.target.value)}/>
-                </div>
-            }
+
 
 
             <div className="w-full flex justify-center">

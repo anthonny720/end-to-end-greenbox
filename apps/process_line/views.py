@@ -228,7 +228,7 @@ class DetailReleasedView(APIView):
 
 class CreateConditioningView(APIView):
     def post(self, request, *args, **kwargs):
-        if request.user.role != '5':
+        if request.user.role != '5' and request.user.role != '7':
             return Response({'error': 'No tiene permisos para realizar esta acción'},
                             status=status.HTTP_401_UNAUTHORIZED)
         try:

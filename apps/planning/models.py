@@ -222,14 +222,13 @@ class IndicatorKPIMango(IndicatorKPI):
                 mechanical_damage += lot.get_total_net_weight() * (
                         float(lot.analysis_mango.mechanical_damage) + float(lot.analysis_mango.cracked))
                 physical_damage += lot.get_total_net_weight() * (
-                        float(lot.analysis_mango.sun_damage) + float(lot.analysis_mango.latex) + float(
-                    lot.analysis_mango.soft))
+                        float(lot.analysis_mango.sun_damage) + float(lot.analysis_mango.latex))
                 plagues += lot.get_total_net_weight() * (
                         float(lot.analysis_mango.anthracnose) + float(lot.analysis_mango.queresa) + float(
                     lot.analysis_mango.insect_bite))
                 others += lot.get_total_net_weight() * (
                         float(lot.analysis_mango.rot) + float(lot.analysis_mango.mature) + float(
-                    lot.analysis_mango.advanced))
+                    lot.analysis_mango.overripe))
 
             information['wt_280'] = wt_280 / self.get_entry_real()
             information['wt_280_300'] = wt_280_300 / self.get_entry_real()
@@ -303,13 +302,13 @@ class IndicatorKPIAguaymanto(IndicatorKPI):
         ordering = ['-date']
 
     def get_entry_real(self):
-        entry_real = ''
+        entry_real = 0
         try:
             for lot in self.lots.all():
                 entry_real += lot.get_total_net_weight()
             return entry_real
-        except:
-            return 0
+        except Exception:
+            return
 
     def get_maduration_defects(self):
         maduration_1 = 0
@@ -329,21 +328,20 @@ class IndicatorKPIAguaymanto(IndicatorKPI):
         try:
             for lot in self.lots.all():
                 maduration_1 += float(lot.analysis_aguaymanto.maturation_1) * lot.get_total_net_weight()
-                maduration_2 += float(lot.analysis_aguaymanto.maturation_2) * lot.get_total_net_weight()
-                maduration_3 += float(lot.analysis_aguaymanto.maturation_3) * lot.get_total_net_weight()
-
+                maduration_2 += float(lot.analysis_aguaymanto.maturation_) * lot.get_total_net_weight()
+                maduration_3 += float(lot.analysis_aguaymanto.maturation_) * lot.get_total_net_weight()
                 mushroom += float(lot.analysis_aguaymanto.mushroom) * lot.get_total_net_weight()
                 green += float(lot.analysis_aguaymanto.green) * lot.get_total_net_weight()
                 cracked += float(lot.analysis_aguaymanto.cracked) * lot.get_total_net_weight()
                 crushed += float(lot.analysis_aguaymanto.crushed) * lot.get_total_net_weight()
 
-            information['maduration_1'] = maduration_1 / self.get_entry_real()
-            information['maduration_2'] = maduration_2 / self.get_entry_real()
-            information['maduration_3'] = maduration_3 / self.get_entry_real()
-            information['mushroom'] = mushroom / self.get_entry_real()
-            information['green'] = green / self.get_entry_real()
-            information['cracked'] = cracked / self.get_entry_real()
-            information['crushed'] = crushed / self.get_entry_real()
+            # information['maduration_1'] = maduration_1 / self.get_entry_real() if self.get_entry_real() > 0 else 0
+            # information['maduration_2'] = maduration_2 / self.get_entry_real() if self.get_entry_real() > 0 else 0
+            # information['maduration_3'] = maduration_3 / self.get_entry_real() if self.get_entry_real() > 0 else 0
+            # information['mushroom'] = mushroom / self.get_entry_real() if self.get_entry_real() > 0 else 0
+            # information['green'] = green / self.get_entry_real() if self.get_entry_real() > 0 else 0
+            # information['cracked'] = cracked / self.get_entry_real() if self.get_entry_real() > 0 else 0
+            # information['crushed'] = crushed / self.get_entry_real() if self.get_entry_real() > 0 else 0
 
             return information
         except Exception as e:

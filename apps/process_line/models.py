@@ -73,7 +73,7 @@ class ProcessLineConditioning(models.Model):
         unique_together = ('process_date', 'lot',)
         verbose_name = 'Proceso de Acondicionado'
         verbose_name_plural = 'Proceso de Acondicionado'
-        ordering = ['-process_date']
+        ordering = ['process_date']
 
     def __str__(self):
         return str(self.process_date) + ' - ' + str(self.lot)
@@ -126,7 +126,7 @@ class ProcessLineTerminated(models.Model):
     class Meta:
         verbose_name = 'Proceso de Envasado'
         verbose_name_plural = 'Proceso de Envasado'
-        ordering = ['-packing_date']
+        ordering = ['packing_date']
         unique_together = ('packing_date', 'lot',)
 
     def get_lot_mp(self):
@@ -182,7 +182,7 @@ class ProcessLineReleased(models.Model):
     class Meta:
         verbose_name = 'Proceso de  Liberación'
         verbose_name_plural = 'Proceso de Liberación'
-        ordering = ['-release_date']
+        ordering = ['release_date']
 
     def __str__(self):
         try:
@@ -190,6 +190,28 @@ class ProcessLineReleased(models.Model):
         except:
             return "0"
 
+    def get_provider_bags(self):
+        try:
+            return self.lot_bags.provider.business_name
+        except:
+            return ''
+    def get_provider_boxes(self):
+        try:
+            return self.lot_boxes.provider.business_name
+        except:
+            return ''
+
+    def get_provider_ruc_bags(self):
+        try:
+            return self.lot_bags.provider.ruc
+        except:
+            return ''
+
+    def get_provider_ruc_boxes(self):
+        try:
+            return self.lot_boxes.provider.ruc
+        except:
+            return ''
     def get_description(self):
         return self.process.type_cut.name
 

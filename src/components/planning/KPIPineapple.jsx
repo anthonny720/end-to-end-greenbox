@@ -15,7 +15,7 @@ const KPIPineapple = ({data, week, update}) => {
     const dispatch = useDispatch();
     const columns = ['', 'Fecha', 'Semana', 'LOTES', 'PY DE INGRESO', 'REAL INGRESO', '% CUMPLIMIENTO', 'OBJETIVO', 'CALIBRE 6', 'CALIBRE 8 10 12', 'CALIBRE 14', 'MAD. 0', 'MAD. 1', 'MAD. 2-3', 'MAD. >= 4', 'KG DE CORONA', 'KG DE MP BRUTO', '% CUMPLIMIENTO', 'OBJETIVO', 'PRECIO', 'OBJETIVO', 'ORGÁNICO', 'CONVENCIONAL', 'STOCK'];
     const tableRef = useRef(null);
-    return (<div className="overflow-x-auto relative scrollbar-hide">
+    return (<div className="overflow-x-auto w-full relative scrollbar-hide">
         <DownloadTableExcel
             filename="KPI Piña"
             sheet="KPI Piña"

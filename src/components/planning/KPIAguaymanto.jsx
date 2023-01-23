@@ -17,7 +17,7 @@ const KPIAguaymanto = ({data, week, update}) => {
     const columns = ['', 'Fecha', 'Semana', 'LOTES', 'PY DE INGRESO', 'REAL INGRESO', '% CUMPLIMIENTO', 'OBJETIVO', 'MAD. 1', 'MAD. 2', 'MAD.3', 'HONGOS Y FERMENTADO', 'VERDE', 'APLASTADO', 'RAJADO', 'KG CALIZ', 'KG DESCARTE', 'KG DE MP BRUTO', '% CUMPLIMIENTO', 'OBJETIVO', '% DESCARTE', 'OBJETIVO', 'PRECIO', 'OBJETIVO', 'STOCK'];
 
     const tableRef = useRef(null);
-    return (<div className="overflow-x-auto relative scrollbar-hide">
+    return (<div className="overflow-x-auto w-full relative scrollbar-hide">
         <DownloadTableExcel
             filename="KPI Aguaymanto"
             sheet="KPI Aguaymanto"

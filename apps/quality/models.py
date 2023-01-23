@@ -267,19 +267,18 @@ class AnalysisMango(models.Model):
     anthracnose = models.DecimalField(decimal_places=2, max_digits=4, default=0.0, blank=True, null=True,
                                       verbose_name=u"Antracnosis")
     rot = models.DecimalField(decimal_places=2, max_digits=4, default=0.0, blank=True, null=True,
-                              verbose_name=u"Pudricion")
+                              verbose_name=u"Podrido")
     mature = models.DecimalField(decimal_places=2, max_digits=4, default=0.0, blank=True, null=True,
-                                 verbose_name=u"Sobre maduro")
+                                 verbose_name=u"maduro")
     latex = models.DecimalField(decimal_places=2, max_digits=4, default=0.0, blank=True, null=True,
                                 verbose_name=u"Latex")
     queresa = models.DecimalField(decimal_places=2, max_digits=4, default=0.0, blank=True, null=True,
                                   verbose_name=u"Queresa")
     insect_bite = models.DecimalField(decimal_places=2, max_digits=4, default=0.0, blank=True, null=True,
                                       verbose_name=u"Picadura de insectos")
-    soft = models.DecimalField(decimal_places=2, max_digits=4, default=0.0, blank=True, null=True,
-                               verbose_name=u"Fruta Blanda")
-    advanced = models.DecimalField(decimal_places=2, max_digits=4, default=0.0, blank=True, null=True,
-                                   verbose_name=u"Avanzado")
+    overripe = models.DecimalField(decimal_places=2, max_digits=4, default=0.0, blank=True, null=True,
+                               verbose_name=u"Sobre maduro")
+
 
     history = HistoricalRecords()
 
@@ -290,7 +289,7 @@ class AnalysisMango(models.Model):
 
     def get_total_defects(self):
         try:
-            return float(self.mechanical_damage) + float(self.cracked) + float(self.sun_damage) + float(self.anthracnose) + float(self.rot) + float(self.mature) + float(self.latex) + float(self.queresa) + float(self.insect_bite) + float(self.soft) + float(self.advanced)
+            return float(self.mechanical_damage) + float(self.cracked) + float(self.sun_damage) + float(self.anthracnose) + float(self.rot) + float(self.mature) + float(self.latex) + float(self.queresa) + float(self.insect_bite) + float(self.overripe) 
         except:
             return 0
 

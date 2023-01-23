@@ -61,7 +61,7 @@ class ListCreateLotView(APIView):
             serializer.save()
             lot = get_object_or_404(Lot, lot=serializer.data['lot'])
             if lot.category.name == "Piña":
-                pt = get_object_or_404(ReportPTPineapple, lot=lot, date_process=datetime.now())
+                ReportPTPineapple.objects.get_or_create(lot=lot, date_process=datetime.now())
                 AnalysisPineapple.objects.create(lot=lot)
                 CutTest.objects.create(lot=lot)
                 try:
@@ -72,10 +72,10 @@ class ListCreateLotView(APIView):
                 except:
                     pass
             elif lot.category.name == "Banano":
-                pt = get_object_or_404(ReportPTBanana, lot=lot, date_process=datetime.now())
+                ReportPTBanana.objects.get_or_create(lot=lot, date_process=datetime.now())
                 AnalysisBanano.objects.create(lot=lot)
             elif lot.category.name == "Mango":
-                pt = get_object_or_404(ReportPTMango, lot=lot, date_process=datetime.now())
+                ReportPTMango.objects.get_or_create(lot=lot, date_process=datetime.now())
 
                 AnalysisMango.objects.create(lot=lot)
                 try:
@@ -86,7 +86,7 @@ class ListCreateLotView(APIView):
                 except:
                     pass
             elif lot.category.name == "Aguaymanto":
-                pt = get_object_or_404(ReportPTGoldenberry, lot=lot, date_process=datetime.now())
+                ReportPTGoldenberry.objects.get_or_create(lot=lot, date_process=datetime.now())
                 AnalysisAguaymanto.objects.create(lot=lot)
                 try:
                     i, created = IndicatorKPIAguaymanto.objects.get_or_create(date=lot.entryDate)
@@ -98,7 +98,7 @@ class ListCreateLotView(APIView):
             elif lot.category.name == "Fresa":
                 pass
             else:
-                pt = get_object_or_404(ReportPTBlueberry, lot=lot, date_process=datetime.now())
+                ReportPTBlueberry.objects.get_or_create(lot=lot, date_process=datetime.now())
                 AnalysisBlueberry.objects.create(lot=lot)
             Report.objects.create(lot=lot)
             return Response({'message': 'Lote registrado correctamente'}, status=status.HTTP_201_CREATED)

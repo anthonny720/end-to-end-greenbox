@@ -88,6 +88,10 @@ class LiberatedListSerializer(serializers.ModelSerializer):
     lot_boxes_id = serializers.CharField(source='lot_boxes.id', read_only=True)
     lot_bags_id = serializers.CharField(source='lot_bags.id', read_only=True)
     client_id = serializers.CharField(source='client.id', read_only=True)
+    provider_bags=serializers.CharField(source='get_provider_bags',read_only=True)
+    provider_boxes=serializers.CharField(source='get_provider_boxes',read_only=True)
+    provider_ruc_bags=serializers.CharField(source='get_provider_ruc_bags',read_only=True)
+    provider_ruc_boxes=serializers.CharField(source='get_provider_ruc_boxes',read_only=True)
 
     class Meta:
         model = ProcessLineReleased
@@ -98,7 +102,7 @@ class LiberatedListSerializer(serializers.ModelSerializer):
             'observations', 'lot_mp', 'process_id',
             'lot_boxes_id',
             'lot_bags_id',
-            'client_id')
+            'client_id','provider_bags','provider_boxes',)
 
     def get_observations(self, obj):
         return obj.get_observations_display()

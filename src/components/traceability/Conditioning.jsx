@@ -1,48 +1,70 @@
 import React from 'react';
+import {StyleSheet, Text, View} from "@react-pdf/renderer";
+import {map} from "lodash";
 import Humanize from "humanize-plus";
 
+const styles = StyleSheet.create({
+    text1: {
+        fontSize: 10,
+        textAlign: "center",
+        fontFamily: "Times-Roman",
+        borderWidth: "1px",
+        borderStyle: "solid",
+        borderColor: "black",
+        padding: "3px",
+        width: "9%",
+        fontWeight: "bold"
+    }, view: {
+        width: "100%", marginHorizontal: 50
+
+    }, section: {
+        display: "flex", flexDirection: "row"
+    }
+});
 const Conditioning = ({conditioning}) => {
-    return (<div>
-        <p className='font-semibold text-md font-sans my-3 w-full '>4) CONTROL DE ACONDICIONADO </p>
+    return (<View style={styles.view}>
+        <Text style={{fontSize: "10", fontFamily: "Times-Roman"}}>4) CONTROL DE ACONDICIONADO</Text>
+        <View style={{fontSize: "10", marginTop: 4}}>
+            <View style={styles.section}>
+                <Text style={styles.text1}>Fecha de proceso</Text>
+                <Text style={styles.text1}>Kg</Text>
+                <Text style={styles.text1}>Cloro en red</Text>
+                <Text style={styles.text1}>Cloro en tina</Text>
+                <Text style={styles.text1}>Brix</Text>
+                <Text style={styles.text1}>pH</Text>
+                <Text style={styles.text1}>Espesor</Text>
+                <Text style={styles.text1}>Apariencia</Text>
+                <Text style={styles.text1}>Sabor</Text>
+            </View>
+            {map(conditioning, data => {
+                return (<View style={styles.section}>
+                        <Text style={styles.text1}>{new Date(data?.process_date).toLocaleDateString('es-PE', {
+                            timeZone: 'UTC',
+                        })}</Text>
+                        <Text style={styles.text1}>{Humanize.formatNumber(data?.kg_processed, 2)}</Text>
+                        <Text style={styles.text1}>{Humanize.formatNumber(data?.chlorine, 2)}</Text>
+                        <Text style={styles.text1}>{Humanize.formatNumber(data?.disinfection, 0)}</Text>
+                        <Text style={styles.text1}>{Humanize.formatNumber(data?.brix, 2)}</Text>
+                        <Text style={styles.text1}>{Humanize.formatNumber(data?.ph, 2)}</Text>
+                        <Text style={styles.text1}>{Humanize.formatNumber(data?.width, 2)}</Text>
+                        <Text style={styles.text1}>{Humanize.formatNumber(data?.appearance, 0)}</Text>
+                        <Text style={styles.text1}>{Humanize.formatNumber(data?.flavor, 0)}</Text>
+                    </View>)
+            })}
+            <Text style={{fontSize: 10, fontFamily: "Times-Roman",marginTop:4}}>Observaciones</Text>
+            <Text style={{fontSize: 10, fontFamily: "Times-Roman",}}>
+                __________________________________________________________________________________________________
+                __________________________________________________________________________________________________
+                __________________________________________________________________________________________________
+                __________________________________________________________________________________________________
+                __________________________________________________________________________________________________
+                __________________________________________________________________________________________________
+                __________________________________________________________________________________________________
 
-        <table className="bg-white w-full">
-            <thead className="text-xs   text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr className={"border-1 border border-black"}>
-                <th className="px-6 py-3 text-center border-1 border border-black">FECHA DE PROCESO</th>
-                <th className="px-6 py-3 text-center border-1 border border-black">CLORO EN RED</th>
-                <th className="px-6 py-3 text-center border-1 border border-black">CLORO EN TINA</th>
-                <th className="px-6 py-3 text-center border-1 border border-black">BRIX</th>
-                <th className="px-6 py-3 text-center border-1 border border-black">PH</th>
-                <th className="px-6 py-3 text-center border-1 border border-black">ESPESOR</th>
-                <th className="px-6 py-3 text-center border-1 border border-black">ASPECTO</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td className="font-bold border-black border px-2 py-1 text-center">{new Date().toLocaleDateString()}</td>
-                <td className="font-bold border-black border px-2 py-1 text-center">{Humanize.formatNumber(0,2) }</td>
-                <td className="font-bold border-black border px-2 py-1 text-center">{Humanize.formatNumber(0,2) }</td>
-                <td className="font-bold border-black border px-2 py-1 text-center">{Humanize.formatNumber(0,2) }</td>
-                <td className="font-bold border-black border px-2 py-1 text-center">{Humanize.formatNumber(0,2) }</td>
-                <td className="font-bold border-black border px-2 py-1 text-center">{Humanize.formatNumber(0,2) }</td>
-                <td className="font-bold border-black border px-2 py-1 text-center">{Humanize.formatNumber(0,2) }</td>
-            </tr>
-            <tr>
-                <td className="font-bold border-black border px-2 py-1 text-center">{new Date().toLocaleDateString()}</td>
-                <td className="font-bold border-black border px-2 py-1 text-center">{Humanize.formatNumber(0,2) }</td>
-                <td className="font-bold border-black border px-2 py-1 text-center">{Humanize.formatNumber(0,2) }</td>
-                <td className="font-bold border-black border px-2 py-1 text-center">{Humanize.formatNumber(0,2) }</td>
-                <td className="font-bold border-black border px-2 py-1 text-center">{Humanize.formatNumber(0,2) }</td>
-                <td className="font-bold border-black border px-2 py-1 text-center">{Humanize.formatNumber(0,2) }</td>
-                <td className="font-bold border-black border px-2 py-1 text-center">{Humanize.formatNumber(0,2) }</td>
-            </tr>
 
-            </tbody>
-        </table>
-
-
-    </div>);
-
+            </Text>
+        </View>
+    </View>)
 };
 
 export default Conditioning;

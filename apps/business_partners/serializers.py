@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from apps.business_partners.models import ProviderMP, Contact, Client, Carrier, BusinessMaquila
+from apps.business_partners.models import ProviderMP, Contact, Client, Carrier, BusinessMaquila, ProviderPacking
 
 
 class ProviderMPSerializer(serializers.ModelSerializer):
@@ -74,3 +74,7 @@ class ProviderMaquilaDetailSerializer(serializers.ModelSerializer):
 
     def to_internal_value(self, data):
         return data
+class ProviderPackingDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProviderPacking
+        fields = ('business_name','ruc',)

@@ -339,7 +339,7 @@ class ListPTGoldenberryView(APIView):
 class ListPTBlueberryView(APIView):
     def get(self, request, *args, **kwargs):
         current_date = datetime.date(datetime.now())
-        queryset = ReportPTBlueberry.objects.all()
+        queryset = ReportPTBlueberry.objects.all().order_by('date_process')
         # FILTERS
         year = request.query_params.get('year', None)
         month = request.query_params.get('month', None)

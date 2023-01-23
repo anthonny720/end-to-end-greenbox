@@ -184,7 +184,7 @@ const ProcessLine = () => {
                     ><FontAwesomeIcon icon={faPlusCircle} className={"mx-[50%] text-red-400 text-xl cursor-pointer"}
                                       onClick={handleAddReleased}/>
                         <Table humanize={true}
-                               omit_data={['id', 'week', 'month', 'year', 'lot_mp', 'lot_id', 'process_id', 'type_id', 'client_id', 'lot_bags_id', 'lot_boxes_id']}
+                               omit_data={['id', 'week', 'month', 'year', 'lot_mp', 'lot_id', 'process_id', 'type_id', 'client_id', 'lot_bags_id', 'lot_boxes_id','provider_bags','provider_boxes']}
                                data={released} columns={columns_liberated} remove={handleDeleteReleased}
                                edit={handleUpdateReleased}/>
                     </Tab.Panel>

@@ -21,6 +21,7 @@ urlpatterns = [path('admin/', admin.site.urls),
                path('api/commercial/', include('apps.commercial.urls')),
                path('api/planning/', include('apps.planning.urls')),
                path('api/traceability/', include('apps.traceability.urls')),
+               path('api/costs/', include('apps.costs.urls')),
 
                path('auth/', include('djoser.urls')), path('auth/', include('djoser.urls.jwt')), ]
 

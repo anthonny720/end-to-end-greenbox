@@ -15,7 +15,7 @@ const KPIMango = ({data,week,update}) => {
     const dispatch = useDispatch();
     const columns = ['', 'Fecha', 'Semana', 'Lotes', 'PY DE INGRESO', 'REAL INGRESO', '% CUMPLIMIENTO', 'OBJETIVO', '<280G', '280-300G', '>300G', 'COLOR 1', 'COLOR 1.5-2.5 ', 'COLOR >=3', 'MECÁNICO', 'FISICO', 'PLAGAS Y ENFERMEDADES', 'OTROS', '% DEFECTOS', 'DESCARTE', 'KG DE MP BRUTO', '% CUMPLIMIENTO', 'OBJETIVO', 'PRECIO', 'OBJETIVO', 'KENT', 'EDWARD', 'HADEN', 'OTROS', 'STOCK'];
     const tableRef = useRef(null);
-    return (<div className="overflow-x-auto relative scrollbar-hide">
+    return (<div className="overflow-x-auto w-full relative scrollbar-hide">
         <DownloadTableExcel
             filename="KPI Mango"
             sheet="KPI Mango"
