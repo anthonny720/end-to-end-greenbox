@@ -16,8 +16,8 @@ const Form = ({close, slug, id}) => {
     const lots = useSelector(state => state.Logistic.lots)
     const columns = [
         {name: 'number', title: 'Número de pallet', type: 'text', maxLength: 2},
-        {name: 'boxes', title: 'Cantidad de cajas', type: 'text', maxLength: 2},
-        {name: 'bags', title: 'Cantidad de bolsas por caja', type: 'text', maxLength: 2},
+        {name: 'boxes', title: 'Cantidad de cajas', type: 'text', maxLength: 3},
+        {name: 'bags', title: 'Cantidad de bolsas por caja', type: 'text', maxLength: 3},
         {name: 'weight', title: 'Peso referencial', type: 'text', maxLength: 7},
     ]
     /*Formik*/

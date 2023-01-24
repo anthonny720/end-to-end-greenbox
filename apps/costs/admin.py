@@ -3,35 +3,27 @@ from import_export.admin import ImportExportModelAdmin
 from rest_framework.permissions import AllowAny
 from simple_history.admin import SimpleHistoryAdmin
 
-from apps.costs.models import SubGroup, Group, Category, Modality, ReportSubGroup, Report
+from apps.costs.models import Category, ReportCost, ReportCategory
 
 
 # Register your models here.
-@admin.register(Modality)
-class ModalityAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    list_display = ('name',)
-    list_per_page = 20
+
 @admin.register(Category)
 class CategoryAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    list_display = ('name',)
-    list_filter = ('modality',)
+    list_display = ('name', 'cost')
+    list_filter = ('type',)
     list_per_page = 20
-@admin.register(Group)
-class GroupAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    list_display = ('name',)
-    list_filter = ('category',)
-    list_per_page = 20
-@admin.register(SubGroup)
-class SubGroupAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    list_display = ('name',)
-    list_filter = ('group',)
-    list_per_page = 20
-@admin.register(Report)
+
+
+@admin.register(ReportCost)
 class ReportAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    list_display = ('date',)
+    list_display = ('date', 'kg_processed', 'kg_total', 'get_performance',)
+    list_filter = ('category',)
+    date_hierarchy = 'date'
     list_per_page = 20
-@admin.register(ReportSubGroup)
-class ReportSubGroupAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    permission_classes = [AllowAny]
-    list_display = ('report','subgroup','cost')
+
+
+@admin.register(ReportCategory)
+class ReportCategoryAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
+    list_display = ('report', 'category', 'cost',)
     list_per_page = 20

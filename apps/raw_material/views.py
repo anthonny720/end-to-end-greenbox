@@ -5,6 +5,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from apps.costs.models import ReportCost
 from apps.planning.models import IndicatorKPIPineapple, IndicatorKPIMango, IndicatorKPIAguaymanto
 from apps.quality.models import AnalysisPineapple, CutTest, AnalysisBanano, AnalysisMango, AnalysisAguaymanto, \
     AnalysisBlueberry
@@ -20,6 +21,10 @@ from apps.util.pagination import SetPagination
 class ListCreateLotView(APIView):
 
     def get(self, request, format=None):
+        try:
+            ReportCost.objects.get_or_create(date=datetime.now())
+        except Exception as e:
+            print(str(e))
         try:
             IndicatorKPIPineapple.objects.get_or_create(date=datetime.now())
             IndicatorKPIMango.objects.get_or_create(date=datetime.now())

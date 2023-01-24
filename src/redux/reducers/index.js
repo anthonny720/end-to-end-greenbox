@@ -12,7 +12,21 @@ import Report from "./report";
 import Commercial from "./commercial";
 import Planning from "./planning";
 import Traceability from "./traceability";
+import Costs from "./costs";
 
 export default combineReducers({
-    Products, Alert, Management, Business, Auth, RawMaterial, Quality, Process, Logistic, Report, Commercial,Planning,Traceability
+    Products,
+    Alert,
+    Management,
+    Business,
+    Auth,
+    RawMaterial,
+    Quality,
+    Process,
+    Logistic,
+    Report,
+    Commercial,
+    Planning,
+    Traceability,
+    Costs
 });

@@ -1,9 +1,11 @@
-from rest_framework import routers
+from django.urls import path
 
-from apps.costs.views import CostView
+from apps.costs.views import ListCostAPIView, UpdateReportAPIView, UpdateCostsAPIView
 
 app_name = "costs"
 
-router = routers.SimpleRouter()
-router.register(r'report', CostView)
-urlpatterns = router.urls
+urlpatterns = [
+    path('get-costs', ListCostAPIView.as_view(), name='costs'),
+    path('update-costs', UpdateCostsAPIView.as_view(), name='update-costs-variable'),
+    path('update-report/<int:id>', UpdateReportAPIView.as_view(), name='update-costs'),
+]
