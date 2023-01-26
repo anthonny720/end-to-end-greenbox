@@ -36,6 +36,8 @@ const ProcessLine = () => {
     const {lot} = useParams()
     const dispatch = useDispatch()
     const info = useSelector(state => state.RawMaterial.lot)
+    const user = useSelector(state => state.Auth.user);
+
     let [categories] = useState(["Acondicionado", "Envasado", "Liberación de Producto Terminado"])
     const conditioning = useSelector(state => state.Process.conditioning)
     const terminated = useSelector(state => state.Process.terminated)
@@ -136,7 +138,7 @@ const ProcessLine = () => {
 
 
     const columns_conditioning = ['Acciones', 'Fecha de Proceso', 'Lote', 'Kg procesados', 'Cloro en red', 'Cloro en tina', 'Brix', 'pH', 'Espesor', 'Apariencia', 'Sabor', 'Horno', '1hr', '2hr', '3hr', '4hr', '5hr', '6hr', '7hr', '8hr', '9hr', '10hr', '11hr', '12hr', '13hr', '14hr', '15hr', '16hr', '17hr', '18hr', '19hr', '20hr', '21hr', '22hr', '23hr', '24hr']
-    const columns_terminated = ['Acciones', 'Fecha de Proceso', 'Fecha de Envasado', 'Lote', 'Brix', 'pH', 'Humedad', 'Aroma', 'Color', 'Sabor', 'Textura', 'Espesor', 'Defectos', 'Cantidad','Cliente']
+    const columns_terminated = ['Acciones', 'Fecha de Proceso', 'Fecha de Envasado', 'Lote', 'Brix', 'pH', 'Humedad', 'Aroma', 'Color', 'Sabor', 'Textura', 'Espesor', 'Defectos', 'Cantidad', 'Cliente']
     const columns_liberated = ['Acciones', 'Fecha de Envasado', 'Fecha de Liberación', 'Lote', 'Cantidad', 'Kg por caja', 'Cliente', 'Fecha de vencimiento', 'Cajas', 'Bolsas', 'Observaciones']
 
     return (<Layout>
@@ -160,8 +162,11 @@ const ProcessLine = () => {
                     <Tab.Panel
 
                         className={classNames('rounded-xl bg-white p-3', 'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2')}
-                    ><FontAwesomeIcon icon={faPlusCircle} className={"mx-[50%] text-red-400 text-xl cursor-pointer"}
-                                      onClick={handleAddConditioning}/>
+                    >
+                        {user && user !== undefined && user !== null && user.get_role_name === "Calidad" &&
+                            <FontAwesomeIcon icon={faPlusCircle}
+                                             className={"mx-[50%] text-red-400 text-xl cursor-pointer"}
+                                             onClick={handleAddConditioning}/>}
                         <Table humanize={true}
                                omit_data={['id', 'week', 'month', 'year', 'lot_mp', 'lot_id', 'process_id', 'type_id', 'client_id', 'lot_bags_id', 'lot_boxes_id']}
                                columns={columns_conditioning} data={conditioning}
@@ -171,20 +176,22 @@ const ProcessLine = () => {
                     <Tab.Panel
 
                         className={classNames('rounded-xl bg-white p-3', 'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2')}
-                    ><FontAwesomeIcon icon={faPlusCircle} className={"mx-[50%] text-red-400 text-xl cursor-pointer"}
-                                      onClick={handleAddTerminated}/>
+                    >{user && user !== undefined && user !== null && user.get_role_name === "Calidad" &&
+                        <FontAwesomeIcon icon={faPlusCircle} className={"mx-[50%] text-red-400 text-xl cursor-pointer"}
+                                      onClick={handleAddTerminated}/>}
                         <Table humanize={true}
-                               omit_data={['id', 'week', 'month', 'year', 'lot_mp', 'lot_id', 'process_id', 'type_id', 'client_id', 'lot_bags_id', 'lot_boxes_id', ]}
+                               omit_data={['id', 'week', 'month', 'year', 'lot_mp', 'lot_id', 'process_id', 'type_id', 'client_id', 'lot_bags_id', 'lot_boxes_id',]}
                                columns={columns_terminated} data={terminated} edit={handleUpdateTerminated}
                                remove={handleDeleteTerminated}/>
                     </Tab.Panel>
                     <Tab.Panel
 
                         className={classNames('rounded-xl bg-white p-3', 'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2')}
-                    ><FontAwesomeIcon icon={faPlusCircle} className={"mx-[50%] text-red-400 text-xl cursor-pointer"}
-                                      onClick={handleAddReleased}/>
+                    >{user && user !== undefined && user !== null && user.get_role_name === "Calidad" &&
+                        <FontAwesomeIcon icon={faPlusCircle} className={"mx-[50%] text-red-400 text-xl cursor-pointer"}
+                                      onClick={handleAddReleased}/>}
                         <Table humanize={true}
-                               omit_data={['id', 'week', 'month', 'year', 'lot_mp', 'lot_id', 'process_id', 'type_id', 'client_id', 'lot_bags_id', 'lot_boxes_id', 'provider_bags', 'provider_boxes','provider_ruc_bags', 'provider_ruc_boxes','observations']}
+                               omit_data={['id', 'week', 'month', 'year', 'lot_mp', 'lot_id', 'process_id', 'type_id', 'client_id', 'lot_bags_id', 'lot_boxes_id', 'provider_bags', 'provider_boxes', 'provider_ruc_bags', 'provider_ruc_boxes', 'observations']}
                                data={released} columns={columns_liberated} remove={handleDeleteReleased}
                                edit={handleUpdateReleased}/>
                     </Tab.Panel>
