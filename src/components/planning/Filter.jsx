@@ -1,7 +1,7 @@
 import React from 'react';
 import {useFormik} from "formik";
 import {useDispatch} from "react-redux";
-import {get_kpi_aguaymanto, get_kpi_maintenance, get_kpi_mango, get_kpi_pineapple} from "../../redux/actions/planning";
+import {get_kpi_aguaymanto, get_kpi_mango, get_kpi_pineapple} from "../../redux/actions/planning";
 import * as Yup from "yup";
 
 const Filter = ({ft}) => {

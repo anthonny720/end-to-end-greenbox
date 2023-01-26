@@ -3,13 +3,11 @@ import {map, omit, size} from "lodash";
 import React, {useRef} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEdit, faFileExcel} from "@fortawesome/free-solid-svg-icons";
-import {useSelector} from "react-redux";
 import {DownloadTableExcel} from "react-export-table-to-excel";
 import Humanize from "humanize-plus";
 
-const TablePT = ({data, update,header,columns}) => {
+const TablePT = ({data, update, header, columns}) => {
     const tableRef = useRef(null);
-    const user = useSelector(state => state.Auth.user);
 
     return (<div className="overflow-x-auto relative scrollbar-hide">
         <DownloadTableExcel
@@ -35,14 +33,14 @@ const TablePT = ({data, update,header,columns}) => {
             {data !== null && size(data) > 0 ? map(data, (row, index) => (<tr key={index} className="bg-white border-b">
                 <td className="px-6 py-4 text-center gap-x">
 
-                        <FontAwesomeIcon icon={faEdit} onClick={() => update(row)}
-                                         className={"text-blue-400 cursor-pointer"}
-                        />
+                    <FontAwesomeIcon icon={faEdit} onClick={() => update(row)}
+                                     className={"text-blue-400 cursor-pointer"}
+                    />
 
                 </td>
-                {map(omit(row,['id']),(value, index) => (<td key={index}
-                                                                      className="py-4 px-6 whitespace-nowrap text-center">{typeof (value) === 'number' ? Humanize.formatNumber(value,2) : value
-                    }</td>))}
+                {map(omit(row, ['id']), (value, index) => (<td key={index}
+                                                               className="py-4 px-6 whitespace-nowrap text-center">{typeof (value) === 'number' ? Humanize.formatNumber(value, 2) : value
+                }</td>))}
             </tr>)) : <tr>
                 {map(columns, (column, index) => (
                     <th key={index} className="px-6 py-3 text-center"><Skeleton count={10}/></th>))}

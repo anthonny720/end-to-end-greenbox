@@ -44,7 +44,6 @@ import ReportPTGoldenberry from "./containers/pages/ReportPTGoldenberry";
 import ReportPTMango from "./containers/pages/ReportPTMango";
 import Traceability from "./components/traceability/Traceability";
 import Costs from "./containers/pages/Costs";
-import CostDetail from "./containers/pages/CostsDetail";
 
 
 const App = () => {
@@ -116,7 +115,6 @@ const App = () => {
                     {/*Planning*/}
                     <Route exact path="planning/kpi" element={<KPI/>}/>
                     <Route exact path="planning/costs" element={<Costs/>}/>
-                    <Route exact path="planning/costs/:date" element={<CostDetail/>}/>
 
 
                     {/* Traceability   */}

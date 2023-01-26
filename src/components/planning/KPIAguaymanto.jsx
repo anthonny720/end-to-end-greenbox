@@ -10,7 +10,6 @@ import {DownloadTableExcel} from "react-export-table-to-excel";
 import {setAlert} from "../../redux/actions/alert";
 
 const KPIAguaymanto = ({data, week, update}) => {
-    const summary = useSelector(state => state.Planning.summary_aguaymanto)
     const user = useSelector(state => state.Auth.user);
     const dispatch = useDispatch();
 

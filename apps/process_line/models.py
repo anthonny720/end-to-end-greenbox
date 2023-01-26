@@ -106,6 +106,7 @@ class ProcessLineTerminated(models.Model):
     lot = models.CharField(max_length=100, verbose_name='Lote Producto Terminado', blank=True, null=True)
     process = models.ForeignKey(ProcessLineConditioning, on_delete=models.PROTECT, related_name='process_line',
                                 verbose_name='Proceso de Acondicionado')
+    client = models.ForeignKey(Client, on_delete=models.PROTECT, related_name='client_terminated', verbose_name='Cliente')
     brix_pt = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='°Brix', blank=True, null=True,
                                   default=0)
     ph_pt = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='pH', blank=True, null=True, default=0)

@@ -56,13 +56,14 @@ class TerminatedListSerializer(serializers.ModelSerializer):
     month = serializers.CharField(source='get_month', read_only=True)
     year = serializers.CharField(source='get_year', read_only=True)
     lot_mp = serializers.CharField(source='get_lot_mp', read_only=True)
+    client = serializers.CharField(source='client.name', read_only=True)
 
     class Meta:
         model = ProcessLineTerminated
         fields = (
             'id', 'week', 'month', 'year', 'process_date', 'packing_date', 'lot', 'brix_pt', 'ph_pt', 'humidity',
             'aroma', 'color', 'flavor',
-            'texture', 'width_pt', 'defects', 'quantity', 'lot_mp', 'process_id', 'type_id')
+            'texture', 'width_pt', 'defects', 'quantity','client', 'lot_mp', 'process_id', 'type_id')
 
 
 class LiberatedReceptionListSerializer(serializers.ModelSerializer):

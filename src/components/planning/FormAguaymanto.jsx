@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPaperPlane} from "@fortawesome/free-solid-svg-icons";
 import * as Yup from "yup";
 import {useFormik} from "formik";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {map} from "lodash";
 import {update_kpi_aguaymanto} from "../../redux/actions/planning";
 
@@ -33,8 +33,6 @@ const FormPlanningAguaymanto = ({data, close, params}) => {
             close()
         }
     })
-
-    console.log(data)
 
 
     return (<form className="bg-white  rounded px-8 pt-6 pb-8 mb-4">

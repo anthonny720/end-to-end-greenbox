@@ -10,7 +10,6 @@ import {DownloadTableExcel} from "react-export-table-to-excel";
 import {setAlert} from "../../redux/actions/alert";
 
 const KPIPineapple = ({data, week, update}) => {
-    const summary = useSelector(state => state.Planning.summary_pineapple)
     const user = useSelector(state => state.Auth.user);
     const dispatch = useDispatch();
     const columns = ['', 'Fecha', 'Semana', 'LOTES', 'PY DE INGRESO', 'REAL INGRESO', '% CUMPLIMIENTO', 'OBJETIVO', 'CALIBRE 6', 'CALIBRE 8 10 12', 'CALIBRE 14', 'MAD. 0', 'MAD. 1', 'MAD. 2-3', 'MAD. >= 4', 'KG DE CORONA', 'KG DE MP BRUTO', '% CUMPLIMIENTO', 'OBJETIVO', 'PRECIO', 'OBJETIVO', 'ORGÁNICO', 'CONVENCIONAL', 'STOCK'];

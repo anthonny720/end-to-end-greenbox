@@ -10,7 +10,6 @@ import {DownloadTableExcel} from "react-export-table-to-excel";
 import {setAlert} from "../../redux/actions/alert";
 
 const KPIMango = ({data,week,update}) => {
-    const summary = useSelector(state => state.Planning.summary_mango)
     const user = useSelector(state => state.Auth.user);
     const dispatch = useDispatch();
     const columns = ['', 'Fecha', 'Semana', 'Lotes', 'PY DE INGRESO', 'REAL INGRESO', '% CUMPLIMIENTO', 'OBJETIVO', '<280G', '280-300G', '>300G', 'COLOR 1', 'COLOR 1.5-2.5 ', 'COLOR >=3', 'MECÁNICO', 'FISICO', 'PLAGAS Y ENFERMEDADES', 'OTROS', '% DEFECTOS', 'DESCARTE', 'KG DE MP BRUTO', '% CUMPLIMIENTO', 'OBJETIVO', 'PRECIO', 'OBJETIVO', 'KENT', 'EDWARD', 'HADEN', 'OTROS', 'STOCK'];

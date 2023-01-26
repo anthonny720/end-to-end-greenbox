@@ -24,7 +24,7 @@ class ListCreateLotView(APIView):
         try:
             ReportCost.objects.get_or_create(date=datetime.now())
         except Exception as e:
-            print(str(e))
+            pass
         try:
             IndicatorKPIPineapple.objects.get_or_create(date=datetime.now())
             IndicatorKPIMango.objects.get_or_create(date=datetime.now())

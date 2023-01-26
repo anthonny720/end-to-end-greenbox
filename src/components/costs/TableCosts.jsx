@@ -31,7 +31,7 @@ const TableCosts = ({data, viewer, update, update_costs}) => {
                                 <FontAwesomeIcon icon={faEdit} onClick={() => {
                                     update(row)
                                 }} className={"text-blue-400 ml-4 cursor-pointer"}/>}
-                            {user && user !== undefined && user !== null && user.get_role_name === 'Administración' &&
+                            {user && user !== undefined && user !== null && user.get_role_name === 'Administración' || 'Logística' &&
                                 <FontAwesomeIcon icon={faEdit} onClick={() => {
                                     update_costs(row?.item_variable)
                                 }} className={"text-cyan-400 ml-4 cursor-pointer"}/>}</div>

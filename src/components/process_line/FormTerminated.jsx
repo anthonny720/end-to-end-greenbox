@@ -1,14 +1,22 @@
-import React from 'react';
-import {useDispatch} from "react-redux";
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPaperPlane} from "@fortawesome/free-solid-svg-icons";
 import {map} from "lodash";
 import {add_process_terminated, update_process_terminated} from "../../redux/actions/process_line";
+import {get_clients} from "../../redux/actions/business_partners";
+import {get_bags, get_boxes} from "../../redux/actions/products";
 
 const FormTerminated = ({close, data, cuts, process,lot}) => {
     const dispatch = useDispatch();
+    const clients = useSelector(state => state.Business.clients)
+
+    useEffect(() => {
+        dispatch(get_clients());
+
+    }, []);
 
     const columns = [
         {name: 'packing_date', title: 'Fecha de envasado', type: 'date', maxLength: 50,}, {
@@ -85,6 +93,20 @@ const FormTerminated = ({close, data, cuts, process,lot}) => {
             </select>
 
         </div>
+        <div className={"w-full  z-30"}>
+            {/*Cliente*/}
+            <p className={`${formik.errors.client ? "text-red-500" : "text-base mt-4 font-medium leading-none text-gray-800"}`}>Cliente:</p>
+            <select value={formik.values.client}
+                    onChange={(value) => {
+                        formik.setFieldValue('client', value.target.value);
+                    }}
+                    className="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300       rounded transition       ease-in-out
+                    m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                    aria-label="Default select example">
+                <option value={''}>Seleccione un cliente</option>
+                {clients !== null && map(clients, c => (<option key={c.id} value={c.id}>{c.name}</option>))}
+            </select>
+        </div>
         {map(columns, (column, index) => (<div key={index}>
             <p className={`${formik.errors[column.name] ? "text-red-500" : "text-base mt-4 font-medium leading-none text-gray-800"}`}>{column.title}:</p>
             <input type={column.type} maxLength={column.maxLength}
@@ -116,6 +138,7 @@ const initialValues = (data) => {
         defects: data?.defects || 0,
         width_pt: data?.width_pt || 0,
         quantity: data?.quantity || 0,
+        client: data?.client_id || "",
     }
 }
 const newSchema = () => {
@@ -133,6 +156,7 @@ const newSchema = () => {
         defects: Yup.number().min(0).max(100).required(true),
         width_pt: Yup.number().min(0).max(100).required(true),
         quantity: Yup.number().integer().min(0).max(9999).required(true),
+        client: Yup.number().required(true),
 
     }
 }

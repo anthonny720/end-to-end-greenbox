@@ -1,7 +1,6 @@
 import React from 'react';
 import {map, sum} from 'lodash'
 import Humanize from 'humanize-plus'
-import {Helmet} from "react-helmet";
 
 export class Output extends React.PureComponent {
 
