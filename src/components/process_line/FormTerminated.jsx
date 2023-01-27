@@ -7,9 +7,8 @@ import {faPaperPlane} from "@fortawesome/free-solid-svg-icons";
 import {map} from "lodash";
 import {add_process_terminated, update_process_terminated} from "../../redux/actions/process_line";
 import {get_clients} from "../../redux/actions/business_partners";
-import {get_bags, get_boxes} from "../../redux/actions/products";
 
-const FormTerminated = ({close, data, cuts, process,lot}) => {
+const FormTerminated = ({close, data, cuts, process, lot}) => {
     const dispatch = useDispatch();
     const clients = useSelector(state => state.Business.clients)
 
@@ -72,13 +71,15 @@ const FormTerminated = ({close, data, cuts, process,lot}) => {
                 <option value={''}>Seleccione una fecha del proceso previo</option>
                 {map(process, p => (
                     <option key={p.id} value={p.id}>{new Date(p?.process_date).toLocaleDateString('es-PE', {
-                    timeZone: 'UTC'})}</option>))}
+                        timeZone: 'UTC'
+                    })}</option>))}
             </select>
 
         </div>
         <div className={"w-full  z-30"}>
             {/*Tipo de corte*/}
-            <p className={`${formik.errors.type_cut ? "text-red-500" : "text-base mt-4 font-medium leading-none text-gray-800"}`}>Tipo de corte:</p>
+            <p className={`${formik.errors.type_cut ? "text-red-500" : "text-base mt-4 font-medium leading-none text-gray-800"}`}>Tipo
+                de corte:</p>
 
             <select value={formik.values.type_cut}
                     onChange={(value) => {
@@ -89,7 +90,7 @@ const FormTerminated = ({close, data, cuts, process,lot}) => {
                     aria-label="Default select example">
                 <option value={''}>Seleccione un corte</option>
                 {map(cuts, c => (
-                    <option key={c.id} value={c.id}>{c.name} - {c.category_name}</option>))}
+                    <option key={c.id} value={c.id}>{c.name} - {c.code}</option>))}
             </select>
 
         </div>

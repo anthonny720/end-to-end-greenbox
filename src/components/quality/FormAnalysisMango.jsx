@@ -9,36 +9,54 @@ import {map} from "lodash";
 const FormAnalysisMango = ({close, data, dispatch}) => {
 
     const columns = [{name: 'color_1', title: 'Color 1 %', type: 'text', maxLength: 4,}, {
-        name: 'color_1_5',
-        title: 'Color 1,5  %',
-        type: 'text',
-        maxLength: 4,
+        name: 'color_1_5', title: 'Color 1,5  %', type: 'text', maxLength: 4,
     }, {name: 'color_2', title: 'Color 2 %', type: 'text', maxLength: 4,}, {
-        name: 'color_2_5',
-        title: 'Color 2,5 %',
+        name: 'color_2_5', title: 'Color 2,5 %', type: 'text', maxLength: 4,
+    }, {name: 'color_3', title: 'Color 3 %', type: 'text', maxLength: 4,}, {
+        name: 'color_3_5',
+        title: 'Color 3.5 %',
         type: 'text',
         maxLength: 4,
-    }, {name: 'color_3', title: 'Color 3 %', type: 'text', maxLength: 4,}, {name: 'color_3_5', title: 'Color 3.5 %', type: 'text', maxLength: 4,},
-        {name: 'brix_7', title: 'Brix > 7 %', type: 'text', maxLength: 4,},
-        {name: 'brix_7_8', title: 'Brix 7-8 %', type: 'text', maxLength: 4,},
-        {name: 'brix_8_9', title: 'Brix 8-9 %', type: 'text', maxLength: 4,},
-        {name: 'brix_9', title: 'Brix 9 %', type: 'text', maxLength: 4,},
-        {name: 'weight_280', title: 'Peso <280 gr %', type: 'text', maxLength: 4,}, {
+    }, {name: 'brix_7', title: 'Brix > 7 %', type: 'text', maxLength: 4,}, {
+        name: 'brix_7_8',
+        title: 'Brix 7-8 %',
+        type: 'text',
+        maxLength: 4,
+    }, {name: 'brix_8_9', title: 'Brix 8-9 %', type: 'text', maxLength: 4,}, {
+        name: 'brix_9',
+        title: 'Brix 9 %',
+        type: 'text',
+        maxLength: 4,
+    }, {name: 'weight_280', title: 'Peso <280 gr %', type: 'text', maxLength: 4,}, {
         name: 'weight_280_300', title: 'Peso 280-300 gr %', type: 'text', maxLength: 4,
-    }, {name: 'weight_300', title: 'Peso >300 gr %', type: 'text', maxLength: 4,},
-        {name: 'mechanical_damage', title: 'Daños mecanicos %', type: 'text', maxLength: 4,},
-        {name: 'cracked', title: 'Rajado %', type: 'text', maxLength: 4,},
-        {name: 'sun_damage', title: 'Daños de sol %', type: 'text', maxLength: 4,}, {
+    }, {name: 'weight_300', title: 'Peso >300 gr %', type: 'text', maxLength: 4,}, {
+        name: 'mechanical_damage',
+        title: 'Daños mecanicos %',
+        type: 'text',
+        maxLength: 4,
+    }, {name: 'cracked', title: 'Rajado %', type: 'text', maxLength: 4,}, {
+        name: 'sun_damage',
+        title: 'Daños de sol %',
+        type: 'text',
+        maxLength: 4,
+    }, {
         name: 'anthracnose', title: 'Antracnosis %', type: 'text', maxLength: 4,
-    },
-        {name: 'rot', title: 'Pudricion %', type: 'text', maxLength: 4,},
-        {name: 'mature', title: 'Sobre maduro %', type: 'text', maxLength: 4,},
-        {name: 'latex', title: 'Latex %', type: 'text', maxLength: 4,},
-        {name: 'queresa', title: 'Queresa %', type: 'text', maxLength: 4,},
-        {name: 'insect_bite', title: 'Insectos %', type: 'text', maxLength: 4,},
-        {
-        name: 'soft', title: 'Blando %', type: 'text', maxLength: 4,
-    }, {name: 'advanced', title: 'Avanzado %', type: 'text', maxLength: 4,},]
+    }, {name: 'rot', title: 'Pudrido %', type: 'text', maxLength: 4,}, {
+        name: 'latex',
+        title: 'Latex %',
+        type: 'text',
+        maxLength: 4,
+    }, {name: 'queresa', title: 'Queresa %', type: 'text', maxLength: 4,}, {
+        name: 'insect_bite',
+        title: 'Insectos %',
+        type: 'text',
+        maxLength: 4,
+    }, {name: 'mature', title: 'Maduro %', type: 'text', maxLength: 4,}, {
+        name: 'overripe',
+        title: 'Sobre maduro %',
+        type: 'text',
+        maxLength: 4,
+    },]
     const formik = useFormik({
         initialValues: initialValues(data),
         validationSchema: Yup.object(newSchema()),
@@ -96,8 +114,7 @@ const initialValues = (data) => {
         latex: data?.latex || 0,
         queresa: data?.queresa || 0,
         insect_bite: data?.insect_bite || 0,
-        soft: data?.soft || 0,
-        advanced: data?.advanced || 0,
+        overripe: data?.overripe || 0,
 
     }
 
@@ -126,8 +143,7 @@ const newSchema = () => {
         latex: Yup.number().min(0).max(100).required(),
         queresa: Yup.number().min(0).max(100).required(),
         insect_bite: Yup.number().min(0).max(100).required(),
-        soft: Yup.number().min(0).max(100).required(),
-        advanced: Yup.number().min(0).max(100).required(),
+        overripe: Yup.number().min(0).max(100).required(),
 
 
     }
